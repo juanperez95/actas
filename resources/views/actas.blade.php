@@ -1,3 +1,7 @@
+@extends('layouts.app')
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,11 +10,11 @@
 </head>
 <body>
   <div class="container">
-    <img src="{{ asset('images/americas.png') }}" alt="Descripción de la imagen" class="logo">
-    
     <div id="app">
       <example-component></example-component>
     </div>
+    <img src="{{ asset('images/americas.png') }}" alt="Descripción de la imagen" class="logo">
+    
     <h2>ACTA DE RESPONSABILIDAD DE EQUIPOS DE TRABAJO</h2>
 
     <label for="option">Seleccione una opción:</label>
@@ -168,5 +172,5 @@
     });
   </script>
 </body>
-<script src="{{ asset('resources/js/app.js') }}"></script>
+<script src="{{ mix('js/app.js') }}"></script>
 </html>
