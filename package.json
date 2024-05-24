@@ -14,10 +14,11 @@
         "laravel-vite-plugin": "^1.0",
         "sass": "^1.56.1",
         "vite": "^5.0",
-        "vue": "^3.2.37"
+        "vue": "^3.4.27"
     },
     "dependencies": {
         "laravel-mix": "^6.0.49",
+        "sweetalert2": "^11.11.0",
         "vuex": "^4.1.0"
     }
 }

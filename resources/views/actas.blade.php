@@ -1,159 +1,34 @@
 @extends('layouts.app')
 
-
-
 <!DOCTYPE html>
 <html>
 <head>
   <title>Acta de Responsabilidad de Equipos de Trabajo</title>
   <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
   <div class="container">
-    <div id="app">
-      <example-component></example-component>
-    </div>
     <img src="{{ asset('images/americas.png') }}" alt="Descripción de la imagen" class="logo">
     
     <h2>ACTA DE RESPONSABILIDAD DE EQUIPOS DE TRABAJO</h2>
-
+    
+    
+    <!-- framework Vue.js -->
+    
     <label for="option">Seleccione una opción:</label>
-    <select id="option">
-      <option value="">Seleccione una opción</option>
-      <option value="gestores">Gestores</option>
-      <option value="operaciones">Operaciones</option>
-    </select>
-
-    <div id="gestores" class="hidden">
-      <p>Señor <input type="text" placeholder="Ingrese el nombre"></p>
-      <p>CC. <input type="text" placeholder="Ingrese el número de CC"></p>
-      <p>Correo: <input type="email" placeholder="Ingrese el correo"></p>
-      <p>Respetada Señor <input type="text" placeholder="Ingrese el nombre"></p>
-      <p>El presente formato se tiene con fin de entregar la responsabilidad del activo solicitado al gestor <input type="text" placeholder="Ingrese el gestor"></p>
-      <p>Definiciones:</p>
-      <ul>
-        <li>Motivo de Solicitud <input type="text" placeholder="Ingrese el motivo"></li>
-        <li>Operación Solicitante <input type="text" placeholder="Ingrese la operación"></li>
-      </ul>
-      <p>Fecha de entrega del activo: <input type="date"></p>
-      <p>Activos relacionados:</p>
-      <table>
-        <tr>
-          <th>Elemento</th>
-          <th>Serial</th>
-          <th>Activo</th>
-          <th>Observaciones</th>
-        </tr>
-        <tr>
-          <td><input type="text" placeholder="Ingrese el elemento"></td>
-          <td><input type="text" placeholder="Ingrese el serial"></td>
-          <td><input type="text" placeholder="Ingrese el activo"></td>
-          <td><input type="text" placeholder="Ingrese las observaciones"></td>
-        </tr>
-      </table>
-      <p>Observación: <textarea placeholder="Ingrese la observación"></textarea></p>
-      <p>Con la firma de esta acta el gestor que solicita el elemento se hará responsable de este en su totalidad hasta que sea entregada a la operación la cual deberá de ser certificada por un acta de entrega similar, firmada por la operación y cargada a GLPI.</p>
-      <table>
-        <tr>
-          <th></th>
-          <th></th>
-        </tr>
-        <tr>
-          <td>
-            <p>Firma de quien entrega: Gestor de Soluciones Tecnológica</p>
-            <p>Nombre: <input type="text" placeholder="Ingrese el nombre"></p>
-            <p>Firma: <input type="file" accept="image/*"></p>
-          </td>
-          <td>
-            <p>Firma de quien recibe: Gestor de Soluciones Tecnológica</p>
-            <p>Nombre: <input type="text" placeholder="Ingrese el nombre"></p>
-            <p>Firma: <input type="file" accept="image/*"></p>
-          </td>
-        </tr>
-      </table>
+    <div id="app">
+      <select id="option" v-model.number="seleccion_operacion">
+        <option value="#" selected >Seleccione una opción</option>
+        <option value="1">Gestores</option>
+        <option value="2">Operaciones</option>
+      </select>
+      <!-- Componentes de formularios -->
+      <form-gestor v-if="seleccion_operacion===1"></form-gestor>
+      <form-operacion  v-if="seleccion_operacion===2"></form-operacion>
     </div>
 
-    <div id="operaciones" class="hidden">
-      <p>Señor <input type="text" placeholder="Ingrese el nombre">.</p>
-      <p>CC. <input type="text" placeholder="Ingrese el número de CC"></p>
-      <p>Correo: <input type="email" placeholder="Ingrese el correo"></p>
-      <p>Respetada Señor <input type="text" placeholder="Ingrese el nombre"></p>
-      <p>El presente formato se tiene con fin de entregar la responsabilidad del activo solicitado a la operación retirando el activo anterior según el caso: <input type="text" placeholder="Ingrese el caso"></p>
-      <p>Definiciones:</p>
-      <ul>
-        <li>Motivo de Solicitud <input type="text" placeholder="Ingrese el motivo"></li>
-        <li>Operación Solicitante <input type="text" placeholder="Ingrese la operación"></li>
-        <li>Estado de Entrega del Nuevo Activo <input type="text" placeholder="Ingrese el estado"></li>
-        <li>Estado de Recibido del Activo Recogido <input type="text" placeholder="Ingrese el estado"></li>
-      </ul>
-      <p>Fecha de entrega del activo: <input type="date"></p>
-      <p>Activos relacionados:</p>
-      <table>
-        <tr>
-          <th>Elemento Recogido</th>
-          <th>Serial</th>
-          <th>Activo</th>
-          <th>Observaciones (Estado)</th>
-        </tr>
-        <tr>
-          <td><input type="text" placeholder="Ingrese el elemento"></td>
-          <td><input type="text" placeholder="Ingrese el serial"></td>
-          <td><input type="text" placeholder="Ingrese el activo"></td>
-          <td><input type="text" placeholder="Ingrese las observaciones"></td>
-        </tr>
-        <tr>
-          <td><input type="text" placeholder="Ingrese el elemento"></td>
-          <td><input type="text" placeholder="Ingrese el serial"></td>
-          <td><input type="text" placeholder="Ingrese el activo"></td>
-          <td><input type="text" placeholder="Ingrese las observaciones"></td>
-        </tr>
-      </table>
-      <table>
-        <tr>
-          <th>Elemento Entregado</th>
-          <th>Serial</th>
-          <th>Activo</th>
-          <th>Observaciones (Estado)</th>
-        </tr>
-        <tr>
-          <td><input type="text" placeholder="Ingrese el elemento"></td>
-          <td><input type="text" placeholder="Ingrese el serial"></td>
-          <td><input type="text" placeholder="Ingrese el activo"></td>
-          <td><input type="text" placeholder="Ingrese las observaciones"></td>
-        </tr>
-        <tr>
-          <td><input type="text" placeholder="Ingrese el elemento"></td>
-          <td><input type="text" placeholder="Ingrese el serial"></td>
-          <td><input type="text" placeholder="Ingrese el activo"></td>
-          <td><input type="text" placeholder="Ingrese las observaciones"></td>
-        </tr>
-      </table>
-      <p>Observación: <textarea placeholder="Ingrese la observación"></textarea></p>
-      <hr>
-      <table>
-        <tr>
-          <th></th>
-          <th></th>
-        </tr>
-        <tr>
-          <td>
-            <p>Firma de quien entrega</p>
-            <p>Gestor de Soluciones Tecnológica</p>
-            <p>Nombre: <input type="text" placeholder="Ingrese el nombre"></p>
-            <p>Firma: <input type="file" accept="image/*"></p>
-          </td>
-          <td>
-            <p>Firma Operación</p>
-            <p>Cargo: <input type="text" placeholder="Ingrese el cargo"></p>
-            <p>Nombre: <input type="text" placeholder="Ingrese el nombre"></p>
-            <p>Firma: <input type="file" accept="image/*"></p>
-          </td>
-        </tr>
-      </table>
-    </div>
-  </div>
-
-  <script>
+  <!-- <script>
     const optionSelect = document.getElementById('option');
     const gestoresDiv = document.getElementById('gestores');
     const operacionesDiv = document.getElementById('operaciones');
@@ -170,7 +45,7 @@
         operacionesDiv.classList.add('hidden');
       }
     });
-  </script>
+  </script> -->
 </body>
 <script src="{{ mix('js/app.js') }}"></script>
 </html>
