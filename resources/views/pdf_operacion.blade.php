@@ -89,13 +89,13 @@
         <!-- Iterar todos los elementos entregados -->
         @foreach ($data_entregado as $entregado)
         
-        @endforeach
         <tr>
             <td>{{$entregado['elemento_entregado']}}</td>
             <td>{{$entregado['serial_entregado']}}</td>
             <td>{{$entregado['activo_entregado']}}</td>
             <td>{{$entregado['observaciones_entregado']}}</td>
         </tr>
+        @endforeach
     </tbody>
 </table>
 

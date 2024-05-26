@@ -65,19 +65,19 @@ class Pdf extends Controller
     // Generar PDF del gestor
     public function pdfGestor(Request $request){
         // Datos basicos
-        $nombre_persona = $request->input('nombre_persona');
+        $nombre_persona = strtoupper($request->input('nombre_persona'));
         $documento_persona = $request->input('documento_persona');
         $correo_persona = $request->input('correo_persona');
         // Nombre gestor
-        $nombre_gestor = $request->input('nombre_gestor');
+        $nombre_gestor = strtoupper($request->input('nombre_gestor'));
         // Motivos
         $motivo_solicitud = $request->input('motivo_solicitud');
         $op_solicitante = $request->input('op_solicitante');
         $fecha_entregaActivo = $request->input('fecha_entregaActivo');
         // Datos de elementos y observaciones
-        $ingreso_elemento = $request->input('ingreso_elemento');
-        $serial_elemento = $request->input('serial_elemento');
-        $activo_elemento = $request->input('activo_elemento');
+        $ingreso_elemento = strtoupper($request->input('ingreso_elemento'));
+        $serial_elemento = strtoupper($request->input('serial_elemento'));
+        $activo_elemento = strtoupper($request->input('activo_elemento'));
         $observaciones_elemento = $request->input('observaciones_elemento');
         $observaciones = $request->input('observaciones');
         // Nombre de quien entrega e elemento

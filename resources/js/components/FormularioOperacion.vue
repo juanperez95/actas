@@ -40,6 +40,7 @@
               <tr>
                 <th>Elemento</th>
                 <th>N° Serial</th>
+                <th>N° Activo</th>
                 <th>Eliminar</th>
               </tr>
             </thead>
@@ -47,6 +48,7 @@
               <tr v-for="data in form_data.data_recogido" :key="data.id">
                 <td scope="col">{{data.elemento_recogido}}</td>
                 <td scope="col">{{data.serial_recogido}}</td>
+                <td scope="col">{{data.activo_recogido}}</td>
                 <td scope="col">
                   <button class="btn btn-danger" @click="quitarRecogidos(data)">x</button>
                 </td>
@@ -82,6 +84,7 @@
             <tr>
               <th>Elemento</th>
               <th>N° Serial</th>
+              <th>N° Activo</th>
               <th>Eliminar</th>
             </tr>
           </thead>
@@ -89,6 +92,7 @@
             <tr v-for="data in form_data.data_entregado" :key="data.id">
               <td scope="col">{{data.elemento_entregado}}</td>
               <td scope="col">{{data.serial_entregado}}</td>
+              <td scope="col">{{data.activo_entregado}}</td>
               <td scope="col">
                 <button class="btn btn-danger" @click="quitarEntregados(data)">x</button>
               </td>
@@ -186,14 +190,18 @@ export default{
                 if(res.status == 200){
                   // Descargar el pdf desde laravel
                   var link = document.getElementById('link');
-                  link.download = (Date.now().toString()) + '_' + this.form_data.cargo_operacion + '.pdf';
+                  link.download = (new Date().getDate().toLocaleString() +'_'+ (new Date().getMonth()+1).toString() +'_'+ new Date().getTime().toString()) + '_' + this.form_data.cargo_operacion.toUpperCase() + '.pdf';
                   link.href = URL.createObjectURL(res.data);
                   link.click();
 
                   URL.revokeObjectURL(link.href);
 
                 }else{
-                    alert('!');
+                  Swal.fire({
+                    title:'¡Oops!',
+                    text:'Ha ocurrido un error al generar el pdf',
+                    icon:'error',
+                  });
                 }
             })
             .catch((err)=>{

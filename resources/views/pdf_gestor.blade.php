@@ -32,21 +32,21 @@
 </head>
 <body>
 
-<h1>ACTA DE RESPONSABILIDAD DE EQUIPOS DE TRABAJO</h1>
+<h4>ACTA DE RESPONSABILIDAD DE EQUIPOS DE TRABAJO</h4>
 
-<p>Señor (@): </p>
-<p>CC: </p>
-<p>Correo: </p>
+<p>Señor (@): <b>{{$nombre_persona}}</b></p>
+<p>CC: <b>{{$documento_persona}}</b></p>
+<p>Correo: <b>{{$correo_persona}}</b></p>
 
-<p>Respetada Señor (@),</p>
+<p>Respetada Señor (@)</p>
 
-<p>El presente formato se tiene con fin de entregar la responsabilidad del activo solicitado al gestor: <strong>___________________________________</strong></p>
+<p>El presente formato se tiene con fin de entregar la responsabilidad del activo solicitado al gestor: <b>{{$nombre_gestor}}</b></p>
 
 <h2>Definiciones:</h2>
 
-<p>Motivo de Solicitud: </p>
-<p>Operación Solicitante: </p>
-<p>Fecha de entrega del activo: </p>
+<p>Motivo de Solicitud: <b>{{$motivo_solicitud}}</b></p>
+<p>Operación Solicitante: <b>{{$op_solicitante}}</b></p>
+<p>Fecha de entrega del activo: <b>{{$fecha_entregaActivo}}</b></p>
 
 <h2>Activos relacionados:</h2>
 
@@ -61,12 +61,15 @@
     </thead>
     <tbody>
         <!-- Agregar filas según sea necesario -->
+        @foreach ($data_elemento as $data)
+        
         <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>{{$data['ingreso_elemento']}}</td>
+            <td>{{$data['serial_elemento']}}</td>
+            <td>{{$data['activo_elemento']}}</td>
+            <td>{{$data['observaciones_elemento']}}</td>
         </tr>
+        @endforeach
     </tbody>
 </table>
 
@@ -75,10 +78,11 @@
 <div class="signature">
     <p>Firma de quien entrega: __________________________</p>
     <p>Gestor de Soluciones Tecnológica</p>
-    <p>Nombre: </p>
+    <p>Nombre: <b>{{$nombre_persona}}</b></p>
+    <br>
     <p>Firma de quien recibe: __________________________</p>
     <p>Gestor de Soluciones Tecnológica</p>
-    <p>Nombre: __________________________</p>
+    <p>Nombre: <b>{{$nombre_gestor}}</b></p>
 </div>
 
 </body>
