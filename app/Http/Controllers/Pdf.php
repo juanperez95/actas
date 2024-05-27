@@ -39,6 +39,30 @@ class Pdf extends Controller
         $cargo_operacion = strtoupper($request->input('cargo_operacion'));
         $nombre_operacion = strtoupper($request->input('nombre_operacion'));
 
+        // Recoger las firmas 
+        $firma1 = $request->input('firma1');
+        $firma2 = $request->input('firma2');
+
+        // Decodificar las dos firmas
+        $firma1 = str_replace('data:image/png;base64,', '', $firma1);
+        $firma2 = str_replace('data:image/png;base64,', '', $firma2);
+
+        $firma1 = str_replace(' ', '+', $firma1);
+        $firma2 = str_replace(' ', '+', $firma2);
+
+        $firmaImg1 = base64_decode($firma1);
+        $firmaImg2 = base64_decode($firma2);
+
+        // Guardar imagenes en el servidor
+        $ruta1 = public_path('firmas/firma1.png');
+        $ruta2 = public_path('firmas/firma2.png');
+
+        file_put_contents($ruta1, $firmaImg1);
+        file_put_contents($ruta2, $firmaImg2);
+
+        $firma1 = base64_encode(file_get_contents($ruta1));
+        $firma2 = base64_encode(file_get_contents($ruta2));
+
 
         $pdf = App::make('dompdf.wrapper');
         // Compactar todas la variables para enviarlas al PDF
@@ -56,7 +80,9 @@ class Pdf extends Controller
         'observaciones',
         'nombre_gestor',
         'cargo_operacion',
-        'nombre_operacion'));
+        'nombre_operacion',
+        'firma1',
+        'firma2'));
         
         return $pdf->download('prueba.pdf');
     }

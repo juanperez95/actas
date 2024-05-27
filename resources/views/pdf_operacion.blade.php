@@ -101,6 +101,8 @@
 
 <p>Observación: {{$observaciones}}</p>
 
+<img src="data:image/png;base64,{{asset('firmas/firma1.png')}}" alt="">
+
 <div class="signature">
     <p>Firma de quien entrega: __________________________</p>
     <p>Gestor de soluciones tecnologicas</p>

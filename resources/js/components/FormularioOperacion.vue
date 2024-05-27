@@ -103,6 +103,11 @@
 
       <p>Observación: <textarea placeholder="Ingrese la observación" v-model="form_data.observaciones"></textarea></p>
       <hr>
+      <!-- Componente firmas -->
+      <div class="container firmas">
+        <Firma ref="signaturePad" firma_d="Firma de quien entrega" class="mb-3"></Firma>
+        <Firma ref="signaturePad2" firma_d="Firma Operacion" class="mb-3"></Firma>
+      </div>
       <table>
         <tr>
           <th></th>
@@ -137,9 +142,14 @@
 import axios from 'axios'
 
 import Swal from 'sweetalert2'
+import Firma from './Firma.vue'
+
 
 
 export default{
+    components:{
+      Firma
+    },
     name:'form-operacion',
     // Recoger los datos del formulario
     data(){
@@ -168,7 +178,9 @@ export default{
                 nombre_gestor:'',
                 cargo_operacion:'',
                 nombre_operacion:'',
-
+                // Firmas
+                firma1:null,
+                firma2:null,
             }
         }
     },
@@ -183,6 +195,11 @@ export default{
               imageUrl: 'https://play-lh.googleusercontent.com/9XKD5S7rwQ6FiPXSyp9SzLXfIue88ntf9sJ9K250IuHTL7pmn2-ZB0sngAX4A2Bw4w',
               imageHeight: 180,
             });
+            const firma1 = this.$refs.signaturePad.getSignatureDataUrl();
+            const firma2 = this.$refs.signaturePad2.getSignatureDataUrl();
+            // Recoger las firmas para laravel
+            this.form_data.firma1 = firma1;
+            this.form_data.firma2 = firma2;
             await axios.post('/PDF_OP',this.form_data,{
                 responseType:'blob'
             })
@@ -215,19 +232,23 @@ export default{
         },
         // Agregar los elementos recogidos de la operacion
         agregarRecogidos(){
-          // Validar que los cmapos no esten vacios
-          if(this.form_data.serial_recogido != '' && this.form_data.activo_recogido != ''){
-            this.form_data.data_recogido.unshift({
-                elemento_recogido:this.form_data.elemento_recogido.toUpperCase(),
-                serial_recogido:this.form_data.serial_recogido.toUpperCase(),
-                activo_recogido:this.form_data.activo_recogido.toUpperCase(),
-                observaciones_recogido:this.form_data.observaciones_recogido,
-            });
-            this.form_data.elemento_recogido = '';
-            this.form_data.serial_recogido = '';
-            this.form_data.activo_recogido = '';
-            this.form_data.observaciones_recogido = '';
-          }else{
+          try{
+            // Validar que los cmapos no esten vacios
+            if(this.form_data.serial_recogido != '' && this.form_data.activo_recogido != ''){
+              this.form_data.data_recogido.unshift({
+                  elemento_recogido:this.form_data.elemento_recogido.toUpperCase(),
+                  serial_recogido:this.form_data.serial_recogido.toUpperCase(),
+                  activo_recogido:this.form_data.activo_recogido.toUpperCase(),
+                  observaciones_recogido:this.form_data.observaciones_recogido,
+              });
+              this.form_data.elemento_recogido = '';
+              this.form_data.serial_recogido = '';
+              this.form_data.activo_recogido = '';
+              this.form_data.observaciones_recogido = '';
+            }else{
+              alert('Complete el activo o serial');
+            }
+          }catch(err){
             alert('Complete el activo o serial');
           }
         },
@@ -243,21 +264,26 @@ export default{
 
         // Agregar datos del entragado
         agregarEntregados(){
-        if(this.form_data.serial_entregado !== '' && this.form_data.activo_entregado !== ''){
-          this.form_data.data_entregado.unshift(
-            {               
-              elemento_entregado:this.form_data.elemento_entregado.toUpperCase(),
-              serial_entregado:this.form_data.serial_entregado.toUpperCase(),
-              activo_entregado:this.form_data.activo_entregado.toUpperCase(),
-              observaciones_entregado:this.form_data.observaciones_entregado,
-            }
-          );
-          this.form_data.elemento_entregado = '';
-          this.form_data.serial_entregado = '';
-          this.form_data.activo_entregado = '';
-          this.form_data.observaciones_entregado = '';
-        }else{
-          alert('Complete el activo o serial');
+        try{
+          if(this.form_data.serial_entregado !== '' && this.form_data.activo_entregado !== ''){
+            this.form_data.data_entregado.unshift(
+              {               
+                elemento_entregado:this.form_data.elemento_entregado.toUpperCase(),
+                serial_entregado:this.form_data.serial_entregado.toUpperCase(),
+                activo_entregado:this.form_data.activo_entregado.toUpperCase(),
+                observaciones_entregado:this.form_data.observaciones_entregado,
+              }
+            );
+            this.form_data.elemento_entregado = '';
+            this.form_data.serial_entregado = '';
+            this.form_data.activo_entregado = '';
+            this.form_data.observaciones_entregado = '';
+          }else{
+            alert('Complete el activo o serial');
+          }
+
+        }catch(err){
+          alert("Complete");
         }
         },
         // Quitar elementos entregados
