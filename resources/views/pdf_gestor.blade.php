@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <img src="data:image/png;base64,{{ $rutaLogo }}" alt="" width="30%">
     <title>ACTA DE RESPONSABILIDAD DE EQUIPOS DE TRABAJO</title>
     <style>
         body {
@@ -19,8 +20,8 @@
         }
         th, td {
             border: 1px solid #000;
-            padding: 8px;
-            text-align: left;
+            padding: 6px;
+            text-align: center;
         }
         .signature {
             margin-top: 40px;
@@ -76,11 +77,11 @@
 <p>Observación: Con la firma de esta acta el gestor que solicita el elemento se hará responsable de este en su totalidad hasta que sea entregada a la operación la cual deberá de ser certificada por un acta de entrega similar, firmada por la operación y cargada a GLPI.</p>
 
 <div class="signature">
-    <p>Firma de quien entrega: __________________________</p>
+    <p>Firma de quien entrega: <img src="data:image/png;base64,{{$ruta1}}" alt="" width="20%"></p>
     <p>Gestor de Soluciones Tecnológica</p>
     <p>Nombre: <b>{{$nombre_persona}}</b></p>
     <br>
-    <p>Firma de quien recibe: __________________________</p>
+    <p>Firma de quien recibe: <img src="data:image/png;base64,{{$ruta2}}" alt="" width="20%"></p>
     <p>Gestor de Soluciones Tecnológica</p>
     <p>Nombre: <b>{{$nombre_gestor}}</b></p>
 </div>

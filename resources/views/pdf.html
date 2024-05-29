@@ -6,10 +6,10 @@
     <title>ACTA DE RESPONSABILIDAD DE EQUIPOS DE TRABAJO</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: sans-serif;
             margin: 12px;
         }
-        h1, h2, h4 {
+        h1, h2 {
             text-align: center;
         }
         table {
@@ -24,61 +24,97 @@
         }
         .signature {
             margin-top: 40px;
+            display:grid;
+            grid-template-columns: repeat(2,1fr);
         }
         p{
-            font-size:14px
+            font-size:14px;
         }
     </style>
 </head>
 <body>
 
-<h1>ACTA DE RESPONSABILIDAD DE EQUIPOS DE TRABAJO</h1>
+<img src="data:image/png;base64,{{ $rutaLogo }}" alt="" width="40%">
 
-<p>Señor (@): __________________________</p>
-<p>CC: _______________________________</p>
-<p>Correo: ____________________________</p>
+<h3 align="center">ACTA DE RESPONSABILIDAD DE EQUIPOS DE TRABAJO</h3>
 
-<p>Respetada Señor (@),</p>
+<p>Señor(@) <b>{{$nombre_encargado}}</b></p>
+<p>CC: <b>{{$documento_encargado}}</b></p>
+<p>Correo: <b>{{$correo_encargado}}</b></p>
 
-<p>El presente formato se tiene con fin de entregar la responsabilidad del activo solicitado al gestor: <strong>___________________________________</strong></p>
+<p>Respetada Señor(@) <b>{{$nombre_encargado}}</b></p>
+
+<p>El presente formato se tiene con fin de entregar la responsabilidad del activo solicitado a la operación retirando el activo anterior según el caso: <strong>{{$n_caso}}</strong></p>
 
 <h2>Definiciones:</h2>
 
-<p>Motivo de Solicitud: _________________________</p>
-<p>Operación Solicitante: _________________________</p>
-<p>Fecha de entrega del activo: _________________________</p>
+<p>Motivo de Solicitud: <b>{{$motivo_solicitud}}</b></p>
+<p>Operación Solicitante:  <b>{{$op_solicitante}}</b></p>
+<p>Estado de Entrega del Nuevo Activo: <b>{{$est_entrega_nuevoActivo}}</b></p>
+<p>Estado de Recibido del Activo Recogido: <b>{{$est_recibido_activo}}</b></p>
+
+<p>Fecha de entrega del activo: <b>{{$fecha_entrega}}</b></p>
 
 <h2>Activos relacionados:</h2>
 
 <table>
     <thead>
         <tr>
-            <th>Elemento</th>
+            <th>Elemento Recogido</th>
             <th>Serial</th>
             <th>Activo</th>
-            <th>Observaciones</th>
+            <th>Observaciones (Estado)</th>
         </tr>
     </thead>
     <tbody>
-        <!-- Agregar filas según sea necesario -->
+        <!-- Iterar todos los elementos recogidos -->     
+        @foreach ($data_recogido as $elemento)      
         <tr>
-            <td>________________________</td>
-            <td>________________________</td>
-            <td>________________________</td>
-            <td>________________________</td>
+            <td>{{$elemento['elemento_recogido']}}</td>
+            <td>{{$elemento['serial_recogido']}}</td>
+            <td>{{$elemento['activo_recogido']}}</td>
+            <td>{{$elemento['observaciones_recogido']}}</td>
         </tr>
+        @endforeach
+
     </tbody>
 </table>
 
-<p>Observación: Con la firma de esta acta el gestor que solicita el elemento se hará responsable de este en su totalidad hasta que sea entregada a la operación la cual deberá de ser certificada por un acta de entrega similar, firmada por la operación y cargada a GLPI.</p>
+<table>
+    <thead>
+        <tr>
+            <th>Elemento Entregado</th>
+            <th>Serial</th>
+            <th>Activo</th>
+            <th>Observaciones (Estado)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Iterar todos los elementos entregados -->
+        @foreach ($data_entregado as $entregado)
+        
+        <tr>
+            <td>{{$entregado['elemento_entregado']}}</td>
+            <td>{{$entregado['serial_entregado']}}</td>
+            <td>{{$entregado['activo_entregado']}}</td>
+            <td>{{$entregado['observaciones_entregado']}}</td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
+
+<p>Observación: {{$observaciones}}</p>
+
 
 <div class="signature">
-    <p>Firma de quien entrega: __________________________</p>
-    <p>Firma de quien recibe: __________________________</p>
-    <p>Gestor de Soluciones Tecnológica: __________________________</p>
-    <p>Nombre: __________________________</p>
-    <p>Nombre: __________________________</p>
+    <p>Firma de quien entrega: <img src="data:image/png;base64,{{$ruta1}}" alt="" width="30%"></p>
+    <p>Gestor de soluciones tecnologicas</p>
+    <p>Nombre Gestor: <b>{{$nombre_gestor}}</b></p>
+    <p>Firma Operación:<img src="data:image/png;base64,{{$ruta2}}" alt="" width="30%"></p>
+    <p>Cargo: <b>{{$cargo_operacion}}</b></p>
+    <p>Nombre Operacion: <b>{{$nombre_operacion}}</b></p>
 </div>
+
 
 </body>
 </html>

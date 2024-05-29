@@ -19,7 +19,6 @@
     <label for="option">Seleccione una opción:</label>
     <div id="app">
       <select id="option" v-model.number="seleccion_operacion">
-        <option value="#" selected >Seleccione una opción</option>
         <option value="1">Gestores</option>
         <option value="2">Operaciones</option>
       </select>

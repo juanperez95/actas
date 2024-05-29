@@ -1,8 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\File;
 
 use Dompdf\Dompdf;
+use Dompdf\Options;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 
@@ -15,6 +18,7 @@ class Pdf extends Controller
 
     // Generar PDF de la operacion
     public function pdfOperacion(Request $request){
+        ini_set('max_execution_time', 120); 
         // Datos basicos
         $nombre_encargado = strtoupper($request->input('nombre_encargado'));
         $documento_encargado = $request->input('documento_encargado');
@@ -44,47 +48,47 @@ class Pdf extends Controller
         $firma2 = $request->input('firma2');
 
         // Decodificar las dos firmas
-        $firma1 = str_replace('data:image/png;base64,', '', $firma1);
-        $firma2 = str_replace('data:image/png;base64,', '', $firma2);
+        $data = $this->encodeImagen($firma1, $firma2);
 
-        $firma1 = str_replace(' ', '+', $firma1);
-        $firma2 = str_replace(' ', '+', $firma2);
+        $ruta1 = $data['ruta1'];
+        $ruta2 = $data['ruta2'];
+        $rutaLogo = $data['rutaLogo'];
 
-        $firmaImg1 = base64_decode($firma1);
-        $firmaImg2 = base64_decode($firma2);
-
-        // Guardar imagenes en el servidor
-        $ruta1 = public_path('firmas/firma1.png');
-        $ruta2 = public_path('firmas/firma2.png');
-
-        file_put_contents($ruta1, $firmaImg1);
-        file_put_contents($ruta2, $firmaImg2);
-
-        $firma1 = base64_encode(file_get_contents($ruta1));
-        $firma2 = base64_encode(file_get_contents($ruta2));
+        $opciones = new Options();
+        $opciones->set('isRemoteEnabled', true);
 
 
-        $pdf = App::make('dompdf.wrapper');
-        // Compactar todas la variables para enviarlas al PDF
-        $pdf->loadView('pdf_operacion',compact('nombre_encargado',
-        'documento_encargado',
-        'correo_encargado',
-        'n_caso',
-        'motivo_solicitud',
-        'op_solicitante',
-        'est_entrega_nuevoActivo',
-        'est_recibido_activo',
-        'fecha_entrega',
-        'data_recogido',
-        'data_entregado',
-        'observaciones',
-        'nombre_gestor',
-        'cargo_operacion',
-        'nombre_operacion',
-        'firma1',
-        'firma2'));
+        try{
+            $pdf = new Dompdf($opciones);
+            // Compactar todas la variables para enviarlas al PDF
+            $vista = view('pdf_operacion',compact('nombre_encargado',
+            'documento_encargado',
+            'correo_encargado',
+            'n_caso',
+            'motivo_solicitud',
+            'op_solicitante',
+            'est_entrega_nuevoActivo',
+            'est_recibido_activo',
+            'fecha_entrega',
+            'data_recogido',
+            'data_entregado',
+            'observaciones',
+            'nombre_gestor',
+            'cargo_operacion',
+            'nombre_operacion',
+            'ruta1',
+            'ruta2',
+            'rutaLogo'));
+    
+            $pdf->loadHtml($vista);
+            $pdf->render();
+
+        }catch(Exception $e){
+            error_log($e->getMessage());
+        }
+
         
-        return $pdf->download('prueba.pdf');
+        return $pdf->stream('prueba.pdf');
     }
 
 
@@ -111,8 +115,21 @@ class Pdf extends Controller
         // Datos de elemento
         $data_elemento = $request->input('data_elemento');
 
-        $pdf = App::make('dompdf.wrapper');
-        $pdf->loadView('pdf_gestor',compact(
+        // Firmas desde vue
+        $firma1 = $request->input('firma1');
+        $firma2 = $request->input('firma2');
+
+        // Codificar las imagenes
+        $data =$this->encodeImagen($firma1,$firma2);
+        $rutaLogo = $data['rutaLogo'];
+        $ruta1 = $data['ruta1'];
+        $ruta2 = $data['ruta2'];
+
+        $opciones = new Options();
+        $opciones->set('isRemoteEnabled', true);
+
+        $pdf = new Dompdf($opciones);
+        $vista = view('pdf_gestor',compact(
             'nombre_persona',
             'documento_persona',
             'correo_persona',
@@ -127,8 +144,46 @@ class Pdf extends Controller
             'observaciones',
             'nombre_deEntrega',
             'data_elemento',
+            'ruta1',
+            'ruta2',
+            'rutaLogo'
         ));
-        return $pdf->download('gestor.pdf');
+
+        $pdf->loadHtml($vista);
+        $pdf->render();
+
+        return $pdf->stream('gestor.pdf');
+    }
+
+    // Funcion para codificar imagenes de las firmas y logo de la compañia
+    public function encodeImagen($firma1, $firma2){
+        $firma1 = str_replace('data:image/png;base64,', '', $firma1);
+        $firma2 = str_replace('data:image/png;base64,', '', $firma2);
+
+        $firma1 = str_replace(' ', '+', $firma1);
+        $firma2 = str_replace(' ', '+', $firma2);
+
+        $firmaImg1 = base64_decode($firma1);
+        $firmaImg2 = base64_decode($firma2);
+
+        // Guardar imagenes en el servidor
+        $ruta1 = public_path('firmas\firma1.png');
+        $ruta2 = public_path('firmas\firma2.png');
+        $rutaLogo = public_path('images\americas.png');
+
+        file_put_contents($ruta1, $firmaImg1);
+        file_put_contents($ruta2, $firmaImg2);
+
+        $ruta1 = File::get($ruta1);
+        $ruta1 = base64_encode($ruta1);
+
+        $ruta2 = File::get($ruta2);
+        $ruta2 = base64_encode($ruta2);
+
+        $rutaLogo = File::get($rutaLogo);
+        $rutaLogo = base64_encode($rutaLogo);
+
+        return compact('ruta1', 'ruta2', 'rutaLogo');
     }
 
 

@@ -6,11 +6,12 @@
     <title>ACTA DE RESPONSABILIDAD DE EQUIPOS DE TRABAJO</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: sans-serif;
             margin: 12px;
         }
         h1, h2 {
             text-align: center;
+            font-size: 15px;
         }
         table {
             width: 100%;
@@ -19,18 +20,22 @@
         }
         th, td {
             border: 1px solid #000;
-            padding: 8px;
-            text-align: left;
+            padding: 6px;
+            text-align: center;
         }
         .signature {
             margin-top: 40px;
+            display:grid;
+            grid-template-columns: repeat(2,1fr);
         }
         p{
-            font-size:14px;
+            font-size:13px;
         }
     </style>
 </head>
 <body>
+
+<img src="data:image/png;base64,{{ $rutaLogo }}" alt="" width="30%">
 
 <h3 align="center">ACTA DE RESPONSABILIDAD DE EQUIPOS DE TRABAJO</h3>
 
@@ -101,16 +106,21 @@
 
 <p>Observación: {{$observaciones}}</p>
 
-<img src="data:image/png;base64,{{asset('firmas/firma1.png')}}" alt="">
 
 <div class="signature">
-    <p>Firma de quien entrega: __________________________</p>
-    <p>Gestor de soluciones tecnologicas</p>
-    <p>Nombre Gestor: <b>{{$nombre_gestor}}</b></p>
-    <p>Firma Operación: __________________________</p>
-    <p>Cargo: <b>{{$cargo_operacion}}</b></p>
-    <p>Nombre Operacion: <b>{{$nombre_operacion}}</b></p>
+    {{-- Decodificar las imagenes de las firmas --}}
+    <div class="container">
+        <p>Firma de quien entrega: <img src="data:image/png;base64,{{$ruta1}}" alt="" width="20%"></p>
+        <p>Gestor de soluciones tecnologicas</p>
+        <p>Nombre Gestor: <b>{{$nombre_gestor}}</b></p>
+    </div>
+    <div class="container">
+        <p>Firma Operación:<img src="data:image/png;base64,{{$ruta2}}" alt="" width="20%"></p>
+        <p>Cargo: <b>{{$cargo_operacion}}</b></p>
+        <p>Nombre Operacion: <b>{{$op_solicitante}}</b></p>
+    </div>
 </div>
+
 
 </body>
 </html>
