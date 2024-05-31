@@ -251,60 +251,53 @@ export default {
   },
   methods: {
     generarPDFGestor: async function(){
-      // Generar la alerta
-      Swal.fire({
-          title:'¡Se esta generado el PDF!',
-          timer:2000,
-          imageUrl: 'https://play-lh.googleusercontent.com/9XKD5S7rwQ6FiPXSyp9SzLXfIue88ntf9sJ9K250IuHTL7pmn2-ZB0sngAX4A2Bw4w',
-          imageHeight: 180,
-        });
-
+      if(this.validarInformacion()){
+        this.notificacion(4);
+      }else{
+        // Generar la alerta
+        this.notificacion(1);
+  
         // Asignar firmas a laravel
         this.form_data.firma1 = this.$refs.signaturePad.getSignatureDataUrl();
         this.form_data.firma2 = this.$refs.signaturePad2.getSignatureDataUrl();
-
-      await axios.post('/PDF_G',this.form_data,{
-        responseType:'blob'
-      })
-      .then((res)=>{
-        if(res.status == 200){
-          var enlace = document.getElementById('enlace');
-          enlace.download = (new Date().getDate().toLocaleString() +'_'+ (new Date().getMonth()+1).toString() +'_'+ new Date().getTime().toString()) + '_' + this.form_data.nombre_gestor.toUpperCase() + '.pdf';
-          enlace.href = URL.createObjectURL(res.data);
-          enlace.click();
-          URL.revokeObjectURL(enlace.href);
-        }else{
-          Swal.fire({
-            title:'¡Oops!',
-            text:'Ha ocurrido un error al generar el pdf',
-            icon:'error',
-          });
-        }
-      }).catch((err)=>{
-        Swal.fire({
-          title:'¡Oops!',
-          text:'Ha ocurrido un error en la peticion, verifique los campos',
-          icon:'error',
-        });
-      })
+  
+        await axios.post('/PDF_G',this.form_data,{
+          responseType:'blob'
+        })
+        .then((res)=>{
+          if(res.status == 200){
+            var enlace = document.getElementById('enlace');
+            enlace.download = (new Date().getDate().toLocaleString() +'_'+ (new Date().getMonth()+1).toString() +'_'+ new Date().getTime().toString()) + '_' + this.form_data.nombre_gestor.toUpperCase() + '.pdf';
+            enlace.href = URL.createObjectURL(res.data);
+            enlace.click();
+            URL.revokeObjectURL(enlace.href);
+          }else{
+            this.notificacion(2);
+          }
+        }).catch((err)=>{
+          this.notificacion(2);
+        })
+      }
     },
     agregarElementos(){
-      if(this.form_data.serial_elemento != '' && this.form_data.activo_elemento != ''){
-        this.form_data.data_elemento.unshift(
-          {
-            // Datos de elementos y observaciones
-            ingreso_elemento:this.form_data.ingreso_elemento.toUpperCase(),
-            serial_elemento:this.form_data.serial_elemento.toUpperCase(),
-            activo_elemento:this.form_data.activo_elemento.toUpperCase(),
-            observaciones_elemento:this.form_data.observaciones_elemento,
-          }  
-        );
-        this.form_data.ingreso_elemento = '';
-        this.form_data.serial_elemento = '';
-        this.form_data.activo_elemento = '';
-        this.form_data.observaciones_elemento = '';
-      }else{
-        alert('Llene los campos ACTIVO, SERIAL');
+      try{
+        if(this.form_data.serial_elemento != '' && this.form_data.activo_elemento != ''){
+          this.form_data.data_elemento.unshift(
+            {
+              // Datos de elementos y observaciones
+              ingreso_elemento:this.form_data.ingreso_elemento.toUpperCase(),
+              serial_elemento:this.form_data.serial_elemento.toUpperCase(),
+              activo_elemento:this.form_data.activo_elemento.toUpperCase(),
+              observaciones_elemento:this.form_data.observaciones_elemento,
+            }  
+          );
+          this.form_data.ingreso_elemento = '';
+          this.form_data.serial_elemento = '';
+          this.form_data.activo_elemento = '';
+          this.form_data.observaciones_elemento = '';
+        }
+      }catch(err){
+        this.notificacion(3);
       }
     },
     quitarElementos(elemento){
@@ -335,7 +328,59 @@ export default {
         firma1:null,
         firma2:null,
       }
-    }
+    },
+    validarInformacion(){
+      if(this.form_data.correo_persona == '' || this.form_data.fecha_entregaActivo == ''
+        || this.form_data.nombre_persona == '' || this.form_data.op_solicitante == '' || this.form_data.documento_persona == ''
+        || this.form_data.nombre_gestor == '' || this.form_data.data_elemento == []
+      ){
+        return true
+      }
+      return false
+    },
+    // alertas de sweetalert2 
+    notificacion(contexto){
+          let datos = {};
+          switch (contexto) {
+            case 1: // Generar alerta del pdf
+              datos = {
+                title:'¡Generando PDF!',
+                timer:2000,
+                imageUrl: 'https://play-lh.googleusercontent.com/9XKD5S7rwQ6FiPXSyp9SzLXfIue88ntf9sJ9K250IuHTL7pmn2-ZB0sngAX4A2Bw4w',
+                imageHeight: 180,
+              };
+              break;
+            case 2: // Generar alerta de error
+              datos = {
+                title:'¡Oops!',
+                text:'Ha ocurrido un error al generar el pdf',
+                icon:'error',
+              };
+              break;
+            case 3: // Generar alerta de error al no completar los seriales
+              datos = {
+                text:'Llene los campos de serial y activo',
+                icon:'error',
+                position:"top-end",
+                showConfirmButton: false,
+                timer:1000,
+              };
+            break;
+            case 4: // Generar alerta de error al no llenar los campos del formulario
+              datos = {
+                title:'¡Oops!',
+                text:'¡Valide los campos del formulario!',
+                icon:'warning',
+              };
+            break;
+            
+          }
+          Swal.fire(datos);
+    },
+
+  },
+  mounted(){
+    this.form_data.observaciones_elemento = 'N/A'
   },
 };
 </script>

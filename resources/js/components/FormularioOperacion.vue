@@ -2,7 +2,7 @@
     <div>
         <div id="operaciones">
       <p>Señor <input type="text" placeholder="Ingrese el nombre" v-model="form_data.nombre_encargado"></p>
-      <p>CC. <input type="text" placeholder="Ingrese el número de CC" v-model.number="form_data.documento_encargado"></p>
+      <p>CC. <input type="number" class="form-control" placeholder="Ingrese el número de CC" v-model.number="form_data.documento_encargado"></p>
       <p>Correo: <input type="email" placeholder="Ingrese el correo" v-model="form_data.correo_encargado"></p>
       <p>Respetada Señor/a <b>{{form_data.nombre_encargado.toUpperCase()}}</b></p>
       <p>El presente formato se tiene con fin de entregar la responsabilidad del activo solicitado a la operación retirando el activo anterior según el caso: <input type="text" placeholder="Ingrese el caso" v-model="form_data.n_caso"></p>
@@ -246,8 +246,8 @@
         <button class="btn btn-danger b-anchof" @click="limpiarTodo">Limpiar formulario</button>
       </div>
     </div>
-  </div>
   <a href="#" download="" id="link"></a>
+  </div>
 </template>
 
 
@@ -256,7 +256,6 @@ import axios from 'axios'
 
 import Swal from 'sweetalert2'
 import Firma from './Firma.vue'
-
 
 
 export default{
@@ -298,16 +297,16 @@ export default{
         }
     },
     mounted() {
+      this.form_data.observaciones_recogido = 'N/A'
+      this.form_data.observaciones_entregado = 'N/A'
     },
     methods: {
         generarPDF: async function(){
+          if(this.validarInformacion()){
+            this.notificacion(4);
+          }else{
             // Generar la alerta
-            Swal.fire({
-              title:'¡Generando PDF!',
-              timer:2000,
-              imageUrl: 'https://play-lh.googleusercontent.com/9XKD5S7rwQ6FiPXSyp9SzLXfIue88ntf9sJ9K250IuHTL7pmn2-ZB0sngAX4A2Bw4w',
-              imageHeight: 180,
-            });
+            this.notificacion(1);
             const firma1 = this.$refs.signaturePad.getSignatureDataUrl();
             const firma2 = this.$refs.signaturePad2.getSignatureDataUrl();
             // Recoger las firmas para laravel
@@ -328,20 +327,13 @@ export default{
                   URL.revokeObjectURL(link.href);
 
                 }else{
-                  Swal.fire({
-                    title:'¡Oops!',
-                    text:'Ha ocurrido un error al generar el pdf',
-                    icon:'error',
-                  });
+                  this.notificacion(2);
                 }
             })
             .catch((err)=>{
-              Swal.fire({
-                    title:'¡Oops!',
-                    text:'Ha ocurrido un error en la peticion, verifique los campos',
-                    icon:'error',
-                  });
+              this.notificacion(2);
             });
+          }
             
         },
         // Agregar los elementos recogidos de la operacion
@@ -353,17 +345,17 @@ export default{
                   elemento_recogido:this.form_data.elemento_recogido.toUpperCase(),
                   serial_recogido:this.form_data.serial_recogido.toUpperCase(),
                   activo_recogido:this.form_data.activo_recogido.toUpperCase(),
-                  observaciones_recogido:this.form_data.observaciones_recogido,
+                  observaciones_recogido:this.form_data.observaciones_recogido
               });
               this.form_data.elemento_recogido = '';
               this.form_data.serial_recogido = '';
               this.form_data.activo_recogido = '';
-              this.form_data.observaciones_recogido = '';
+              this.form_data.observaciones_recogido = 'N/A';
             }else{
-              alert('Complete el activo o serial');
+              this.notificacion(3);
             }
           }catch(err){
-            alert('Complete el activo o serial');
+            this.notificacion(3);
           }
         },
         // Quitar elementos recogidos por equivocacion del usuario
@@ -391,13 +383,13 @@ export default{
             this.form_data.elemento_entregado = '';
             this.form_data.serial_entregado = '';
             this.form_data.activo_entregado = '';
-            this.form_data.observaciones_entregado = '';
+            this.form_data.observaciones_entregado = 'N/A';
           }else{
-            alert('Complete el activo o serial');
+            this.notificacion(3);
           }
 
         }catch(err){
-          alert("Complete");
+          this.notificacion(3);
         }
         },
         // Quitar elementos entregados
@@ -439,6 +431,56 @@ export default{
                 firma2:null,
             }
           },
+        // Retornar un valor booleano para indicar que se puede generar el PDF.
+        validarInformacion(){
+          if(this.form_data.correo_encargado=='' || this.form_data.documento_encargado == '' || this.form_data.n_caso == '' || 
+            this.form_data.est_entrega_nuevoActivo == '' || this.form_data.est_recibido_activo == '' || this.form_data.fecha_entrega == ''
+            || this.form_data.op_solicitante == '' || this.form_data.data_entregado == [] || this.form_data.data_recogido == []
+          ){
+            return true;
+          }
+          return false;
+        },
+        // alertas de sweetalert2 
+        notificacion(contexto){
+          let datos = {};
+          switch (contexto) {
+            case 1: // Generar alerta del pdf
+              datos = {
+                title:'¡Generando PDF!',
+                timer:2000,
+                imageUrl: 'https://play-lh.googleusercontent.com/9XKD5S7rwQ6FiPXSyp9SzLXfIue88ntf9sJ9K250IuHTL7pmn2-ZB0sngAX4A2Bw4w',
+                imageHeight: 180,
+              };
+              break;
+            case 2: // Generar alerta de error
+              datos = {
+                title:'¡Oops!',
+                text:'Ha ocurrido un error al generar el pdf',
+                icon:'error',
+              };
+              break;
+            case 3: // Generar alerta de error al no completar los seriales
+              datos = {
+                text:'Llene los campos de serial y activo',
+                icon:'error',
+                position:"top-end",
+                showConfirmButton: false,
+                timer:1000,
+              };
+            break;
+            case 4: // Generar alerta de error al no llenar los campos del formulario
+              datos = {
+                title:'¡Oops!',
+                text:'¡Valide los campos del formulario!',
+                icon:'warning',
+              };
+            break;
+            
+          }
+          Swal.fire(datos);
+
+        }
     },
 }
 </script>
