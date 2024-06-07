@@ -1,3 +1,4 @@
+@extends('layouts.app')
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -12,11 +13,13 @@
         }
         h1, h2, h4 {
             text-align: center;
+            font-size:14px;
         }
         table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
+            font-size:12px;
         }
         th, td {
             border: 1px solid #000;
@@ -25,9 +28,11 @@
         }
         .signature {
             margin-top: 40px;
+            display:flex;
+            flex-direction:row;
         }
         p{
-            font-size:14px
+            font-size:11px
         }
     </style>
 </head>
@@ -51,7 +56,7 @@
 
 <h2>Activos relacionados:</h2>
 
-<table>
+<table class="table">
     <thead>
         <tr>
             <th>Elemento</th>
@@ -77,13 +82,29 @@
 <p>Observación: Con la firma de esta acta el gestor que solicita el elemento se hará responsable de este en su totalidad hasta que sea entregada a la operación la cual deberá de ser certificada por un acta de entrega similar, firmada por la operación y cargada a GLPI.</p>
 
 <div class="signature">
-    <p>Firma de quien entrega: <img src="data:image/png;base64,{{$ruta1}}" alt="" width="20%"></p>
-    <p>Gestor de Soluciones Tecnológica</p>
-    <p>Nombre: <b>{{$nombre_persona}}</b></p>
+    <table class="table">
+        <tr>
+            <td>
+                
+                <div class="container">
+            
+                    <p>Firma de quien entrega: <img src="data:image/png;base64,{{$ruta1}}" alt="" width="30%"></p>
+                    <p>Gestor de Soluciones Tecnológica</p>
+                    <p>Nombre: <b>{{$nombre_persona}}</b></p>
+                </div>
+            </td>
+            <td>
+                <div class="container">
+            
+                    <p>Firma de quien recibe: <img src="data:image/png;base64,{{$ruta2}}" alt="" width="30%"></p>
+                    <p>Gestor de Soluciones Tecnológica</p>
+                    <p>Nombre: <b>{{$nombre_gestor}}</b></p>
+                </div>
+
+            </td>
+        </tr>
+    </table>
     <br>
-    <p>Firma de quien recibe: <img src="data:image/png;base64,{{$ruta2}}" alt="" width="20%"></p>
-    <p>Gestor de Soluciones Tecnológica</p>
-    <p>Nombre: <b>{{$nombre_gestor}}</b></p>
 </div>
 
 </body>

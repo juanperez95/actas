@@ -247,6 +247,11 @@
       </div>
     </div>
   <a href="#" download="" id="link"></a>
+  <br>
+  <div class="container-fluid" align="center">
+
+    <p style="font-size:12px">Derechos reservados MaxJP 2024</p>
+  </div>
   </div>
 </template>
 
@@ -320,7 +325,7 @@ export default{
                 if(res.status == 200){
                   // Descargar el pdf desde laravel
                   var link = document.getElementById('link');
-                  link.download = (new Date().getDate().toLocaleString() +'_'+ (new Date().getMonth()+1).toString() +'_'+ new Date().getTime().toString()) + 'OPERACION_'+ this.form_data.op_solicitante.toUpperCase() +'.pdf';
+                  link.download = (new Date().getDate().toLocaleString() +'_'+ (new Date().getMonth()+1).toString() +'_'+ (new Date().getFullYear()).toString() + '_' + new Date().getTime().toString()) + 'OPERACION_'+ this.form_data.op_solicitante.toUpperCase() +'.pdf';
                   link.href = URL.createObjectURL(res.data);
                   link.click();
 

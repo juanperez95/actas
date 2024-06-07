@@ -212,6 +212,11 @@
     </div>
 
     <a href="" download="" id="enlace"></a>
+    <br>
+    <div class="container-fluid" align="center">
+
+      <p style="font-size:12px">Derechos reservados MaxJP 2024</p>
+    </div>
   </div>
 </template>
 
@@ -267,7 +272,7 @@ export default {
         .then((res)=>{
           if(res.status == 200){
             var enlace = document.getElementById('enlace');
-            enlace.download = (new Date().getDate().toLocaleString() +'_'+ (new Date().getMonth()+1).toString() +'_'+ new Date().getTime().toString()) + '_' + this.form_data.nombre_gestor.toUpperCase() + '.pdf';
+            enlace.download = (new Date().getDate().toLocaleString() +'_'+ (new Date().getMonth()+1).toString() +'_'+ (new Date().getFullYear()).toString() + '_' + new Date().getTime().toString()) + '_GESTOR_' + this.form_data.nombre_gestor.toUpperCase() + '.pdf';
             enlace.href = URL.createObjectURL(res.data);
             enlace.click();
             URL.revokeObjectURL(enlace.href);
@@ -294,7 +299,7 @@ export default {
           this.form_data.ingreso_elemento = '';
           this.form_data.serial_elemento = '';
           this.form_data.activo_elemento = '';
-          this.form_data.observaciones_elemento = '';
+          this.form_data.observaciones_elemento = 'N/A';
         }
       }catch(err){
         this.notificacion(3);

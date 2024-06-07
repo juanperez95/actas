@@ -1,3 +1,4 @@
+@extends('layouts.app')
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -11,12 +12,13 @@
         }
         h1, h2 {
             text-align: center;
-            font-size: 15px;
+            font-size: 14px;
         }
         table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
+            font-size:12px;
         }
         th, td {
             border: 1px solid #000;
@@ -25,11 +27,11 @@
         }
         .signature {
             margin-top: 40px;
-            display:grid;
-            grid-template-columns: repeat(2,1fr);
+            display:flex;
+            flex-direction:row;
         }
         p{
-            font-size:13px;
+            font-size:12px;
         }
     </style>
 </head>
@@ -58,7 +60,7 @@
 
 <h2>Activos relacionados:</h2>
 
-<table>
+<table class="table">
     <thead>
         <tr>
             <th>Elemento Recogido</th>
@@ -109,16 +111,25 @@
 
 <div class="signature">
     {{-- Decodificar las imagenes de las firmas --}}
-    <div class="container">
-        <p>Firma de quien entrega: <img src="data:image/png;base64,{{$ruta1}}" alt="" width="20%"></p>
-        <p>Gestor de soluciones tecnologicas</p>
-        <p>Nombre Gestor: <b>{{$nombre_gestor}}</b></p>
-    </div>
-    <div class="container">
-        <p>Firma Operación:<img src="data:image/png;base64,{{$ruta2}}" alt="" width="20%"></p>
-        <p>Cargo: <b>{{$cargo_operacion}}</b></p>
-        <p>Nombre Operacion: <b>{{$op_solicitante}}</b></p>
-    </div>
+    <table class="table">
+        <tr>
+            <td>
+
+                <div class="container">
+                    <p>Firma de quien entrega: <img src="data:image/png;base64,{{$ruta1}}" alt="" width="30%"></p>
+                    <p>Gestor de soluciones tecnologicas</p>
+                    <p>Nombre Gestor: <b>{{$nombre_gestor}}</b></p>
+                </div>
+            </td>
+            <td>
+                <div class="container">
+                    <p>Firma Operación:<img src="data:image/png;base64,{{$ruta2}}" alt="" width="30%"></p>
+                    <p>Cargo: <b>{{$cargo_operacion}}</b></p>
+                    <p>Nombre Operacion: <b>{{$op_solicitante}}</b></p>
+                </div>
+            </td>
+        </tr>
+    </table>
 </div>
 
 
