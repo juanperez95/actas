@@ -131,7 +131,7 @@
             </select>
           </td>
           <td><input type="text" placeholder="Ingrese el serial" v-model="form_data.serial_recogido"></td>
-          <td><input type="text" placeholder="Ingrese el activo" v-model="form_data.activo_recogido"></td>
+          <td><input type="text" placeholder="Ingrese el activo" v-model="form_data.activo_recogido" :disabled="form_data.elemento_recogido === 'Diadema'" :enabled="form_data.elemento_recogido !== 'Diadema' ? form_data.activo_recogido : form_data.activo_recogido = 'No tiene'"></td>
           <td><input type="text" placeholder="Ingrese las observaciones" v-model="form_data.observaciones_recogido" @keyup.enter="agregarRecogidos"></td>
           <td>
             <button class="btn btn-danger" @click="agregarRecogidos">Agregar</button>
@@ -180,7 +180,7 @@
             </select>
           </td>
           <td><input type="text" placeholder="Ingrese el serial" v-model="form_data.serial_entregado"></td>
-          <td><input type="text" placeholder="Ingrese el activo" v-model="form_data.activo_entregado"></td>
+          <td><input type="text" placeholder="Ingrese el activo" v-model="form_data.activo_entregado" :disabled="form_data.elemento_entregado === 'Diadema'" :enabled="form_data.elemento_entregado !== 'Diadema' ? form_data.activo_entregado : form_data.activo_entregado = 'No tiene'"></td>
           <td><input type="text" placeholder="Ingrese las observaciones" v-model="form_data.observaciones_entregado" @keyup.enter="agregarEntregados"></td>
           <td>
             <button @click="agregarEntregados" class="btn btn-danger">Agregar</button>
@@ -298,7 +298,9 @@ export default{
                 // Firmas
                 firma1:null,
                 firma2:null,
-            }
+            },
+            // Si escogen diadema cambia el estado de la entrada del activo
+            opcion_diadema:""
         }
     },
     mounted() {
@@ -435,6 +437,8 @@ export default{
                 firma1:null,
                 firma2:null,
             }
+            this.form_data.observaciones_recogido = 'N/A'
+            this.form_data.observaciones_entregado = 'N/A'
           },
         // Retornar un valor booleano para indicar que se puede generar el PDF.
         validarInformacion(){

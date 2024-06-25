@@ -4,7 +4,6 @@
 <html>
 <head>
   <title>Acta de Responsabilidad de Equipos de Trabajo</title>
-  <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
   <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
@@ -26,25 +25,6 @@
       <form-gestor v-if="seleccion_operacion===1"></form-gestor>
       <form-operacion  v-if="seleccion_operacion===2"></form-operacion>
     </div>
-
-  <!-- <script>
-    const optionSelect = document.getElementById('option');
-    const gestoresDiv = document.getElementById('gestores');
-    const operacionesDiv = document.getElementById('operaciones');
-
-    optionSelect.addEventListener('change', function() {
-      if (optionSelect.value === 'gestores') {
-        gestoresDiv.classList.remove('hidden');
-        operacionesDiv.classList.add('hidden');
-      } else if (optionSelect.value === 'operaciones') {
-        gestoresDiv.classList.add('hidden');
-        operacionesDiv.classList.remove('hidden');
-      } else {
-        gestoresDiv.classList.add('hidden');
-        operacionesDiv.classList.add('hidden');
-      }
-    });
-  </script> -->
 </body>
 <script src="{{ mix('js/app.js') }}"></script>
 </html>

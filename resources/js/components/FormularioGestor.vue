@@ -16,7 +16,7 @@
       <p>
         Respetada Señor
         <b>{{form_data.nombre_persona.toUpperCase()}}</b>
-      </p>
+      </p>k
       <p>
         El presente formato se tiene con fin de entregar la responsabilidad del activo solicitado al gestor
         <input type="text" placeholder="Ingrese el gestor" v-model="form_data.nombre_gestor"/>
@@ -140,7 +140,7 @@
             <input type="text" placeholder="Ingrese el serial" v-model="form_data.serial_elemento"/>
           </td>
           <td>
-            <input type="text" placeholder="Ingrese el activo" v-model="form_data.activo_elemento"/>
+            <input type="text" placeholder="Ingrese el activo" v-model="form_data.activo_elemento" :disabled="form_data.ingreso_elemento === 'Diadema'" :enabled="form_data.ingreso_elemento !== 'Diadema' ? form_data.activo_elemento : form_data.activo_elemento = 'No tiene'"/>
           </td>
           <td>
             <input type="text" placeholder="Ingrese las observaciones" v-model="form_data.observaciones_elemento" @keyup.enter="agregarElementos"/>
@@ -154,7 +154,7 @@
       <!-- Lista de elementos agregados -->
 
       <div class="container p-3">
-        <table class="table">
+        <table class="table"> 
           <thead>
             <tr>
               <th>Elemento</th>
@@ -333,6 +333,7 @@ export default {
         firma1:null,
         firma2:null,
       }
+      this.form_data.observaciones_elemento = 'N/A'
     },
     validarInformacion(){
       if(this.form_data.correo_persona == '' || this.form_data.fecha_entregaActivo == ''
