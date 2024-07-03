@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 
 use Dompdf\Dompdf;
@@ -12,8 +14,13 @@ use Illuminate\Support\Facades\App;
 class Pdf extends Controller
 {
     // Vista principal de los formularios
+    public function Home(){
+        return view('actas');
+    }
+
+
     public function index(){
-        return view("actas");
+        return redirect()->route('home');
     }
 
     // Generar PDF de la operacion
@@ -30,8 +37,8 @@ class Pdf extends Controller
         $op_solicitante = $request->input('op_solicitante');
         $est_entrega_nuevoActivo = $request->input('est_entrega_nuevoActivo');
         $est_recibido_activo = $request->input('est_recibido_activo');
-        // Fecha
-        $fecha_entrega = $request->input('fecha_entrega');
+        // Fecha automatizada
+        $fecha_entrega = Carbon::now()->toDateString();
         // Datos equipos recogidos
         $data_recogido = $request->input('data_recogido');
         // Datos equipos entregados
@@ -96,6 +103,7 @@ class Pdf extends Controller
     public function pdfGestor(Request $request){
         // Datos basicos
         $nombre_persona = strtoupper($request->input('nombre_persona'));
+        $numero_caso = $request->input('numero_caso');
         $documento_persona = $request->input('documento_persona');
         $correo_persona = $request->input('correo_persona');
         // Nombre gestor
@@ -103,7 +111,8 @@ class Pdf extends Controller
         // Motivos
         $motivo_solicitud = $request->input('motivo_solicitud');
         $op_solicitante = $request->input('op_solicitante');
-        $fecha_entregaActivo = $request->input('fecha_entregaActivo');
+        // Fecha generada automaticamente
+        $fecha_entregaActivo = Carbon::now()->toDateString();
         // Datos de elementos y observaciones
         $ingreso_elemento = strtoupper($request->input('ingreso_elemento'));
         $serial_elemento = strtoupper($request->input('serial_elemento'));
@@ -114,6 +123,7 @@ class Pdf extends Controller
         $nombre_deEntrega = $request->input('nombre_deEntrega');
         // Datos de elemento
         $data_elemento = $request->input('data_elemento');
+        $data_elemento_r = $request->input('data_elemento_r');
 
         // Firmas desde vue
         $firma1 = $request->input('firma1');
@@ -131,6 +141,7 @@ class Pdf extends Controller
         $pdf = new Dompdf($opciones);
         $vista = view('pdf_gestor',compact(
             'nombre_persona',
+            'numero_caso',
             'documento_persona',
             'correo_persona',
             'nombre_gestor',
@@ -144,6 +155,7 @@ class Pdf extends Controller
             'observaciones',
             'nombre_deEntrega',
             'data_elemento',
+            'data_elemento_r',
             'ruta1',
             'ruta2',
             'rutaLogo'
@@ -186,5 +198,10 @@ class Pdf extends Controller
         return compact('ruta1', 'ruta2', 'rutaLogo');
     }
 
+
+    // Registro de campañas y gestores
+    public function registroCamGestor(){
+        return view('registro_camps_gestores');
+    }
 
 }

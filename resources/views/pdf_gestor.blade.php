@@ -52,7 +52,8 @@
 
 <p>Motivo de Solicitud: <b>{{$motivo_solicitud}}</b></p>
 <p>Operación Solicitante: <b>{{$op_solicitante}}</b></p>
-<p>Fecha de entrega del activo: <b>{{$fecha_entregaActivo}}</b></p>
+<p>Numero Caso: <b>{{$numero_caso}}</b></p>
+<p>Fecha de acta: <b>{{$fecha_entregaActivo}}</b></p>
 
 <h2>Activos relacionados:</h2>
 
@@ -68,6 +69,29 @@
     <tbody>
         <!-- Agregar filas según sea necesario -->
         @foreach ($data_elemento as $data)
+        
+        <tr>
+            <td>{{$data['ingreso_elemento']}}</td>
+            <td>{{$data['serial_elemento']}}</td>
+            <td>{{$data['activo_elemento']}}</td>
+            <td>{{$data['observaciones_elemento']}}</td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
+{{-- Tabla de elementos recogidos --}}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Elemento</th>
+            <th>Serial</th>
+            <th>Activo</th>
+            <th>Observaciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Agregar filas según sea necesario -->
+        @foreach ($data_elemento_r as $data)
         
         <tr>
             <td>{{$data['ingreso_elemento']}}</td>

@@ -56,7 +56,7 @@
 <p>Estado de Entrega del Nuevo Activo: <b>{{$est_entrega_nuevoActivo}}</b></p>
 <p>Estado de Recibido del Activo Recogido: <b>{{$est_recibido_activo}}</b></p>
 
-<p>Fecha de entrega del activo: <b>{{$fecha_entrega}}</b></p>
+<p>Fecha de acta: <b>{{$fecha_entrega}}</b></p>
 
 <h2>Activos relacionados:</h2>
 
@@ -124,6 +124,7 @@
             <td>
                 <div class="container">
                     <p>Firma Operación:<img src="data:image/png;base64,{{$ruta2}}" alt="" width="30%"></p>
+                    <p>Nombre encargado: <b>{{$nombre_encargado}}</b></p>
                     <p>Cargo: <b>{{$cargo_operacion}}</b></p>
                     <p>Nombre Operacion: <b>{{$op_solicitante}}</b></p>
                 </div>

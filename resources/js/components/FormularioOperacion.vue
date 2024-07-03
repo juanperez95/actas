@@ -1,99 +1,21 @@
 <template>
     <div>
         <div id="operaciones">
-      <p>Señor <input type="text" placeholder="Ingrese el nombre" v-model="form_data.nombre_encargado"></p>
+      <p>Señor(a) <input type="text" placeholder="Ingrese el nombre" v-model="form_data.nombre_encargado" class="form-control"></p>
       <p>CC. <input type="number" class="form-control" placeholder="Ingrese el número de CC" v-model.number="form_data.documento_encargado"></p>
-      <p>Correo: <input type="email" placeholder="Ingrese el correo" v-model="form_data.correo_encargado"></p>
-      <p>Respetada Señor/a <b>{{form_data.nombre_encargado.toUpperCase()}}</b></p>
-      <p>El presente formato se tiene con fin de entregar la responsabilidad del activo solicitado a la operación retirando el activo anterior según el caso: <input type="text" placeholder="Ingrese el caso" v-model="form_data.n_caso"></p>
+      <p>Correo: <input type="email" placeholder="Ingrese el correo" v-model="form_data.correo_encargado" class="form-control"></p>
+      <p>Respetado(a) Señor(a) <b>{{form_data.nombre_encargado.toUpperCase()}}</b></p>
+      <p>El presente formato se tiene con fin de entregar la responsabilidad del activo solicitado a la operación retirando el activo anterior según el caso: <input type="text" placeholder="Ingrese el caso" v-model="form_data.n_caso" class="form-control"></p>
       <p>Definiciones:</p>
       <ul>
-        <li>Motivo de Solicitud <input type="text" placeholder="Ingrese el motivo" v-model="form_data.motivo_solicitud"></li>
+        <li>Motivo de Solicitud <input type="text" placeholder="Ingrese el motivo" v-model="form_data.motivo_solicitud" class="form-control"></li>
         <li>Operación Solicitante 
           <!-- Lista que permite escribir las opciones -->
-          <input type="text" list="lista" class="form-control"  v-model="form_data.op_solicitante">
+          <input type="text" list="lista" class="form-control"  v-model="form_data.op_solicitante" @click="mostrarCamps" placeholder="Ingrese la operacion solicitante">
           
+          <!-- Iterar todas las campañas de la base de datos -->
           <datalist id="lista">
-            <option value="ANM AGENCIA NACIONAL DE MINERÍA">ANM AGENCIA NACIONAL DE MINERÍA</option>
-            <option value="BANCAMIACOBRANZAS">BANCAMIACOBRANZAS</option>
-            <option value="BANCAMIASAC">BANCAMIASAC</option>
-            <option value="BIENESTAR IPS">BIENESTAR IPS</option>
-            <option value="CAFAM">CAFAM</option>
-            <option value="CARVAJAL EBUSINESS">CARVAJAL EBUSINESS</option>
-            <option value="CARVAJAL IDC">CARVAJAL IDC</option>
-            <option value="CARVAJAL S.A LINEA 25000">CARVAJAL S.A LINEA 25000</option>
-            <option value="CARVAJAL TECNOLOGÍA Y SERVICIOS S.A.S">CARVAJAL TECNOLOGÍA Y SERVICIOS S.A.S</option>
-            <option value="CHILCO">CHILCO</option>
-            <option value="CODENSA">CODENSA</option>
-            <option value="COMFAMA CARVAJAL">COMFAMA CARVAJAL</option>
-            <option value="COMFANDI">COMFANDI</option>
-            <option value="COMPENSAR">COMPENSAR</option>
-            <option value="CREDIBANCO S.A">CREDIBANCO S.A</option>
-            <option value="CREDIVALORES">CREDIVALORES</option>
-            <option value="CRUZ ROJA">CRUZ ROJA</option>
-            <option value="DERCO">DERCO</option>
-            <option value="ECOPETROL S.A">ECOPETROL S.A</option>
-            <option value="ENDESA">ENDESA</option>
-            <option value="ETBCOBRANZAS">ETBCOBRANZAS</option>
-            <option value="ETBRETENCIONES">ETBRETENCIONES</option>
-            <option value="EXPERIAN">EXPERIAN</option>
-            <option value="FACTURA ELECTRONICA">FACTURA ELECTRONICA</option>
-            <option value="FAMISANAR">FAMISANAR</option>
-            <option value="FISCALIA">FISCALIA</option>
-            <option value="GERENCIA COMERCIAL">GERENCIA COMERCIAL</option>
-            <option value="GERENCIA FINANCIERA Y ADMINISTRATIVA">GERENCIA FINANCIERA Y ADMINISTRATIVA</option>
-            <option value="GERENCIA GENERAL">GERENCIA GENERAL</option>
-            <option value="GERENCIA GESTIÓN HUMANA">GERENCIA GESTIÓN HUMANA</option>
-            <option value="GERENCIA GESTIÓN HUMANA DESARROLLO Y CULTURA">GERENCIA GESTIÓN HUMANA DESARROLLO Y CULTURA</option>
-            <option value="GERENCIA GESTIÓN HUMANA FORMACIÓN">GERENCIA GESTIÓN HUMANA FORMACIÓN</option>
-            <option value="GERENCIA GESTIÓN HUMANA NOMINA">GERENCIA GESTIÓN HUMANA NOMINA</option>
-            <option value="GERENCIA TECNOLOGÍA">GERENCIA TECNOLOGÍA</option>
-            <option value="GERENCIA TECNOLOGÍASEGURIDAD DE LA INFORMACIÓN">GERENCIA TECNOLOGÍASEGURIDAD DE LA INFORMACIÓN</option>
-            <option value="GERENCIA TRANSFORMACIÓN DIGITAL Y DISEÑO DEL SERVICIO">GERENCIA TRANSFORMACIÓN DIGITAL Y DISEÑO DEL SERVICIO</option>
-            <option value="GERENCIA UNIDAD DE DESARROLLO DE NUEVOS NEGOCIOS">GERENCIA UNIDAD DE DESARROLLO DE NUEVOS NEGOCIOS</option>
-            <option value="GERENCIA WORKFORCE MANAGEMENT">GERENCIA WORKFORCE MANAGEMENT</option>
-            <option value="GERENCIA WORKFORCE MANAGEMENT CIENCIA DE DATOS">GERENCIA WORKFORCE MANAGEMENT CIENCIA DE DATOS</option>
-            <option value="GERENCIA WORKFORCE MANAGEMENT EXPERIENCIA AL CLIENTE">GERENCIA WORKFORCE MANAGEMENT EXPERIENCIA AL CLIENTE</option>
-            <option value="GERENCIA WORKFORCE MANAGEMENT INTELIGENCIA DE NEGOCIOS">GERENCIA WORKFORCE MANAGEMENT INTELIGENCIA DE NEGOCIOS</option>
-            <option value="GERENCIA WORKFORCE MANAGEMENT WFM">GERENCIA WORKFORCE MANAGEMENTWFM</option>
-            <option value="GRUPO AVAL">GRUPO AVAL</option>
-            <option value="GRUPO AVALBANCO DE BOGOTÁCOBRANZAS">GRUPO AVALBANCO DE BOGOTÁ COBRANZAS</option>
-            <option value="GRUPO AVALBANCO DE BOGOTÁSAC">GRUPO AVALBANCO DE BOGOTÁ SAC</option>
-            <option value="GRUPO AVALBANCO DE OCCIDENTE">GRUPO AVALBANCO DE OCCIDENTE</option>
-            <option value="GRUPO AVALBANCO POPULAR">GRUPO AVALBANCO POPULAR</option>
-            <option value="HERO MOTOCORP">HERO MOTOCORP</option>
-            <option value="HP HEWLETT PACKARD">HP HEWLETT PACKARD</option>
-            <option value="ICETEX">ICETEX</option>
-            <option value="ILANS">ILANS</option>
-            <option value="ITAU">ITAU</option>
-            <option value="ITAU COBRANZAS">ITAUCOBRANZAS</option>
-            <option value="JAVESALUD">JAVESALUD</option>
-            <option value="MEDERI">MEDERI</option>
-            <option value="MINISTERIO DE CULTURA">MINISTERIO DE CULTURA</option>
-            <option value="MINISTERIO DE SALUD Y PROTECCIÓN SOCIAL">MINISTERIO DE SALUD Y PROTECCIÓN SOCIAL</option>
-            <option value="MINISTERIO DEL TRABAJO">MINISTERIO DEL TRABAJO</option>
-            <option value="MULTICAMPAÑAS">MULTICAMPAÑAS</option>
-            <option value="NUEVA EPS">NUEVA EPS</option>
-            <option value="NUEVA EPSCLIENTE NUEVA EPS">NUEVA EPSCLIENTE NUEVA EPS</option>
-            <option value="POSITIVA">POSITIVA</option>
-            <option value="PROCERASEO SAS">PROCERASEO SAS</option>
-            <option value="QCL AUDITORES SERVISALUD">QCL AUDITORES SERVISALUD</option>
-            <option value="QNT">QNT</option>
-            <option value="RED DE PAGOS">RED DE PAGOS</option>
-            <option value="SECRETARIA DE HACIENDA">SECRETARIA DE HACIENDA</option>
-            <option value="SEGUROS EQUIDAD">SEGUROS EQUIDAD</option>
-            <option value="SERVINFORMBACKOFFICE">SERVINFORM BACKOFFICE</option>
-            <option value="SERVINFORMPOWEN">SERVINFORM POWEN</option>
-            <option value="SODEXO">SODEXO</option>
-            <option value="SOS EPS">SOS EPS</option>
-            <option value="SUPERINTENDENCIA DE TRANSPORTE">SUPERINTENDENCIA DE TRANSPORTE</option>
-            <option value="SUPERSALUD SUPERINTENDENCIA NACIONAL DE SALUD">SUPERSALUD SUPERINTENDENCIA NACIONAL DE SALUD</option>
-            <option value="UGPP NORMALIZACIÓN">UGPP NORMALIZACIÓN</option>
-            <option value="UGPP UT">UGPP UT</option>
-            <option value="UPRESS">UPRESS</option>
-            <option value="VERTIV">VERTIV</option>
-            <option value="WOM">WOM</option>
-
+            <option :value="cam.nombre_camp.toUpperCase()" v-for="cam in lista_camps" :key="cam.id">{{cam.nombre_camp.toUpperCase()}}</option>
           </datalist>
         </li>
         <li>Estado de Entrega del Nuevo Activo
@@ -111,7 +33,6 @@
            </select>
         </li>
       </ul>
-      <p>Fecha de entrega del activo: <input type="date" v-model="form_data.fecha_entrega"></p>
       <p>Activos relacionados:</p>
       <table>
         <tr>
@@ -130,9 +51,9 @@
               <option value="Minitorre">Minitorre</option>
             </select>
           </td>
-          <td><input type="text" placeholder="Ingrese el serial" v-model="form_data.serial_recogido"></td>
-          <td><input type="text" placeholder="Ingrese el activo" v-model="form_data.activo_recogido"></td>
-          <td><input type="text" placeholder="Ingrese las observaciones" v-model="form_data.observaciones_recogido" @keyup.enter="agregarRecogidos"></td>
+          <td><input type="text" placeholder="Ingrese el serial" v-model="form_data.serial_recogido" class="form-control"></td>
+          <td><input type="text" placeholder="Ingrese el activo" v-model="form_data.activo_recogido" class="form-control"></td>
+          <td><input type="text" placeholder="Ingrese las observaciones" v-model="form_data.observaciones_recogido" class="form-control" @keyup.enter="agregarRecogidos"></td>
           <td>
             <button class="btn btn-danger" @click="agregarRecogidos">Agregar</button>
           </td>
@@ -174,14 +95,14 @@
           <td>
             <select name="" id="" class="form-select" v-model="form_data.elemento_entregado">
               <option value="Torre">Torre</option>
-              <option value="Diadema">Diadema</option>
+              <option value="Diadema">Diadema</option> class="form-control"
               <option value="Monitor">Monitor</option>
               <option value="Minitorre">Minitorre</option>
             </select>
           </td>
-          <td><input type="text" placeholder="Ingrese el serial" v-model="form_data.serial_entregado"></td>
-          <td><input type="text" placeholder="Ingrese el activo" v-model="form_data.activo_entregado"></td>
-          <td><input type="text" placeholder="Ingrese las observaciones" v-model="form_data.observaciones_entregado" @keyup.enter="agregarEntregados"></td>
+          <td><input type="text" placeholder="Ingrese el serial" v-model="form_data.serial_entregado" class="form-control"></td>
+          <td><input type="text" placeholder="Ingrese el activo" v-model="form_data.activo_entregado" class="form-control"></td>
+          <td><input type="text" placeholder="Ingrese las observaciones" v-model="form_data.observaciones_entregado" class="form-control" @keyup.enter="agregarEntregados"></td>
           <td>
             <button @click="agregarEntregados" class="btn btn-danger">Agregar</button>
           </td>
@@ -228,12 +149,21 @@
         <tr>
           <td>
               <p>Gestor de Soluciones Tecnológica</p>
-              <p>Nombre Gestor: <input type="text" placeholder="Ingrese el nombre" v-model="form_data.nombre_gestor"></p>
+              <!-- Mostrar los gestores que se encuentran en la base de datos -->
+              <select v-model="form_data.nombre_gestor" id="gestores_operacion"  @click="mostrarGestores" class="form-select">
+                <option :value="gestor.nombre_gestor" v-for="gestor in lista_gestores" :key="gestor.id">{{gestor.nombre_gestor.toUpperCase()}}</option>
+              </select>
             </td>
           <td>
             <p>Cargo: 
               <select class="form-select" v-model="form_data.cargo_operacion" required>
-                <option value="Administrador">Administrador</option>
+                <!-- Cargos de personas que pueden firmar -->
+                <option value="JEFE DE OPERACION">Jefe de Operacion</option>
+          	    <option value="DIRECTOR DE OPERACIONES">Director de Operaciones</option>
+                <option value="COORDINADOR DE OPERACION">Coordinador de Operación</option>
+                <option value="GERENTE DE OPERACION">Gerente de Operación</option>
+                <option value="JEFE DE SOPORTE">Jefe de Soporte</option>
+                <option value="COORDINADOR DE SOPORTE">Coordinador de Soporte</option>
               </select>
             </p>
             <p>Nombre: <b>{{form_data.nombre_encargado.toUpperCase()}}</b></p>
@@ -242,7 +172,7 @@
       </table>
       <div class="container-fluid b-finales">
         <!-- Llamar a la funcion para generar el pdf -->
-        <button class="btn btn-danger b-anchof" @click="generarPDF">Generar PDF</button>
+        <button class="btn btn-danger b-anchof" @click="generarPDF"><span :class="cargar"></span>Generar PDF</button>
         <button class="btn btn-danger b-anchof" @click="limpiarTodo">Limpiar formulario</button>
       </div>
     </div>
@@ -250,7 +180,7 @@
   <br>
   <div class="container-fluid" align="center">
 
-    <p style="font-size:12px">Derechos reservados MaxJP 2024</p>
+    <p style="font-size:12px">Derechos reservados MaxJP 2024 1.0</p>
   </div>
   </div>
 </template>
@@ -283,8 +213,6 @@ export default{
                 op_solicitante:'',
                 est_entrega_nuevoActivo:'',
                 est_recibido_activo:'',
-                // Fecha entrega
-                fecha_entrega:'',
                 // Datos del equipos recogido
                 data_recogido:[],
                 // Datos del equipos entregado
@@ -298,7 +226,12 @@ export default{
                 // Firmas
                 firma1:null,
                 firma2:null,
-            }
+            },
+            // Mostrar un spinner para señalar la carga de la respuesta.
+            cargar:'',
+            // Guardar los gestores de la base de datos.
+            lista_gestores:[],
+            lista_camps:[],
         }
     },
     mounted() {
@@ -309,9 +242,11 @@ export default{
         generarPDF: async function(){
           if(this.validarInformacion()){
             this.notificacion(4);
+            this.cargar = '';
           }else{
             // Generar la alerta
             this.notificacion(1);
+            this.cargar = 'spinner-border spinner-border-sm';
             const firma1 = this.$refs.signaturePad.getSignatureDataUrl();
             const firma2 = this.$refs.signaturePad2.getSignatureDataUrl();
             // Recoger las firmas para laravel
@@ -330,7 +265,7 @@ export default{
                   link.click();
 
                   URL.revokeObjectURL(link.href);
-
+                  this.cargar = '';
                 }else{
                   this.notificacion(2);
                 }
@@ -434,7 +369,9 @@ export default{
                 // Firmas
                 firma1:null,
                 firma2:null,
-            }
+                observaciones_recogido:'N/A',
+                observaciones_entregado:'N/A',
+            }          
           },
         // Retornar un valor booleano para indicar que se puede generar el PDF.
         validarInformacion(){
@@ -469,7 +406,6 @@ export default{
               datos = {
                 text:'Llene los campos de serial y activo',
                 icon:'error',
-                position:"top-end",
                 showConfirmButton: false,
                 timer:1000,
               };
@@ -485,7 +421,28 @@ export default{
           }
           Swal.fire(datos);
 
+        },
+        // Mostrar a todos los gestores.
+        mostrarGestores(){
+          axios.get('/Actas_de_responsabilidad/Gestores')
+          .then((gestores)=>{
+            this.lista_gestores = gestores.data;
+          })
+          .catch((error)=>{
+            console.log(error);
+          })
+        },
+        // Mostrar campañas
+        mostrarCamps(){
+          axios.get('/Actas_de_responsabilidad/Campanas')
+          .then((cam)=>{
+            this.lista_camps = cam.data;
+          })
+          .catch((error)=>{
+            console.log(error);
+          })
         }
     },
+    
 }
 </script>

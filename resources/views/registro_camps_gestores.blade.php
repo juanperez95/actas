@@ -11,20 +11,13 @@
   <div class="container">
     <img src="{{ asset('images/americas.png') }}" alt="Descripción de la imagen" class="logo">
     
-    <h2>ACTA DE RESPONSABILIDAD DE EQUIPOS DE TRABAJO</h2>
+    <h2>Registro de campañas y gestores</h2>
     
     
     <!-- framework Vue.js -->
     
-    <label for="option">Seleccione una opción:</label>
     <div id="app">
-      <select id="option" v-model.number="seleccion_operacion">
-        <option value="1">Gestores</option>
-        <option value="2">Operaciones</option>
-      </select>
-      <!-- Componentes de formularios -->
-      <form-gestor v-if="seleccion_operacion===1"></form-gestor>
-      <form-operacion  v-if="seleccion_operacion===2"></form-operacion>
+        <modal-gestor></modal-gestor>
     </div>
 
 </body>
