@@ -1,6 +1,6 @@
 INSERT INTO `gestores_actas`.`camps` (`nombre_camp`) VALUES
-('BancamiaCobranzas'),
-('BancamiaSAC'),
+('Bancamia Cobranzas'),
+('Bancamia SAC'),
 ('Bienestar IPS'),
 ('Cafam'),
 ('Carvajal Ebusiness'),

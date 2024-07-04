@@ -12,6 +12,7 @@ Route::post('/PDF_G',[Pdf::class,'pdfGestor'])->name('pdf_gestor');
 
 // Acciones con los gestores de la base de datos
 Route::get('/Actas_de_responsabilidad/Gestores',[GestoresActas::class,'MostrarGestores'])->name('mostrar_gestor');
+Route::post('/Actas_de_responsabilidad/Gestores/Registro',[GestoresActas::class,'AgregarGestores'])->name('registro_gestor');
 
 
 // Acciones con las campañas

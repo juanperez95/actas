@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Acta de Responsabilidad de Equipos de Trabajo</title>
+  <title>Registro de gestores y campañas</title>
   <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
   <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
@@ -17,9 +17,9 @@
     <!-- framework Vue.js -->
     
     <div id="app">
-        <modal-gestor></modal-gestor>
+      <modal-gestor/>
     </div>
-
-</body>
-<script src="{{ mix('js/app.js') }}"></script>
+    
+  </body>
+  <script src="{{ mix('js/app.js') }}"></script>
 </html>
