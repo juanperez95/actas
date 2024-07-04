@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#example-modal" data-bs-whatever="@mdo">Registrar gestor</button>
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#example-modal" data-bs-whatever="@mdo"><span class="fas fa-user"/>     Registrar gestor</button>
 
         <div class="modal fade" id="example-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -17,7 +17,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="message-text" class="col-form-label">Correo del gestor:</label>
-                        <input type="email" class="form-control" id="message-text" v-model="datos_gestor.correo">
+                        <input type="email" class="form-control" id="message-text" v-model="datos_gestor.correo" @keyup.enter="registrarGestor">
                     </div>
                 </form>
             </div>
@@ -45,7 +45,7 @@ export default {
                 correo:''.toLowerCase(),
             },
             // Spinner de carga de datos
-            cargar:'',
+            cargar:'fas fa-user',
         }
     },
     methods: {
@@ -72,7 +72,7 @@ export default {
             }else{
                 this.notificaciones(4);
             }
-            this.cargar = '';
+            this.cargar = 'fas fa-user';
         },
         // Notificaciones de swwetalert2
         notificaciones(opcion){

@@ -17,7 +17,19 @@
     <!-- framework Vue.js -->
     
     <div id="app">
-      <modal-gestor/>
+      <div class="container" style="display: flex; flex-direction:row;justify-content:space-around">
+        <div>
+          {{-- Modal gestor --}}
+          <modal-gestor/>
+        </div>
+        {{-- Modal campaña --}}
+        <modal-camp/>
+      </div>
+      <div class="container p-3">
+        <h2>Datos de busqueda</h2>
+        {{-- Tabla de busqueda con vue --}}
+        <tabla-acciones/>
+      </div>
     </div>
     
   </body>

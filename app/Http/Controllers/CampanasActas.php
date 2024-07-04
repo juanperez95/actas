@@ -10,15 +10,26 @@ class CampanasActas extends Controller
 
     // Agregar campañas
     public function AgregarCam(Request $request){
-        return null;
+        $cam = ModelsCampanasActas::where('nombre_camp',$request->input('nombre_cam'))->exists();
+        if($cam){
+            return true;
+        }
+
+        $camp = new ModelsCampanasActas();
+        $camp->nombre_camp = $request->input('nombre_cam');
+        $camp->save();
+        return false;
     }
     // Modificar
-    public function ModificarCam(Request $request){
-        return null;
+    public function ModificarCam($id, Request $request){
+        $cam = ModelsCampanasActas::find($id);
+        $cam->nombre_camp = $request->input('nombre_camp');
+        $cam->save();
     }
     // Eliminar
-    public function EliminarCam(Request $request){
-        return null;
+    public function EliminarCam($id){
+        $cam = ModelsCampanasActas::find($id);
+        $cam->delete();
     }
 
     // Mostrar a todas las campañas de la base de datos
@@ -27,4 +38,11 @@ class CampanasActas extends Controller
         // Devolver la respuesta en formato JSON
         return response()->json($camps);
     }
+
+    // Buscar campaña
+    public function BuscarCamp(Request $request){
+        $cam = ModelsCampanasActas::find($request->input('id'));
+        return response()->json($cam);
+    }
+
 }

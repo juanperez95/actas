@@ -15,7 +15,7 @@
           
           <!-- Iterar todas las campañas de la base de datos -->
           <datalist id="lista">
-            <option :value="cam.nombre_camp.toUpperCase()" v-for="cam in lista_camps" :key="cam.id">{{cam.nombre_camp.toUpperCase()}}</option>
+            <option :value="cam.nombre_camp.toUpperCase()" v-for="cam in lista_camps" :key="cam.id">{{cam.id}}</option>
           </datalist>
         </li>
         <li>Estado de Entrega del Nuevo Activo
@@ -55,7 +55,7 @@
           <td><input type="text" placeholder="Ingrese el activo" v-model="form_data.activo_recogido" class="form-control"></td>
           <td><input type="text" placeholder="Ingrese las observaciones" v-model="form_data.observaciones_recogido" class="form-control" @keyup.enter="agregarRecogidos"></td>
           <td>
-            <button class="btn btn-danger" @click="agregarRecogidos">Agregar</button>
+            <button class="btn btn-danger" @click="agregarRecogidos"><i class="fa-solid fa-plus"></i> Agregar</button>
           </td>
         </tr>
       </table>
@@ -76,7 +76,7 @@
                 <td scope="col">{{data.serial_recogido}}</td>
                 <td scope="col">{{data.activo_recogido}}</td>
                 <td scope="col">
-                  <button class="btn btn-danger" @click="quitarRecogidos(data)">x</button>
+                  <button class="btn btn-danger" @click="quitarRecogidos(data)"><i class="fa-solid fa-trash"></i></button>
                 </td>
               </tr>
             </tbody>
@@ -104,7 +104,7 @@
           <td><input type="text" placeholder="Ingrese el activo" v-model="form_data.activo_entregado" class="form-control"></td>
           <td><input type="text" placeholder="Ingrese las observaciones" v-model="form_data.observaciones_entregado" class="form-control" @keyup.enter="agregarEntregados"></td>
           <td>
-            <button @click="agregarEntregados" class="btn btn-danger">Agregar</button>
+            <button @click="agregarEntregados" class="btn btn-danger"><i class="fa-solid fa-plus"></i> Agregar</button>
           </td>
         </tr>
       </table>
@@ -127,7 +127,7 @@
               <td scope="col">{{data.serial_entregado}}</td>
               <td scope="col">{{data.activo_entregado}}</td>
               <td scope="col">
-                <button class="btn btn-danger" @click="quitarEntregados(data)">x</button>
+                <button class="btn btn-danger" @click="quitarEntregados(data)"><i class="fa-solid fa-trash"></i></button>
               </td>
             </tr>
           </tbody>
@@ -172,8 +172,8 @@
       </table>
       <div class="container-fluid b-finales">
         <!-- Llamar a la funcion para generar el pdf -->
-        <button class="btn btn-danger b-anchof" @click="generarPDF"><span :class="cargar"></span>Generar PDF</button>
-        <button class="btn btn-danger b-anchof" @click="limpiarTodo">Limpiar formulario</button>
+        <button class="btn btn-danger b-anchof" @click="generarPDF"><span :class="[cargar]"></span>Generar PDF</button>
+        <button class="btn btn-danger b-anchof" @click="limpiarTodo"><span class="fa-solid fa-eraser"/> Limpiar formulario</button>
       </div>
     </div>
   <a href="#" download="" id="link"></a>
@@ -228,7 +228,7 @@ export default{
                 firma2:null,
             },
             // Mostrar un spinner para señalar la carga de la respuesta.
-            cargar:'',
+            cargar:'fa-solid fa-file-pdf',
             // Guardar los gestores de la base de datos.
             lista_gestores:[],
             lista_camps:[],
@@ -239,14 +239,14 @@ export default{
       this.form_data.observaciones_entregado = 'N/A'
     },
     methods: {
-        generarPDF: async function(){
+      generarPDF: async function(){
+          this.cargar = 'spinner-border spinner-border-sm';
           if(this.validarInformacion()){
             this.notificacion(4);
             this.cargar = '';
           }else{
             // Generar la alerta
             this.notificacion(1);
-            this.cargar = 'spinner-border spinner-border-sm';
             const firma1 = this.$refs.signaturePad.getSignatureDataUrl();
             const firma2 = this.$refs.signaturePad2.getSignatureDataUrl();
             // Recoger las firmas para laravel
@@ -265,15 +265,15 @@ export default{
                   link.click();
 
                   URL.revokeObjectURL(link.href);
-                  this.cargar = '';
                 }else{
                   this.notificacion(2);
                 }
-            })
-            .catch((err)=>{
-              this.notificacion(2);
-            });
-          }
+              })
+              .catch((err)=>{
+                this.notificacion(2);
+              });
+            }
+            this.cargar = 'fa-solid fa-file-pdf';
             
         },
         // Agregar los elementos recogidos de la operacion
@@ -376,8 +376,8 @@ export default{
         // Retornar un valor booleano para indicar que se puede generar el PDF.
         validarInformacion(){
           if(this.form_data.correo_encargado=='' || this.form_data.documento_encargado == '' || this.form_data.n_caso == '' || 
-            this.form_data.est_entrega_nuevoActivo == '' || this.form_data.est_recibido_activo == '' || this.form_data.fecha_entrega == ''
-            || this.form_data.op_solicitante == '' || this.form_data.data_entregado == [] || this.form_data.data_recogido == []
+            this.form_data.est_entrega_nuevoActivo == '' || this.form_data.est_recibido_activo == '' 
+            || this.form_data.op_solicitante == '' 
           ){
             return true;
           }

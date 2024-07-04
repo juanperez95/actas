@@ -29,8 +29,9 @@ class GestoresActas extends Controller
         return null;
     }
     // Eliminar
-    public function EliminarGestores(Request $request){
-        return null;
+    public function EliminarGestores($id){
+        GestoreActas::find($id)->delete();
+        return response()->json(true);
     }
 
     // Mostrar a todos los gestores de la base de datos
@@ -38,5 +39,11 @@ class GestoresActas extends Controller
         $gestores = GestoreActas::all();
         // Devolver la respuesta en formato JSON
         return response()->json($gestores);
+    }
+
+    // Buscar a un gestor en especifico al filtrarlo en vue
+    public function BuscarGestor(Request $request){
+        $gestor = GestoreActas::find($request->input('id'));
+        return response()->json($gestor);
     }
 }

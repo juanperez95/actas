@@ -38,7 +38,7 @@
           <input type="text" placeholder="Ingrese la operación" class="form-select" v-model="form_data.op_solicitante" list="listaOp" @click="mostrarCamps"/>
           
           <datalist id="listaOp">
-            <option :value="cam.nombre_camp.toUpperCase()" v-for="cam in lista_camps" :key="cam.id">{{cam.nombre_camp.toUpperCase()}}</option>
+            <option :value="cam.nombre_camp.toUpperCase()" v-for="cam in lista_camps" :key="cam.id">{{cam.id}}</option>
           </datalist>
         </li>
       </ul>
@@ -71,7 +71,7 @@
             <input type="text" placeholder="Ingrese las observaciones" v-model="form_data.observaciones_elemento" @keyup.enter="agregarElementos" class="form-control"/>
           </td>
           <td>
-            <button class="btn btn-danger" @click="agregarElementos">Agregar</button>
+            <button class="btn btn-danger" @click="agregarElementos"><i class="fa-solid fa-plus"></i> Agregar</button>
           </td>
         </tr>
       </table>
@@ -94,7 +94,7 @@
               <td scope="col">{{data.serial_elemento.toUpperCase()}}</td>
               <td scope="col">{{data.activo_elemento.toUpperCase()}}</td>
               <td scope="col">
-                <button class="btn btn-danger" @click="quitarElementos(data)">x</button>
+                <button class="btn btn-danger" @click="quitarElementos(data)"><i class="fa-solid fa-trash"></i></button>
               </td>
             </tr>
           </tbody>
@@ -130,7 +130,7 @@
             <input type="text" placeholder="Ingrese las observaciones" v-model="form_data.observaciones_elemento_r" @keyup.enter="agregarRecogido" class="form-control"/>
           </td>
           <td>
-            <button class="btn btn-danger" @click="agregarRecogido">Agregar</button>
+            <button class="btn btn-danger" @click="agregarRecogido"><i class="fa-solid fa-plus"></i> Agregar</button>
           </td>
         </tr>
       </table>
@@ -153,7 +153,7 @@
               <td scope="col">{{data.serial_elemento.toUpperCase()}}</td>
               <td scope="col">{{data.activo_elemento.toUpperCase()}}</td>
               <td scope="col">
-                <button class="btn btn-danger" @click="quitarRecogido(data)">x</button>
+                <button class="btn btn-danger" @click="quitarRecogido(data)"><i class="fa-solid fa-trash"></i></button>
               </td>
             </tr>
           </tbody>
@@ -191,8 +191,8 @@
       </table>
     </div>
     <div class="container-fluid b-finales">
-      <button class="btn btn-danger mt-2 b-anchof" @click="generarPDFGestor"><span :class="[cargar]"></span>Generar PDF</button>
-      <button class="btn btn-danger mt-2 b-anchof" @click="limpiarTodo">Limpiar Formulario</button>
+      <button class="btn btn-danger mt-2 b-anchof" @click="generarPDFGestor"><span :class="[cargar]"></span>  Generar PDF</button>
+      <button class="btn btn-danger mt-2 b-anchof" @click="limpiarTodo"><span class="fa-solid fa-eraser"/>  Limpiar Formulario</button>
     </div>
 
     <a href="" download="" id="enlace"></a>
@@ -238,18 +238,18 @@ export default {
         firma2:null,
       },
       // Mostrar un spinner para señalar la carga de la respuesta.
-      cargar:'',
+      cargar:'fa-solid fa-file-pdf',
       lista_gestores:[],
       lista_camps:[],
     }
   },
   methods: {
     generarPDFGestor: async function(){
+      this.cargar = 'spinner-border spinner-border-sm';
       if(this.validarInformacion()){
         this.notificacion(4);
       }else{
         // Generar la alerta
-        this.cargar = 'spinner-border spinner-border-sm';
         this.notificacion(1);
   
         // Asignar firmas a laravel
@@ -266,7 +266,6 @@ export default {
             enlace.href = URL.createObjectURL(res.data);
             enlace.click();
             URL.revokeObjectURL(enlace.href);
-            this.cargar = '';
           }else{
             this.notificacion(2);
           }
@@ -274,6 +273,7 @@ export default {
           this.notificacion(2);
         })
       }
+      this.cargar = 'fa-solid fa-file-pdf';
     },
     agregarElementos(){
       try{
@@ -353,13 +353,14 @@ export default {
         // Firmas de quien entrega y de quien recibe
         firma1:null,
         firma2:null,
-        observaciones_elemento:'N/A'
+        observaciones_elemento:'N/A',
+        observaciones_elemento_r:'N/A'
       }
     },
     validarInformacion(){
-      if(this.form_data.correo_persona == '' || this.form_data.fecha_entregaActivo == ''
+      if(this.form_data.correo_persona == '' 
         || this.form_data.nombre_persona == '' || this.form_data.op_solicitante == '' || this.form_data.documento_persona == ''
-        || this.form_data.nombre_gestor == '' || this.form_data.data_elemento == []
+        || this.form_data.nombre_gestor == ''
       ){
         return true
       }
