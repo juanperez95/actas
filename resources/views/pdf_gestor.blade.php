@@ -1,11 +1,10 @@
-@extends('layouts.app')
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <img src="data:image/png;base64,{{ $rutaLogo }}" alt="" width="30%">
-    <title>ACTA DE RESPONSABILIDAD DE EQUIPOS DE TRABAJO</title>
+    <title>ACTA DE RESPONSABILIDAD AL GESTOR</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -21,7 +20,14 @@
             margin-bottom: 20px;
             font-size:12px;
         }
-        th, td {
+        th{
+            border: 1px solid #000;
+            padding: 6px;
+            text-align: center;
+            color: aliceblue;
+            background-color: rgb(0, 0, 0);
+        }
+        td {
             border: 1px solid #000;
             padding: 6px;
             text-align: center;
@@ -43,8 +49,6 @@
 <p>Señor (@): <b>{{$nombre_persona}}</b></p>
 <p>CC: <b>{{$documento_persona}}</b></p>
 <p>Correo: <b>{{$correo_persona}}</b></p>
-
-<p>Respetada Señor (@)</p>
 
 <p>El presente formato se tiene con fin de entregar la responsabilidad del activo solicitado al gestor: <b>{{$nombre_gestor}}</b></p>
 
@@ -130,6 +134,6 @@
     </table>
     <br>
 </div>
-
 </body>
+<script src="{{asset('js/styles.js')}}"></script>
 </html>

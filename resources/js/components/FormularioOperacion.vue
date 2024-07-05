@@ -9,13 +9,13 @@
       <p>Definiciones:</p>
       <ul>
         <li>Motivo de Solicitud <input type="text" placeholder="Ingrese el motivo" v-model="form_data.motivo_solicitud" class="form-control"></li>
-        <li>Operación Solicitante 
+        <li>Operación Solicitante <span :class="[cargar1]"></span>
           <!-- Lista que permite escribir las opciones -->
           <input type="text" list="lista" class="form-control"  v-model="form_data.op_solicitante" @click="mostrarCamps" placeholder="Ingrese la operacion solicitante">
           
           <!-- Iterar todas las campañas de la base de datos -->
           <datalist id="lista">
-            <option :value="cam.nombre_camp.toUpperCase()" v-for="cam in lista_camps" :key="cam.id">{{cam.id}}</option>
+            <option :value="cam.nombre_camp.toUpperCase()" v-for="cam in lista_camps" :key="cam.id">{{cam.nombre_camp.toUpperCase()}}</option>
           </datalist>
         </li>
         <li>Estado de Entrega del Nuevo Activo
@@ -148,7 +148,7 @@
         </tr>
         <tr>
           <td>
-              <p>Gestor de Soluciones Tecnológica</p>
+              <p>Gestor de Soluciones Tecnológica   <span :class="[cargar2]"></span></p>
               <!-- Mostrar los gestores que se encuentran en la base de datos -->
               <select v-model="form_data.nombre_gestor" id="gestores_operacion"  @click="mostrarGestores" class="form-select">
                 <option :value="gestor.nombre_gestor" v-for="gestor in lista_gestores" :key="gestor.id">{{gestor.nombre_gestor.toUpperCase()}}</option>
@@ -232,6 +232,10 @@ export default{
             // Guardar los gestores de la base de datos.
             lista_gestores:[],
             lista_camps:[],
+            // Cargar las campañas
+            cargar1:'',
+            // Cargar gestores
+            cargar2:'',
         }
     },
     mounted() {
@@ -424,6 +428,7 @@ export default{
         },
         // Mostrar a todos los gestores.
         mostrarGestores(){
+          this.cargar1 = 'spinner-border spinner-border-sm';
           axios.get('/Actas_de_responsabilidad/Gestores')
           .then((gestores)=>{
             this.lista_gestores = gestores.data;
@@ -431,9 +436,11 @@ export default{
           .catch((error)=>{
             console.log(error);
           })
+          this.cargar1 = '';
         },
         // Mostrar campañas
         mostrarCamps(){
+          this.cargar2 = 'spinner-border spinner-border-sm';
           axios.get('/Actas_de_responsabilidad/Campanas')
           .then((cam)=>{
             this.lista_camps = cam.data;
@@ -441,6 +448,7 @@ export default{
           .catch((error)=>{
             console.log(error);
           })
+          this.cargar2 = '';
         }
     },
     

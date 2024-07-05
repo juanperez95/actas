@@ -14,12 +14,8 @@
         <input type="email" placeholder="Ingrese el correo" v-model="form_data.correo_persona" class="form-control"/>
       </p>
       <p>
-        Respetado(a) Señor(a)
-        <b>{{form_data.nombre_persona.toUpperCase()}}</b>
-      </p>
-      <p>
         El presente formato se tiene con fin de entregar la responsabilidad del activo solicitado al gestor
-        <select class="form-select" v-model="form_data.nombre_gestor" @click="mostrarGestores">
+        <span :class="[cargar2]"></span><select class="form-select" v-model="form_data.nombre_gestor" @click="mostrarGestores">
           <option :value="gestor.nombre_gestor" v-for="gestor in lista_gestores" :key="gestor.id">{{gestor.nombre_gestor.toUpperCase()}}</option>
         </select>
       </p>
@@ -35,10 +31,10 @@
         </li>
         <li>
           Operación Solicitante
-          <input type="text" placeholder="Ingrese la operación" class="form-select" v-model="form_data.op_solicitante" list="listaOp" @click="mostrarCamps"/>
+          <span :class="[cargar1]"></span><input type="text" placeholder="Ingrese la operación" class="form-select" v-model="form_data.op_solicitante" list="listaOp" @click="mostrarCamps"/>
           
           <datalist id="listaOp">
-            <option :value="cam.nombre_camp.toUpperCase()" v-for="cam in lista_camps" :key="cam.id">{{cam.id}}</option>
+            <option :value="cam.nombre_camp.toUpperCase()" v-for="cam in lista_camps" :key="cam.id">{{cam.nombre_camp.toUpperCase()}}</option>
           </datalist>
         </li>
       </ul>
@@ -241,6 +237,10 @@ export default {
       cargar:'fa-solid fa-file-pdf',
       lista_gestores:[],
       lista_camps:[],
+      // Cargar las campañas
+      cargar1:'',
+      // Cargar gestores
+      cargar2:'',
     }
   },
   methods: {
@@ -406,6 +406,7 @@ export default {
     },
     // Mostrar a todos los gestores.
     mostrarGestores(){
+      this.cargar1 = 'spinner-border spinner-border-sm';
       axios.get('/Actas_de_responsabilidad/Gestores')
       .then((gestores)=>{
         this.lista_gestores = gestores.data;
@@ -413,9 +414,11 @@ export default {
       .catch((error)=>{
         console.log(error);
       })
+      this.cargar1 = '';
     },
     // Mostrar campañas
     mostrarCamps(){
+      this.cargar2 = 'spinner-border spinner-border-sm';
       axios.get('/Actas_de_responsabilidad/Campanas')
       .then((cam)=>{
         this.lista_camps = cam.data;
@@ -423,6 +426,7 @@ export default {
       .catch((error)=>{
         console.log(error);
       })
+      this.cargar2 = '';
     }
 
   },

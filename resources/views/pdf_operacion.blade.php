@@ -1,10 +1,9 @@
-@extends('layouts.app')
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ACTA DE RESPONSABILIDAD DE EQUIPOS DE TRABAJO</title>
+    <title>ACTA CAMBIO DE INVENTARIO A OPERACION</title>
     <style>
         body {
             font-family: sans-serif;
@@ -20,7 +19,14 @@
             margin-bottom: 20px;
             font-size:12px;
         }
-        th, td {
+        th{
+            border: 1px solid #000;
+            padding: 6px;
+            text-align: center;
+            color: aliceblue;
+            background-color: rgb(0, 0, 0);
+        }
+        td {
             border: 1px solid #000;
             padding: 6px;
             text-align: center;
@@ -36,7 +42,7 @@
     </style>
 </head>
 <body>
-
+<script src="{{asset('js/styles.js')}}"></script>
 <img src="data:image/png;base64,{{ $rutaLogo }}" alt="" width="30%">
 
 <h3 align="center">ACTA DE RESPONSABILIDAD DE EQUIPOS DE TRABAJO</h3>
@@ -45,7 +51,6 @@
 <p>CC: <b>{{$documento_encargado}}</b></p>
 <p>Correo: <b>{{$correo_encargado}}</b></p>
 
-<p>Respetada Señor(@) <b>{{$nombre_encargado}}</b></p>
 
 <p>El presente formato se tiene con fin de entregar la responsabilidad del activo solicitado a la operación retirando el activo anterior según el caso: <strong>{{$n_caso}}</strong></p>
 
@@ -132,7 +137,6 @@
         </tr>
     </table>
 </div>
-
 
 </body>
 </html>

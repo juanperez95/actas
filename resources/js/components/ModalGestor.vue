@@ -12,12 +12,24 @@
             <div class="modal-body">
                 <form>
                     <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">N° Documento:</label>
+                        <input type="number" class="form-control" id="recipient-name" v-model="datos_gestor.cedula">
+                    </div>
+                    <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Nombre gestor:</label>
                         <input type="text" class="form-control" id="recipient-name" v-model="datos_gestor.nombre">
                     </div>
                     <div class="mb-3">
                         <label for="message-text" class="col-form-label">Correo del gestor:</label>
-                        <input type="email" class="form-control" id="message-text" v-model="datos_gestor.correo" @keyup.enter="registrarGestor">
+                        <input type="email" class="form-control" id="message-text" v-model="datos_gestor.correo">
+                    </div>
+                    <!-- Roles de los gestores -->
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label">Asignar rol:</label>
+                        <select class="form-control" id="message-text" v-model="datos_gestor.rol" @keyup.enter="registrarGestor">
+                            <option value="gestor">Gestor</option>
+                            <option value="administrador">Administrador</option>
+                        </select>
                     </div>
                 </form>
             </div>
@@ -41,8 +53,10 @@ export default {
         return{
             // Datos de un gestor para validar la base de datos
             datos_gestor:{
+                cedula:'',
                 nombre:''.toLowerCase(),
                 correo:''.toLowerCase(),
+                rol:''.toLowerCase(),
             },
             // Spinner de carga de datos
             cargar:'fas fa-user',
@@ -63,6 +77,8 @@ export default {
                         // Limpiar los datos del formulario
                         this.datos_gestor.nombre = '';
                         this.datos_gestor.correo = '';
+                        this.datos_gestor.cedula = '';
+                        this.datos_gestor.rol = '';
                     }
                 })
                 .catch((error)=>{
@@ -110,7 +126,7 @@ export default {
         },
         // Validar campos del modal
         validarGestor(){
-            if(this.datos_gestor.nombre != '' || this.datos_gestor.correo != ''){
+            if(this.datos_gestor.nombre != '' || this.datos_gestor.correo != '' || this.datos_gestor.cedula != '' || this.datos_gestor.rol != ''){
                 return true;
             }
             return false;

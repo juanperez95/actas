@@ -14,8 +14,11 @@ return new class extends Migration
         //
         Schema::create('gestores', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('cedula');
             $table->string('nombre_gestor');
             $table->string('correo');
+            $table->string('password');
+            $table->string('rol');
             $table->timestamps();
         });
     }

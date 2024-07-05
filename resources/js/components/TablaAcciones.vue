@@ -9,9 +9,9 @@
             <div><span :class="[cargar]"></span></div>
             <!-- <input type="text" name="" list="camps" class="form-control" placeholder="Buscar campaña" @click="mostrarCamps();llenarCamposCamps();" v-model.number="cam_escogida" @keyup.enter="llenarCamposCamps();"> -->
 
-            <select class="form-select" @click="mostrarCamps();llenarCamposCamps();" v-model.number="cam_escogida">
+            <select class="form-select" @click="mostrarCamps();llenarCamposCamps();" v-model="cam_escogida">
                 <option value="">Seleccione una campaña</option>
-                <option :value="cam.id" v-for="cam in camapaña" :key="cam.id" >{{cam.nombre_camp.toUpperCase()}}</option>
+                <option :value="cam.nombre_camp" v-for="cam in camapaña" :key="cam.nombre_camp" >{{cam.nombre_camp.toUpperCase()}}</option>
             </select>
         </div>
 
@@ -21,15 +21,19 @@
                 <thead>
                     <h4>Gestores</h4>
                     <tr>
+                        <th scope="row">N° Documento</th>
                         <th scope="row">Nombre gestor</th>
                         <th scope="row">Correo</th>
+                        <th scope="row">Rol</th>
                         <th scope="row">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="g_found in campos_gestor" :key="g_found.id">
-                        <td scope="row"><input type="text" class="form-control" :disabled="[boton_activado]" :value="g_found.nombre_gestor.toUpperCase()"></td>
-                        <td scope="row"><input type="text" class="form-control" :disabled="[boton_activado]" :value="g_found.correo.toUpperCase()"></td>
+                        <td scope="row"><input type="text" class="form-control" :value="g_found.cedula"></td>
+                        <td scope="row"><input type="text" class="form-control" :value="g_found.nombre_gestor"></td>
+                        <td scope="row"><input type="text" class="form-control" :value="g_found.correo"></td>
+                        <td scope="row"><input type="text" class="form-control" :value="g_found.rol"></td>
                         <td scope="row">
                             <button class="btn btn-primary mt-2 m-2"><i class="fa-solid fa-user-pen"></i> Editar</button>
                             <button class="btn btn-danger mt-2 m-2" @click="eliminarGestor"><i class="fa-solid fa-user-xmark"></i>   Eliminar</button>
@@ -49,8 +53,8 @@
                 </thead>
                 <tbody>
                     <tr v-for="camp in campos_cam" :key="camp.id">
-                        <td scope="row"><input type="text" class="form-control" :disabled="[boton_activado]" v-model="nombre_camp"></td>
-                        <td scope="row"><input type="text" class="form-control" :disabled="[boton_activado]" :value="camp.id"></td>
+                        <td scope="row"><input type="text" class="form-control" v-model="nombre_camp"></td>
+                        <td scope="row"><input type="text" class="form-control" disabled :value="camp.id"></td>
                         <td scope="row">
                             <button class="btn btn-primary mt-2 m-2" @click="editarCamp"><i class="fa-solid fa-user-pen"></i> Editar</button>
                             <button class="btn btn-danger mt-2 m-2" @click="eliminarCam"><i class="fa-solid fa-user-xmark"></i>   Eliminar</button>
@@ -82,8 +86,6 @@ export default {
             campos_cam:[],
             cargar:'',
             nombre_camp:'',
-            // Habilitar campos de editar
-            boton_activado:true,
         }
     },
     methods: {

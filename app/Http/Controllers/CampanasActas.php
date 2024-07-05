@@ -41,7 +41,7 @@ class CampanasActas extends Controller
 
     // Buscar campaña
     public function BuscarCamp(Request $request){
-        $cam = ModelsCampanasActas::find($request->input('id'));
+        $cam = ModelsCampanasActas::where('nombre_camp',$request->input('id'))->first();
         return response()->json($cam);
     }
 

@@ -17,8 +17,11 @@ class GestoreActas extends Model
 
     protected $fillable = [
         'id',
+        'cedula',
         'nombre_gestor',
         'correo',
+        'password',
+        'rol'
     ];
 
 }

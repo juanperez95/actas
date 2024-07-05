@@ -11,14 +11,17 @@ class GestoresActas extends Controller
     public function AgregarGestores(Request $request){
 
         // Validar si ya existe el correo
-        $gestor = GestoreActas::where('correo',$request->input('correo'))->exists();
+        $gestor = GestoreActas::where('cedula',$request->input('cedula'))->exists();
         if($gestor){
             return response()->json(true);
         }else{
             // Instancia de modelo gestor
             $gestor = new GestoreActas();
+            $gestor->cedula = $request->input('cedula');
             $gestor->nombre_gestor = $request->input('nombre');
             $gestor->correo = $request->input('correo');
+            $gestor->rol = $request->input('rol');
+            $gestor->password = '';
             $gestor->save();
             return response()->json(false);
         }
