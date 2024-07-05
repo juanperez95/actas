@@ -28,8 +28,8 @@
                 </thead>
                 <tbody>
                     <tr v-for="g_found in campos_gestor" :key="g_found.id">
-                        <td scope="row"><input type="text" class="form-control" :disabled="[boton_activado]" :value="g_found.nombre_gestor.toUpperCase()"></td>
-                        <td scope="row"><input type="text" class="form-control" :disabled="[boton_activado]" :value="g_found.correo.toUpperCase()"></td>
+                        <td scope="row"><input type="text" class="form-control" :disabled="[boton_activado]" :value="g_found.nombre_gestor"></td>
+                        <td scope="row"><input type="text" class="form-control" :disabled="[boton_activado]" :value="g_found.correo"></td>
                         <td scope="row">
                             <button class="btn btn-primary mt-2 m-2"><i class="fa-solid fa-user-pen"></i> Editar</button>
                             <button class="btn btn-danger mt-2 m-2" @click="eliminarGestor"><i class="fa-solid fa-user-xmark"></i>   Eliminar</button>
