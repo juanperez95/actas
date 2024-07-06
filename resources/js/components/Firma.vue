@@ -8,7 +8,7 @@
     ></canvas
     ><br />
     <h6>{{firma_d}}</h6>
-    <button type="button" @click="clearSignature" class="btn btn-danger">Borrar</button>
+    <button type="button" @click="clearSignature" class="btn btn-outline-danger">Borrar</button>
   </div>
 </template>
   

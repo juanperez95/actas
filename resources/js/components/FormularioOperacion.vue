@@ -55,7 +55,7 @@
           <td><input type="text" placeholder="Ingrese el activo" v-model="form_data.activo_recogido" class="form-control"></td>
           <td><input type="text" placeholder="Ingrese las observaciones" v-model="form_data.observaciones_recogido" class="form-control" @keyup.enter="agregarRecogidos"></td>
           <td>
-            <button class="btn btn-danger" @click="agregarRecogidos"><i class="fa-solid fa-plus"></i> Agregar</button>
+            <button class="btn btn-outline-danger" @click="agregarRecogidos"><i class="fa-solid fa-plus"></i> Agregar</button>
           </td>
         </tr>
       </table>
@@ -76,7 +76,7 @@
                 <td scope="col">{{data.serial_recogido}}</td>
                 <td scope="col">{{data.activo_recogido}}</td>
                 <td scope="col">
-                  <button class="btn btn-danger" @click="quitarRecogidos(data)"><i class="fa-solid fa-trash"></i></button>
+                  <button class="btn btn-outline-danger" @click="quitarRecogidos(data)"><i class="fa-solid fa-trash"></i></button>
                 </td>
               </tr>
             </tbody>
@@ -104,7 +104,7 @@
           <td><input type="text" placeholder="Ingrese el activo" v-model="form_data.activo_entregado" class="form-control"></td>
           <td><input type="text" placeholder="Ingrese las observaciones" v-model="form_data.observaciones_entregado" class="form-control" @keyup.enter="agregarEntregados"></td>
           <td>
-            <button @click="agregarEntregados" class="btn btn-danger"><i class="fa-solid fa-plus"></i> Agregar</button>
+            <button @click="agregarEntregados" class="btn btn-outline-danger"><i class="fa-solid fa-plus"></i> Agregar</button>
           </td>
         </tr>
       </table>
@@ -127,7 +127,7 @@
               <td scope="col">{{data.serial_entregado}}</td>
               <td scope="col">{{data.activo_entregado}}</td>
               <td scope="col">
-                <button class="btn btn-danger" @click="quitarEntregados(data)"><i class="fa-solid fa-trash"></i></button>
+                <button class="btn btn-outline-danger" @click="quitarEntregados(data)"><i class="fa-solid fa-trash"></i></button>
               </td>
             </tr>
           </tbody>
@@ -172,8 +172,8 @@
       </table>
       <div class="container-fluid b-finales">
         <!-- Llamar a la funcion para generar el pdf -->
-        <button class="btn btn-danger b-anchof" @click="generarPDF"><span :class="[cargar]"></span>Generar PDF</button>
-        <button class="btn btn-danger b-anchof" @click="limpiarTodo"><span class="fa-solid fa-eraser"/> Limpiar formulario</button>
+        <button class="btn btn-outline-danger b-anchof" @click="generarPDF"><span :class="[cargar]"></span>Generar PDF</button>
+        <button class="btn btn-outline-danger b-anchof" @click="limpiarTodo"><span class="fa-solid fa-eraser"/> Limpiar formulario</button>
       </div>
     </div>
   <a href="#" download="" id="link"></a>

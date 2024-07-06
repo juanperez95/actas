@@ -28,8 +28,15 @@ class GestoresActas extends Controller
 
     }
     // Modificar
-    public function ModificarGestores(Request $request){
-        return null;
+    public function ModificarGestores($id, Request $request){
+        $gestor = GestoreActas::find($id);
+        $gestor->cedula = $request->input('cedula');
+        $gestor->nombre_gestor = $request->input('nombre_gestor');
+        $gestor->correo = $request->input('correo');
+        $gestor->rol = $request->input('rol');
+        $gestor->password = '';
+        $gestor->save();
+        return response()->json(true);
     }
     // Eliminar
     public function EliminarGestores($id){

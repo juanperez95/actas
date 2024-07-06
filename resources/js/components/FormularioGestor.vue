@@ -14,7 +14,7 @@
         <input type="email" placeholder="Ingrese el correo" v-model="form_data.correo_persona" class="form-control"/>
       </p>
       <p>
-        El presente formato se tiene con fin de entregar la responsabilidad del activo solicitado al gestor
+        El presente formato se tiene con fin de entregar la responsabilidad del activo solicitado al gestor {{cargar1}}
         <span :class="[cargar2]"></span><select class="form-select" v-model="form_data.nombre_gestor" @click="mostrarGestores">
           <option :value="gestor.nombre_gestor" v-for="gestor in lista_gestores" :key="gestor.id">{{gestor.nombre_gestor.toUpperCase()}}</option>
         </select>
@@ -67,7 +67,7 @@
             <input type="text" placeholder="Ingrese las observaciones" v-model="form_data.observaciones_elemento" @keyup.enter="agregarElementos" class="form-control"/>
           </td>
           <td>
-            <button class="btn btn-danger" @click="agregarElementos"><i class="fa-solid fa-plus"></i> Agregar</button>
+            <button class="btn btn-outline-danger" @click="agregarElementos"><i class="fa-solid fa-plus"></i> Agregar</button>
           </td>
         </tr>
       </table>
@@ -90,7 +90,7 @@
               <td scope="col">{{data.serial_elemento.toUpperCase()}}</td>
               <td scope="col">{{data.activo_elemento.toUpperCase()}}</td>
               <td scope="col">
-                <button class="btn btn-danger" @click="quitarElementos(data)"><i class="fa-solid fa-trash"></i></button>
+                <button class="btn btn-outline-danger" @click="quitarElementos(data)"><i class="fa-solid fa-trash"></i></button>
               </td>
             </tr>
           </tbody>
@@ -126,7 +126,7 @@
             <input type="text" placeholder="Ingrese las observaciones" v-model="form_data.observaciones_elemento_r" @keyup.enter="agregarRecogido" class="form-control"/>
           </td>
           <td>
-            <button class="btn btn-danger" @click="agregarRecogido"><i class="fa-solid fa-plus"></i> Agregar</button>
+            <button class="btn btn-outline-danger" @click="agregarRecogido"><i class="fa-solid fa-plus"></i> Agregar</button>
           </td>
         </tr>
       </table>
@@ -149,7 +149,7 @@
               <td scope="col">{{data.serial_elemento.toUpperCase()}}</td>
               <td scope="col">{{data.activo_elemento.toUpperCase()}}</td>
               <td scope="col">
-                <button class="btn btn-danger" @click="quitarRecogido(data)"><i class="fa-solid fa-trash"></i></button>
+                <button class="btn btn-outline-danger" @click="quitarRecogido(data)"><i class="fa-solid fa-trash"></i></button>
               </td>
             </tr>
           </tbody>
@@ -187,8 +187,8 @@
       </table>
     </div>
     <div class="container-fluid b-finales">
-      <button class="btn btn-danger mt-2 b-anchof" @click="generarPDFGestor"><span :class="[cargar]"></span>  Generar PDF</button>
-      <button class="btn btn-danger mt-2 b-anchof" @click="limpiarTodo"><span class="fa-solid fa-eraser"/>  Limpiar Formulario</button>
+      <button class="btn btn-outline-danger mt-2 b-anchof" @click="generarPDFGestor"><span :class="[cargar]"></span>  Generar PDF</button>
+      <button class="btn btn-outline-danger mt-2 b-anchof" @click="limpiarTodo"><span class="fa-solid fa-eraser"/>  Limpiar Formulario</button>
     </div>
 
     <a href="" download="" id="enlace"></a>

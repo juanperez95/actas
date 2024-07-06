@@ -1,7 +1,7 @@
 <template>
     <div>
         <br>
-        <div class="container m-2 p-4" style="display: flex; justify-content:space-between; gap:50px; align-items:center;">
+        <div class="m-2 p-4 input-group mb-3" style="display: flex; justify-content:space-between; gap:50px; align-items:center;">
             <select name="" id="" class="form-select" @click="mostrarGestores(); llenarCampos()" v-model.number="g_seleccionado">
                 <option value="0">Seleccione un gestor</option>
                 <option :value="g.id" v-for="g in gestor" :key="g.id">{{g.nombre_gestor.toUpperCase()}}</option>
@@ -15,7 +15,7 @@
             </select>
         </div>
 
-        <div class="container m-3 p-4">
+        <div class="m-3 p-4 input-group mb-3">
             <!-- Tabla de gestor con sus datos -->
             <table class="table" v-if="g_seleccionado !== 0">
                 <thead>
@@ -30,13 +30,18 @@
                 </thead>
                 <tbody>
                     <tr v-for="g_found in campos_gestor" :key="g_found.id">
-                        <td scope="row"><input type="text" class="form-control" :value="g_found.cedula"></td>
-                        <td scope="row"><input type="text" class="form-control" :value="g_found.nombre_gestor"></td>
-                        <td scope="row"><input type="text" class="form-control" :value="g_found.correo"></td>
-                        <td scope="row"><input type="text" class="form-control" :value="g_found.rol"></td>
+                        <td scope="row"><input type="text" class="form-control"  v-model="datos_gestor.cedula"></td>
+                        <td scope="row"><input type="text" class="form-control"  v-model="datos_gestor.nombre_gestor"></td>
+                        <td scope="row"><input type="text" class="form-control"  v-model="datos_gestor.correo"></td>
                         <td scope="row">
-                            <button class="btn btn-primary mt-2 m-2"><i class="fa-solid fa-user-pen"></i> Editar</button>
-                            <button class="btn btn-danger mt-2 m-2" @click="eliminarGestor"><i class="fa-solid fa-user-xmark"></i>   Eliminar</button>
+                            <input type="radio" class="form-check-input p-2 m-1" value="administrador" v-model="datos_gestor.rol" name="roles" :checked="datos_gestor.boolean_rol_admin">
+                            <label for="" class="form-check-label">Admin</label><br>
+                            <input type="radio" class="form-check-input p-2 m-1" value="gestor" v-model="datos_gestor.rol" name="roles" :checked="datos_gestor.boolean_rol">
+                            <label for="" class="form-check-label">Gestor</label>
+                        </td>
+                        <td scope="row">
+                            <button class="btn btn-outline-primary mt-2 m-2" @click="editarGestor"><span :class="[carga_update]"></span> Editar</button>
+                            <button class="btn btn-outline-danger mt-2 m-2" @click="eliminarGestor"><i class="fa-solid fa-eraser"></i>   Eliminar</button>
                         </td>
                     </tr>
                 </tbody>
@@ -53,11 +58,11 @@
                 </thead>
                 <tbody>
                     <tr v-for="camp in campos_cam" :key="camp.id">
-                        <td scope="row"><input type="text" class="form-control" v-model="nombre_camp"></td>
+                        <td scope="row"><input type="text" class="form-control" v-model="datos_camapaña.nombre_camp"></td>
                         <td scope="row"><input type="text" class="form-control" disabled :value="camp.id"></td>
                         <td scope="row">
-                            <button class="btn btn-primary mt-2 m-2" @click="editarCamp"><i class="fa-solid fa-user-pen"></i> Editar</button>
-                            <button class="btn btn-danger mt-2 m-2" @click="eliminarCam"><i class="fa-solid fa-user-xmark"></i>   Eliminar</button>
+                            <button class="btn btn-outline-primary mt-2 m-2" @click="editarCamp"><span :class="[carga_update]"></span> Editar</button>
+                            <button class="btn btn-outline-danger mt-2 m-2" @click="eliminarCam"><i class="fa-solid fa-eraser"></i>   Eliminar</button>
                         </td>
                     </tr>
                 </tbody>
@@ -85,13 +90,25 @@ export default {
             campos_gestor:[],
             campos_cam:[],
             cargar:'',
-            nombre_camp:'',
+            datos_gestor:{
+                nombre_gestor:'',
+                cedula:'',
+                rol:'',
+                correo:'',
+                boolean_rol:false,
+                boolean_rol_admin:true,
+            },
+            datos_camapaña:{
+                nombre_camp:''
+            },
+            // Cargas al editar
+            carga_update:'fa-solid fa-pen'
         }
     },
     methods: {
         // Mostrar gestores
         mostrarGestores: async function(){
-            this.cargar = 'spinner-border spinner-border';
+            this.cargar = 'spinner-grow spinner-grow-sm';
             this.control_tabla = 1;
             await axios.get('/Actas_de_responsabilidad/Gestores')
             .then((gestor)=>{
@@ -104,7 +121,7 @@ export default {
         },
         // Mostrar lasw campañas disponibles
         mostrarCamps: async function(){
-            this.cargar = 'spinner-border spinner-border';
+            this.cargar = 'spinner-grow spinner-grow-sm';
             await axios.get('/Actas_de_responsabilidad/Campanas')
             .then((cam)=>{
                 this.camapaña = cam.data;
@@ -118,6 +135,20 @@ export default {
             await axios.post('/Actas_de_responsabilidad/Gestores/BuscarGestor',{id:this.g_seleccionado})
             .then((gestor)=>{
                 this.campos_gestor[0] = (gestor.data);
+                // Llenar variables para poder editar al gestor
+                this.datos_gestor.nombre_gestor = this.campos_gestor[0].nombre_gestor;
+                this.datos_gestor.cedula = this.campos_gestor[0].cedula;
+                this.datos_gestor.correo = this.campos_gestor[0].correo;
+                this.datos_gestor.rol = this.campos_gestor[0].rol;
+                // Invertir el checkradio para saber que rol tiene el usuario
+                if(this.datos_gestor.rol == 'gestor'){
+                    this.datos_gestor.boolean_rol = true;
+                    this.datos_gestor.boolean_rol_admin = false;                
+                }else{
+                    this.datos_gestor.boolean_rol = false;
+                    this.datos_gestor.boolean_rol_admin = true;                
+
+                }
             })
             .catch((error)=>{
                 console.log(error);
@@ -128,6 +159,8 @@ export default {
             .then((cam)=>{
                 this.campos_cam[0] = (cam.data);
                 this.nombre_camp = this.campos_cam[0].nombre_camp;
+                // Llenar campo de nombre
+                this.datos_camapaña.nombre_camp = this.nombre_camp;
             })
             .catch((error)=>{
                 console.log(error);
@@ -172,17 +205,31 @@ export default {
                 text: "¡La accion se ejecuto exitosamente!",
                 icon: "success"
                 });
-
             }
             });
         },
         // Editar campos de campaña
-        editarCamp(){            
-            this.boton_activado = false;
-            // axios.put(`/Actas_de_responsabilidad/Campanas/Update/${this.cam_escogida}`,{nombre_camp:this.nombre_camp})
+        editarCamp(){       
+            this.carga_update = 'spinner-border spinner-border-sm';
+            axios.put(`/Actas_de_responsabilidad/Campanas/Update/${this.cam_escogida}`,this.datos_camapaña)
+            .then((res)=>{
+                Swal.fire({
+                    icon:'success',
+                    text:'¡Actulizacion exitosa!'
+                });
+            })
+            this.carga_update = 'fa-solid fa-pen';
         },
         editarGestor(){
-            // axios.put(`/Actas_de_responsabilidad/Campanas/Update/${this.cam_escogida}`,{nombre_camp:this.nombre_camp})
+            this.carga_update = 'spinner-border spinner-border-sm';
+            axios.put(`/Actas_de_responsabilidad/Gestores/Update/${this.g_seleccionado}`,this.datos_gestor)
+            .then((res)=>{
+                Swal.fire({
+                    icon:'success',
+                    text:'¡Actulizacion exitosa!'
+                });
+            });
+            this.carga_update = 'fa-solid fa-pen';
         }
     },
 }

@@ -17,7 +17,7 @@
     <!-- framework Vue.js -->
     
     <div id="app">
-      <div class="container" style="display: flex; flex-direction:row;justify-content:space-around">
+      <div class="input-group mb-3 p-3" style="display: flex; flex-direction:row;justify-content:space-around">
         <div>
           {{-- Modal gestor --}}
           <modal-gestor/>
@@ -25,7 +25,7 @@
         {{-- Modal campaña --}}
         <modal-camp/>
       </div>
-      <div class="container p-3">
+      <div class="p-3">
         <h2>Datos de busqueda</h2>
         {{-- Tabla de busqueda con vue --}}
         <tabla-acciones/>
