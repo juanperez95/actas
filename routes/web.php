@@ -27,3 +27,12 @@ Route::put('/Actas_de_responsabilidad/Campanas/Update/{id}',[CampanasActas::clas
 
 // Registro de campañas y registros
 Route::get('/Actas_de_responsabilidad/Registro/Camps_y_gestores',[Pdf::class,'registroCamGestor'])->name('registro_camps_gestor');
+
+
+// Acta de retorno de equipo
+Route::get('/devolucion-equipo', function () {
+    return view('devolucion-equipo');
+});
+
+Route::post('/api/devolucion-equipo', [DevolucionEquipoController::class, 'store']);
+Route::get('/api/devolucion-equipo/{devolucion}/pdf', [DevolucionEquipoController::class, 'generarPDF']);
