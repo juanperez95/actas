@@ -21,9 +21,14 @@
         <div>
           {{-- Modal gestor --}}
           <modal-gestor/>
+          {{-- Modal componente --}}
         </div>
         {{-- Modal campaña --}}
-        <modal-camp/>
+        <div>
+          
+          <modal-camp/>
+        </div>
+        <modal-componente/>
       </div>
       <div class="p-3">
         <h2>Datos de busqueda</h2>

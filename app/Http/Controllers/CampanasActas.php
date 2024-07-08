@@ -22,7 +22,7 @@ class CampanasActas extends Controller
     }
     // Modificar
     public function ModificarCam($id, Request $request){
-        $cam = ModelsCampanasActas::where('nombre_camp',$id)->first();
+        $cam = ModelsCampanasActas::find($id);
         $cam->nombre_camp = $request->input('nombre_camp');
         $cam->save();
     }
@@ -41,7 +41,7 @@ class CampanasActas extends Controller
 
     // Buscar campaña
     public function BuscarCamp(Request $request){
-        $cam = ModelsCampanasActas::where('nombre_camp',$request->input('id'))->first();
+        $cam = ModelsCampanasActas::where('id',$request->input('id'))->first();
         return response()->json($cam);
     }
 

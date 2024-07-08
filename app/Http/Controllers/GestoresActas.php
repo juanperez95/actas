@@ -36,7 +36,7 @@ class GestoresActas extends Controller
         $gestor->rol = $request->input('rol');
         $gestor->password = '';
         $gestor->save();
-        return response()->json(true);
+        return true;
     }
     // Eliminar
     public function EliminarGestores($id){
@@ -46,6 +46,13 @@ class GestoresActas extends Controller
 
     // Mostrar a todos los gestores de la base de datos
     public function MostrarGestores(){
+        $gestores = GestoreActas::where('rol','gestor')->get();
+        // Devolver la respuesta en formato JSON
+        return response()->json($gestores);
+    }
+
+    // Mostrar a todos los que conforman la base de datos
+    public function MostrarTodos(Request $request){
         $gestores = GestoreActas::all();
         // Devolver la respuesta en formato JSON
         return response()->json($gestores);

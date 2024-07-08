@@ -6,16 +6,21 @@
                 <option value="0">Seleccione un gestor</option>
                 <option :value="g.id" v-for="g in gestor" :key="g.id">{{g.nombre_gestor.toUpperCase()}}</option>
             </select>
-            <div><span :class="[cargar]"></span></div>
             <!-- <input type="text" name="" list="camps" class="form-control" placeholder="Buscar campaña" @click="mostrarCamps();llenarCamposCamps();" v-model.number="cam_escogida" @keyup.enter="llenarCamposCamps();"> -->
-
+            
             <select class="form-select" @click="mostrarCamps();llenarCamposCamps();" v-model="cam_escogida">
                 <option value="">Seleccione una campaña</option>
-                <option :value="cam.nombre_camp" v-for="cam in camapaña" :key="cam.nombre_camp" >{{cam.nombre_camp.toUpperCase()}}</option>
+                <option :value="cam.id" v-for="cam in camapaña" :key="cam.id" >{{cam.nombre_camp.toUpperCase()}}</option>
+            </select>
+            <!-- Parte de componente -->
+            <select class="form-select" @click="mostrarComponente();llenarCamposComponente()" v-model="componente_escogido">
+                <option value="">Seleccione un componente</option>
+                <option :value="componente.id" v-for="componente in componentes" :key="componente.id" >{{componente.nombre_componente.toUpperCase()}}</option>
             </select>
         </div>
-
+        
         <div class="m-3 p-4 input-group mb-3">
+            <!-- <div class="text-center"><span :class="[cargar]"></span></div> -->
             <!-- Tabla de gestor con sus datos -->
             <table class="table" v-if="g_seleccionado !== 0">
                 <thead>
@@ -67,6 +72,25 @@
                     </tr>
                 </tbody>
             </table>
+            <!-- Tabla de componentes -->
+            <table class="table" v-if="componente_escogido !== ''">
+                <thead>
+                    <h4>Campañas</h4>
+                    <tr>
+                        <th scope="row">Nombre Componente</th>
+                        <th scope="row">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="compo in campos_componente" :key="compo.id">
+                        <td scope="row"><input type="text" class="form-control" v-model="datos_componente.nombre_componente"></td>
+                        <td scope="row">
+                            <button class="btn btn-outline-primary mt-2 m-2" @click="editarComponente"><span :class="[carga_update]"></span> Editar</button>
+                            <button class="btn btn-outline-danger mt-2 m-2" @click="eliminarComponente"><i class="fa-solid fa-eraser"></i>   Eliminar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </template>
@@ -82,6 +106,7 @@ export default {
         return {
             gestor:[],
             camapaña:[],
+            componentes:[],
             // ID del gestor escogido en la lista desplegable
             g_seleccionado:0,
             // ID de la campaña escogida
@@ -89,7 +114,9 @@ export default {
             control_tabla:0,
             campos_gestor:[],
             campos_cam:[],
+            campos_componente:[],
             cargar:'',
+            componente_escogido:'',
             datos_gestor:{
                 nombre_gestor:'',
                 cedula:'',
@@ -101,6 +128,9 @@ export default {
             datos_camapaña:{
                 nombre_camp:''
             },
+            datos_componente:{
+                nombre_componente:''
+            },
             // Cargas al editar
             carga_update:'fa-solid fa-pen'
         }
@@ -110,7 +140,7 @@ export default {
         mostrarGestores: async function(){
             this.cargar = 'spinner-grow spinner-grow-sm';
             this.control_tabla = 1;
-            await axios.get('/Actas_de_responsabilidad/Gestores')
+            await axios.get('/Actas_de_responsabilidad/Gestores/Admin')
             .then((gestor)=>{
                 this.gestor = gestor.data;
             })
@@ -174,6 +204,9 @@ export default {
         eliminarCam(){
             this.notificacion(2);
         },
+        eliminarComponente(){
+            this.notificacion(3);
+        },
         // Notificaciones de sweet
         notificacion(opcion){
             Swal.fire({
@@ -197,6 +230,13 @@ export default {
                     axios.delete(`/Actas_de_responsabilidad/Campanas/Destroy/${this.cam_escogida}`)
                     .then((res)=>{
                         this.cam_escogida = '';
+                    });    
+                }
+
+                if(opcion === 3){
+                    axios.delete(`/Actas_de_responsabilidad/Componentes/Destroy/${this.componente_escogido}`)
+                    .then((res)=>{
+                        this.componente_escogido = '';
                     });    
                 }
 
@@ -224,12 +264,53 @@ export default {
             this.carga_update = 'spinner-border spinner-border-sm';
             axios.put(`/Actas_de_responsabilidad/Gestores/Update/${this.g_seleccionado}`,this.datos_gestor)
             .then((res)=>{
-                Swal.fire({
-                    icon:'success',
-                    text:'¡Actulizacion exitosa!'
-                });
+                if(res.data){
+                    Swal.fire({
+                        icon:'success',
+                        text:'¡Actulizacion exitosa!'
+                    });
+                }
             });
             this.carga_update = 'fa-solid fa-pen';
+        },
+        editarComponente(){
+            axios.put(`/Actas_de_responsabilidad/Componentes/Update/${this.componente_escogido}`,this.datos_componente)
+            .then(res=>{
+                if(res.data){
+                    Swal.fire({
+                        icon:'success',
+                        text:'¡Actualizacion exitosa!'
+                    });
+                }else{
+                    Swal.fire({
+                        icon:'info',
+                        text:`¡Ya existe el componente ${this.datos_componente.nombre_componente}!`
+                    });
+
+                }
+            })
+            .catch(error=>{
+                // console.log(error);
+            })
+        },
+        mostrarComponente: async function(){
+            await axios.get('/Actas_de_responsabilidad/Componentes')
+            .then(respuesta=>{
+                this.componentes = respuesta.data;
+            })
+            .catch(error=>{
+                // console.log(error);
+            });
+        },
+        llenarCamposComponente: async function(){
+            await axios.post(`/Actas_de_responsabilidad/Componentes/Buscar_com/${this.componente_escogido}`)
+            .then(respuesta=>{
+                this.campos_componente[0] = respuesta.data;
+                this.datos_componente.nombre_componente = this.campos_componente[0].nombre_componente;
+            })
+            .catch(error=>{
+                // console.log(error);
+            });
         }
     },
 }

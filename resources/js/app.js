@@ -4,6 +4,7 @@ import FormularioOperacion from './components/FormularioOperacion.vue';
 import ModalGestor from './components/ModalGestor.vue';
 import ModalCamp from './components/ModalCamp.vue';
 import TablaAcciones from './components/TablaAcciones.vue';
+import ModelComponentes from './components/ModelComponentes.vue';
 import 'bootstrap';
 import '@fortawesome/fontawesome-free/css/all.css';
 
@@ -21,7 +22,9 @@ app.component('form-operacion', FormularioOperacion);
 // Modales para gestores y campañas
 app.component('modal-gestor', ModalGestor);
 app.component('modal-camp', ModalCamp);
+app.component('modal-componente', ModelComponentes);
 app.component('tabla-acciones', TablaAcciones);
+
 
 
 app.mount('#app');

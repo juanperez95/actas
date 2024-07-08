@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CampanasActas;
+use App\Http\Controllers\ComponentesController;
 use App\Http\Controllers\GestoresActas;
 use App\Http\Controllers\Pdf;
 use Illuminate\Support\Facades\Route;
@@ -12,6 +13,7 @@ Route::post('/PDF_G',[Pdf::class,'pdfGestor'])->name('pdf_gestor');
 
 // Acciones con los gestores de la base de datos
 Route::get('/Actas_de_responsabilidad/Gestores',[GestoresActas::class,'MostrarGestores'])->name('mostrar_gestor');
+Route::get('/Actas_de_responsabilidad/Gestores/Admin',[GestoresActas::class,'MostrarTodos'])->name('mostrar_gestor');
 Route::post('/Actas_de_responsabilidad/Gestores/Registro',[GestoresActas::class,'AgregarGestores'])->name('registro_gestor');
 Route::post('/Actas_de_responsabilidad/Gestores/BuscarGestor',[GestoresActas::class,'BuscarGestor'])->name('buscar_gestor');
 Route::delete('/Actas_de_responsabilidad/Gestores/Destroy/{id}',[GestoresActas::class,'EliminarGestores'])->name('borrar_gestor');
@@ -27,3 +29,11 @@ Route::put('/Actas_de_responsabilidad/Campanas/Update/{id}',[CampanasActas::clas
 
 // Registro de campañas y registros
 Route::get('/Actas_de_responsabilidad/Registro/Camps_y_gestores',[Pdf::class,'registroCamGestor'])->name('registro_camps_gestor');
+
+
+// Acciones con componentes en la base de datos
+Route::post('/Actas_de_responsabilidad/Componentes/Agregar_com',[ComponentesController::class,'AgregarComponente'])->name('agregar_componentes');
+Route::get('/Actas_de_responsabilidad/Componentes',[ComponentesController::class,'MostrarComponente'])->name('mostrar_componentes');
+Route::post('/Actas_de_responsabilidad/Componentes/Buscar_com/{id}',[ComponentesController::class,'BuscarComponente'])->name('buscar_componentes');
+Route::put('/Actas_de_responsabilidad/Componentes/Update/{id}',[ComponentesController::class,'ModificarComponente'])->name('editar_componentes');
+Route::delete('/Actas_de_responsabilidad/Componentes/Destroy/{id}',[ComponentesController::class,'BorrarComponente'])->name('borrar_componentes');
