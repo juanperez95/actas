@@ -44,11 +44,8 @@
         </tr>
         <tr>
           <td>
-            <select name="" id="" class="form-select" v-model="form_data.elemento_recogido">
-              <option value="Torre">Torre</option>
-              <option value="Diadema">Diadema</option>
-              <option value="Monitor">Monitor</option>
-              <option value="Minitorre">Minitorre</option>
+            <select name="" id="" class="form-select" v-model="form_data.elemento_recogido" @click="mostrarComponentes">
+              <option :value="componente.nombre_componente" v-for="componente in componentes_vuex" :key="componente.id">{{componente.nombre_componente.toUpperCase()}}</option>             
             </select>
           </td>
           <td><input type="text" placeholder="Ingrese el serial" v-model="form_data.serial_recogido" class="form-control"></td>
@@ -93,11 +90,8 @@
         </tr>
         <tr>
           <td>
-            <select name="" id="" class="form-select" v-model="form_data.elemento_entregado">
-              <option value="Torre">Torre</option>
-              <option value="Diadema">Diadema</option> class="form-control"
-              <option value="Monitor">Monitor</option>
-              <option value="Minitorre">Minitorre</option>
+            <select name="" id="" class="form-select" v-model="form_data.elemento_entregado" @click="mostrarComponentes">
+              <option :value="componente.nombre_componente" v-for="componente in componentes_vuex" :key="componente.id">{{componente.nombre_componente.toUpperCase()}}</option>             
             </select>
           </td>
           <td><input type="text" placeholder="Ingrese el serial" v-model="form_data.serial_entregado" class="form-control"></td>
@@ -151,7 +145,7 @@
               <p>Gestor de Soluciones Tecnológica   <span :class="[cargar2]"></span></p>
               <!-- Mostrar los gestores que se encuentran en la base de datos -->
               <select v-model="form_data.nombre_gestor" id="gestores_operacion"  @click="mostrarGestores" class="form-select">
-                <option :value="gestor.nombre_gestor" v-for="gestor in lista_gestores" :key="gestor.id">{{gestor.nombre_gestor.toUpperCase()}}</option>
+                <option :value="gestor.nombre_gestor" v-for="gestor in lista_gestores" :key="gestor.id">{{gestor.nombre_gestor ? gestor.nombre_gestor.toUpperCase() : ''}}</option>
               </select>
             </td>
           <td>
@@ -180,7 +174,7 @@
   <br>
   <div class="container-fluid" align="center">
 
-    <p style="font-size:12px">Derechos reservados MaxJP 2024 1.0</p>
+    <p style="font-size:12px">Derechos reservados MaxJP 2024 1.1</p>
   </div>
   </div>
 </template>
@@ -191,6 +185,7 @@ import axios from 'axios'
 
 import Swal from 'sweetalert2'
 import Firma from './Firma.vue'
+import { mapState,mapMutations } from 'vuex';
 
 
 export default{
@@ -230,7 +225,6 @@ export default{
             // Mostrar un spinner para señalar la carga de la respuesta.
             cargar:'fa-solid fa-file-pdf',
             // Guardar los gestores de la base de datos.
-            lista_gestores:[],
             lista_camps:[],
             // Cargar las campañas
             cargar1:'',
@@ -243,6 +237,7 @@ export default{
       this.form_data.observaciones_entregado = 'N/A'
     },
     methods: {
+      ...mapMutations(['mostrarComponentes','mostrarGestores']),
       generarPDF: async function(){
           this.cargar = 'spinner-border spinner-border-sm';
           if(this.validarInformacion()){
@@ -426,18 +421,6 @@ export default{
           Swal.fire(datos);
 
         },
-        // Mostrar a todos los gestores.
-        mostrarGestores(){
-          this.cargar1 = 'spinner-border spinner-border-sm';
-          axios.get('/Actas_de_responsabilidad/Gestores')
-          .then((gestores)=>{
-            this.lista_gestores = gestores.data;
-          })
-          .catch((error)=>{
-            console.log(error);
-          })
-          this.cargar1 = '';
-        },
         // Mostrar campañas
         mostrarCamps(){
           this.cargar2 = 'spinner-border spinner-border-sm';
@@ -450,6 +433,9 @@ export default{
           })
           this.cargar2 = '';
         }
+    },
+    computed:{
+      ...mapState(['componentes_vuex','lista_gestores'])
     },
     
 }

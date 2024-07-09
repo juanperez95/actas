@@ -16,6 +16,7 @@ Route::get('/Actas_de_responsabilidad/Gestores',[GestoresActas::class,'MostrarGe
 Route::get('/Actas_de_responsabilidad/Gestores/Admin',[GestoresActas::class,'MostrarTodos'])->name('mostrar_gestor');
 Route::post('/Actas_de_responsabilidad/Gestores/Registro',[GestoresActas::class,'AgregarGestores'])->name('registro_gestor');
 Route::post('/Actas_de_responsabilidad/Gestores/BuscarGestor',[GestoresActas::class,'BuscarGestor'])->name('buscar_gestor');
+Route::post('/Actas_de_responsabilidad/Gestores/BuscarGestorName',[GestoresActas::class,'BuscarGestorName'])->name('buscar_gestor_nombre');
 Route::delete('/Actas_de_responsabilidad/Gestores/Destroy/{id}',[GestoresActas::class,'EliminarGestores'])->name('borrar_gestor');
 Route::put('/Actas_de_responsabilidad/Gestores/Update/{id}',[GestoresActas::class,'ModificarGestores'])->name('editar_gestor');
 

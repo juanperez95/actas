@@ -2,8 +2,10 @@
   <div>
     <div id="gestores">
       <p>
-        Señor(a)
-        <input type="text" placeholder="Ingrese el nombre" v-model="form_data.nombre_persona" class="form-control"/>
+        Gestor que entrega:
+        <select class="form-select" v-model="form_data.nombre_persona" @click="mostrarGestores();llenarCampos();">
+          <option :value="gestor.nombre_gestor" v-for="gestor in lista_gestores" :key="gestor.nombre_gestor">{{gestor.nombre_gestor ? gestor.nombre_gestor.toUpperCase() : ''}}</option>
+        </select>
       </p>
       <p>
         CC.
@@ -16,7 +18,7 @@
       <p>
         El presente formato se tiene con fin de entregar la responsabilidad del activo solicitado al gestor {{cargar1}}
         <span :class="[cargar2]"></span><select class="form-select" v-model="form_data.nombre_gestor" @click="mostrarGestores">
-          <option :value="gestor.nombre_gestor" v-for="gestor in lista_gestores" :key="gestor.id">{{gestor.nombre_gestor.toUpperCase()}}</option>
+          <option :value="gestor.nombre_gestor" v-for="gestor in lista_gestores" :key="gestor.nombre_gestor">{{gestor.nombre_gestor ? gestor.nombre_gestor.toUpperCase() : ''}}</option>
         </select>
       </p>
       <p>Definiciones:</p>
@@ -50,11 +52,8 @@
         </tr>
         <tr>
           <td>
-            <select name="" id="" class="form-select" v-model="form_data.ingreso_elemento">
-              <option value="Torre">Torre</option>
-              <option value="Diadema">Diadema</option>
-              <option value="Monitor">Monitor</option>
-              <option value="Minitorre">Minitorre</option>
+            <select name="" id="" class="form-select" v-model="form_data.ingreso_elemento" @click="mostrarComponentes">
+              <option :value="componente.nombre_componente" v-for="componente in componentes_vuex" :key="componente.id">{{componente.nombre_componente.toUpperCase()}}</option>             
             </select>
           </td>
           <td>
@@ -109,11 +108,8 @@
         </tr>
         <tr>
           <td>
-            <select name="" id="" class="form-select" v-model="form_data.ingreso_elemento_r">
-              <option value="Torre">Torre</option>
-              <option value="Diadema">Diadema</option>
-              <option value="Monitor">Monitor</option>
-              <option value="Minitorre">Minitorre</option>
+            <select name="" id="" class="form-select" v-model="form_data.ingreso_elemento_r" @click="mostrarComponentes">
+              <option :value="componente.nombre_componente" v-for="componente in componentes_vuex" :key="componente.id">{{componente.nombre_componente.toUpperCase()}}</option>             
             </select>
           </td>
           <td>
@@ -204,6 +200,8 @@
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import Firma from './Firma.vue';
+import { mapState, mapMutations } from 'vuex';
+
 export default {
 
   name: "formulario-gestor",
@@ -235,8 +233,8 @@ export default {
       },
       // Mostrar un spinner para señalar la carga de la respuesta.
       cargar:'fa-solid fa-file-pdf',
-      lista_gestores:[],
       lista_camps:[],
+      campos_gestor:[],
       // Cargar las campañas
       cargar1:'',
       // Cargar gestores
@@ -244,6 +242,20 @@ export default {
     }
   },
   methods: {
+    // Datos de uso global
+    ...mapMutations(['mostrarComponentes','mostrarGestores']),
+    llenarCampos: async function(){
+      await axios.post('/Actas_de_responsabilidad/Gestores/BuscarGestorName',this.form_data)
+      .then(res=>{
+        this.campos_gestor[0] = res.data;
+        // Llenar campos de gestor que hace acta
+        this.form_data.documento_persona = this.campos_gestor[0].cedula;
+        this.form_data.correo_persona = this.campos_gestor[0].correo;
+      })
+      .catch(error=>{
+        // console.log(error);
+      });
+    },
     generarPDFGestor: async function(){
       this.cargar = 'spinner-border spinner-border-sm';
       if(this.validarInformacion()){
@@ -405,17 +417,7 @@ export default {
           Swal.fire(datos);
     },
     // Mostrar a todos los gestores.
-    mostrarGestores(){
-      this.cargar1 = 'spinner-border spinner-border-sm';
-      axios.get('/Actas_de_responsabilidad/Gestores')
-      .then((gestores)=>{
-        this.lista_gestores = gestores.data;
-      })
-      .catch((error)=>{
-        console.log(error);
-      })
-      this.cargar1 = '';
-    },
+    
     // Mostrar campañas
     mostrarCamps(){
       this.cargar2 = 'spinner-border spinner-border-sm';
@@ -429,6 +431,10 @@ export default {
       this.cargar2 = '';
     }
 
+  },
+  computed:{
+    // De manera global mostrar los componentes
+    ...mapState(['componentes_vuex','lista_gestores'])
   },
   mounted(){
     this.form_data.observaciones_elemento = 'N/A';

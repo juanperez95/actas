@@ -63,4 +63,10 @@ class GestoresActas extends Controller
         $gestor = GestoreActas::find($request->input('id'));
         return response()->json($gestor);
     }
+
+    // Buscar a un gestor por nombre
+    public function BuscarGestorName(Request $request){
+        $gestor = GestoreActas::where('nombre_gestor',$request->input('nombre_persona'))->first();
+        return response()->json($gestor);
+    }
 }

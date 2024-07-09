@@ -7,16 +7,19 @@ import TablaAcciones from './components/TablaAcciones.vue';
 import ModelComponentes from './components/ModelComponentes.vue';
 import 'bootstrap';
 import '@fortawesome/fontawesome-free/css/all.css';
+import store from './store/store';
 
 
 const app = createApp({
     data(){
         return {
+            store:store,
             seleccion_operacion : 0,
         }
     }
 });
 
+app.use(store);
 app.component('form-gestor', FormularioGestor);
 app.component('form-operacion', FormularioOperacion);
 // Modales para gestores y campañas

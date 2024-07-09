@@ -15,7 +15,7 @@
             <!-- Parte de componente -->
             <select class="form-select" @click="mostrarComponente();llenarCamposComponente()" v-model="componente_escogido">
                 <option value="">Seleccione un componente</option>
-                <option :value="componente.id" v-for="componente in componentes" :key="componente.id" >{{componente.nombre_componente.toUpperCase()}}</option>
+                <option :value="componente.id" v-for="componente in componentes_vuex" :key="componente.id" >{{componente.nombre_componente}}</option>
             </select>
         </div>
         
@@ -98,7 +98,8 @@
 <script>
 import axios from 'axios';
 import Swal from 'sweetalert2';
-
+// Acceder a funciones y datos de manera global
+import { mapMutations, mapState } from 'vuex';
 
 
 export default {
@@ -106,7 +107,6 @@ export default {
         return {
             gestor:[],
             camapaña:[],
-            componentes:[],
             // ID del gestor escogido en la lista desplegable
             g_seleccionado:0,
             // ID de la campaña escogida
@@ -135,7 +135,11 @@ export default {
             carga_update:'fa-solid fa-pen'
         }
     },
+    computed:{
+        ...mapState(['componentes_vuex']),
+    },
     methods: {
+        ...mapMutations(['mostrarComponentes']),
         // Mostrar gestores
         mostrarGestores: async function(){
             this.cargar = 'spinner-grow spinner-grow-sm';
@@ -294,13 +298,7 @@ export default {
             })
         },
         mostrarComponente: async function(){
-            await axios.get('/Actas_de_responsabilidad/Componentes')
-            .then(respuesta=>{
-                this.componentes = respuesta.data;
-            })
-            .catch(error=>{
-                // console.log(error);
-            });
+            this.mostrarComponentes();
         },
         llenarCamposComponente: async function(){
             await axios.post(`/Actas_de_responsabilidad/Componentes/Buscar_com/${this.componente_escogido}`)
