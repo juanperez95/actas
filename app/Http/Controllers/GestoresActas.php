@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\GestoreActas;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class GestoresActas extends Controller
 {
@@ -69,4 +70,19 @@ class GestoresActas extends Controller
         $gestor = GestoreActas::where('nombre_gestor',$request->input('nombre_persona'))->first();
         return response()->json($gestor);
     }
+
+    // Saber que usuario inicio sesion
+    public function getSessionGestor(Request $request){
+        $usuario = $request->session()->get('gestor_session');
+        return response()->json($usuario);
+    }
+
+    // Restablecer contraseña
+    public function ResetPassGestor($id){
+        $gestor = GestoreActas::find($id);
+        $gestor->password = '';
+        $gestor->save();
+        return true;
+    }
+
 }

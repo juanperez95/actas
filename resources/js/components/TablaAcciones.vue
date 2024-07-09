@@ -46,6 +46,7 @@
                         </td>
                         <td scope="row">
                             <button class="btn btn-outline-primary mt-2 m-2" @click="editarGestor"><span :class="[carga_update]"></span> Editar</button>
+                            <button class="btn btn-outline-primary mt-2 m-2" @click="resetPassword"><i class="fa-solid fa-key"></i> Restablecer contraseña</button>
                             <button class="btn btn-outline-danger mt-2 m-2" @click="eliminarGestor"><i class="fa-solid fa-eraser"></i>   Eliminar</button>
                         </td>
                     </tr>
@@ -308,6 +309,17 @@ export default {
             })
             .catch(error=>{
                 // console.log(error);
+            });
+        },
+        // Restablecer la contraseña de un usuario
+        resetPassword(){
+            axios.post(`/Actas_de_responsabilidad/Gestores/ResetPass/${this.g_seleccionado}`)
+            .then(res=>{
+                if(res.data){
+                    Swal.fire('','¡Restablecimiento de contraseña exitoso!','success');
+                }
+            }).catch(error=>{
+                console.log(error);
             });
         }
     },

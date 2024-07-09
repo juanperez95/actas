@@ -19,6 +19,8 @@ Route::post('/Actas_de_responsabilidad/Gestores/BuscarGestor',[GestoresActas::cl
 Route::post('/Actas_de_responsabilidad/Gestores/BuscarGestorName',[GestoresActas::class,'BuscarGestorName'])->name('buscar_gestor_nombre');
 Route::delete('/Actas_de_responsabilidad/Gestores/Destroy/{id}',[GestoresActas::class,'EliminarGestores'])->name('borrar_gestor');
 Route::put('/Actas_de_responsabilidad/Gestores/Update/{id}',[GestoresActas::class,'ModificarGestores'])->name('editar_gestor');
+Route::get('/Actas_de_responsabilidad/Gestores/Session',[GestoresActas::class,'getSessionGestor'])->name('inicio_gestor');
+Route::post('/Actas_de_responsabilidad/Gestores/ResetPass/{id}',[GestoresActas::class,'ResetPassGestor'])->name('restablecer_gestor');
 
 
 // Acciones con las campañas
@@ -38,3 +40,9 @@ Route::get('/Actas_de_responsabilidad/Componentes',[ComponentesController::class
 Route::post('/Actas_de_responsabilidad/Componentes/Buscar_com/{id}',[ComponentesController::class,'BuscarComponente'])->name('buscar_componentes');
 Route::put('/Actas_de_responsabilidad/Componentes/Update/{id}',[ComponentesController::class,'ModificarComponente'])->name('editar_componentes');
 Route::delete('/Actas_de_responsabilidad/Componentes/Destroy/{id}',[ComponentesController::class,'BorrarComponente'])->name('borrar_componentes');
+
+
+// Rutas de login
+Route::get('/Actas_de_responsabilidad/Login',[Pdf::class,'Login'])->name('inicio_sesion');
+Route::post('/Actas_de_responsabilidad/Login/Validate',[Pdf::class,'InicioSesionValidate'])->name('validar_inicio_sesion');
+Route::get('/Actas_de_responsabilidad/Login/Destroy',[Pdf::class,'SignOut'])->name('cerrar_sesion');
