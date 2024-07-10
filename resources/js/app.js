@@ -6,6 +6,8 @@ import ModalCamp from './components/ModalCamp.vue';
 import TablaAcciones from './components/TablaAcciones.vue';
 import ModelComponentes from './components/ModelComponentes.vue';
 import DevolucionEquipoForm from './components/DevolucionEquipoForm.vue';
+import login from './components/login.vue';
+
 import 'bootstrap';
 import '@fortawesome/fontawesome-free/css/all.css';
 import store from './store/store';
@@ -30,5 +32,7 @@ app.component('modal-componente', ModelComponentes);
 app.component('tabla-acciones', TablaAcciones);
 app.component('form-retorno', DevolucionEquipoForm);
 
+// Inicio de sesion
+app.component('login', login);
 
 app.mount('#app');

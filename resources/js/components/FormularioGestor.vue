@@ -3,8 +3,8 @@
     <div id="gestores">
       <p>
         Gestor que entrega:
-        <select class="form-select" v-model="form_data.nombre_persona" @click="mostrarGestores();llenarCampos();">
-          <option :value="gestor.nombre_gestor" v-for="gestor in lista_gestores" :key="gestor.nombre_gestor">{{gestor.nombre_gestor ? gestor.nombre_gestor.toUpperCase() : ''}}</option>
+        <select class="form-select" v-model="form_data.nombre_persona" @click="getSession();llenarCampos();">
+          <option :value="gestor.nombre_gestor" v-for="gestor in usuario_session" :key="gestor.nombre_gestor">{{gestor.nombre_gestor ? gestor.nombre_gestor.toUpperCase() : ''}}</option>
         </select>
       </p>
       <p>
@@ -243,7 +243,7 @@ export default {
   },
   methods: {
     // Datos de uso global
-    ...mapMutations(['mostrarComponentes','mostrarGestores']),
+    ...mapMutations(['mostrarComponentes','mostrarGestores','getSession']),
     llenarCampos: async function(){
       await axios.post('/Actas_de_responsabilidad/Gestores/BuscarGestorName',this.form_data)
       .then(res=>{
@@ -434,7 +434,7 @@ export default {
   },
   computed:{
     // De manera global mostrar los componentes
-    ...mapState(['componentes_vuex','lista_gestores'])
+    ...mapState(['componentes_vuex','lista_gestores','usuario_session'])
   },
   mounted(){
     this.form_data.observaciones_elemento = 'N/A';

@@ -144,8 +144,8 @@
           <td>
               <p>Gestor de Soluciones Tecnológica   <span :class="[cargar2]"></span></p>
               <!-- Mostrar los gestores que se encuentran en la base de datos -->
-              <select v-model="form_data.nombre_gestor" id="gestores_operacion"  @click="mostrarGestores" class="form-select">
-                <option :value="gestor.nombre_gestor" v-for="gestor in lista_gestores" :key="gestor.id">{{gestor.nombre_gestor ? gestor.nombre_gestor.toUpperCase() : ''}}</option>
+              <select v-model="form_data.nombre_gestor" id="gestores_operacion"  @click="getSession" class="form-select">
+                <option :value="gestor.nombre_gestor" v-for="gestor in usuario_session" :key="gestor.id">{{gestor.nombre_gestor ? gestor.nombre_gestor.toUpperCase() : ''}}</option>
               </select>
             </td>
           <td>
@@ -237,7 +237,7 @@ export default{
       this.form_data.observaciones_entregado = 'N/A'
     },
     methods: {
-      ...mapMutations(['mostrarComponentes','mostrarGestores']),
+      ...mapMutations(['mostrarComponentes','mostrarGestores','getSession']),
       generarPDF: async function(){
           this.cargar = 'spinner-border spinner-border-sm';
           if(this.validarInformacion()){
@@ -435,7 +435,7 @@ export default{
         }
     },
     computed:{
-      ...mapState(['componentes_vuex','lista_gestores'])
+      ...mapState(['componentes_vuex','lista_gestores','usuario_session'])
     },
     
 }

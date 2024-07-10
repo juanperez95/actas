@@ -9,7 +9,14 @@
 </head>
 <body>
   <div class="container">
-    <img src="{{ asset('images/americas.png') }}" alt="Descripción de la imagen" class="logo">
+    <div style="display:flex;justify-content:space-between;">
+      <img src="{{ asset('images/americas.png') }}" alt="Descripción de la imagen" class="logo">
+      <div>
+
+        <a href="{{route('cerrar_sesion')}}"><i class="fa-solid fa-right-from-bracket"></i>  Cerrar Sesion</a><br>
+        <a href="{{route('registro_camps_gestor')}}"><i class="fa-solid fa-gear"></i>  Configuracion Avanzada</a>
+      </div>
+    </div>
     
     <h2>ACTAS</h2>
     

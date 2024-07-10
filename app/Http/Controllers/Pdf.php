@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\GestoreActas;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 
@@ -10,12 +11,52 @@ use Dompdf\Options;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 
 class Pdf extends Controller
 {
+    // Inicio de sesion vista
+    public function Login(Request $request){
+        // Validar si hay una sesion iniciada
+        if($request->session()->has('gestor_session')){
+            $response = response(view('home'))->header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+            return $response;
+        }
+        return response(view('login'))->header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+    }
+
+    // Procesar el inicio de sesion
+    public function InicioSesionValidate(Request $request){
+        // Validar si existe el usuario
+        if(GestoreActas::where('cedula',$request->input('cedula'))->exists()){
+            $usuario = GestoreActas::where('cedula',$request->input('cedula'))->first();
+            // Validar si el usuario ya asigno contraseña
+            if($usuario->password == ''){
+                $usuario->password = md5($request->input('password')); // Encryptar la clave
+                $usuario->save();
+                return 1;
+                // Si se asigno clave posteriormente inicia ya la cuenta
+            }else if($usuario->password != ''){
+                // Validar si la clave ingresada coincide con la de la BD
+                if($usuario->password == md5($request->input('password'))){
+                    $request->session()->put('gestor_session',$usuario);
+                    return 2;
+                }
+                // Si no entra a la condicion significa que no digito bien la contraseña
+                return 4;
+            }
+        }
+        return 0; // No existe el usuario en la base de datos
+    }
+
+
+
     // Vista principal de los formularios
-    public function Home(){
-        return view('actas');
+    public function Home(Request $request){
+        if($request->session()->has('gestor_session')){
+            return view('actas');
+        }
+        return response(view('login'))->header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
     }
 
 
@@ -55,7 +96,7 @@ class Pdf extends Controller
         $firma2 = $request->input('firma2');
 
         // Decodificar las dos firmas
-        $data = $this->encodeImagen($firma1, $firma2);
+        $data = $this->encodeImagen($firma1, $firma2,$nombre_gestor,$nombre_encargado);
 
         $ruta1 = $data['ruta1'];
         $ruta2 = $data['ruta2'];
@@ -66,7 +107,7 @@ class Pdf extends Controller
 
 
         try{
-            $pdf = new Dompdf($opciones);
+            $pdf = new Dompdf($opciones);   
             // Compactar todas la variables para enviarlas al PDF
             $vista = view('pdf_operacion',compact('nombre_encargado',
             'documento_encargado',
@@ -130,7 +171,7 @@ class Pdf extends Controller
         $firma2 = $request->input('firma2');
 
         // Codificar las imagenes
-        $data =$this->encodeImagen($firma1,$firma2);
+        $data =$this->encodeImagen($firma1,$firma2,$nombre_persona,$nombre_gestor);
         $rutaLogo = $data['rutaLogo'];
         $ruta1 = $data['ruta1'];
         $ruta2 = $data['ruta2'];
@@ -168,7 +209,7 @@ class Pdf extends Controller
     }
 
     // Funcion para codificar imagenes de las firmas y logo de la compañia
-    public function encodeImagen($firma1, $firma2){
+    public function encodeImagen($firma1, $firma2, $nombre_entrega,$nombre_recibe){
         $firma1 = str_replace('data:image/png;base64,', '', $firma1);
         $firma2 = str_replace('data:image/png;base64,', '', $firma2);
 
@@ -179,8 +220,8 @@ class Pdf extends Controller
         $firmaImg2 = base64_decode($firma2);
 
         // Guardar imagenes en el servidor
-        $ruta1 = public_path('firmas\firma1.png');
-        $ruta2 = public_path('firmas\firma2.png');
+        $ruta1 = public_path(sprintf('firmas\%s.png',$nombre_entrega));
+        $ruta2 = public_path(sprintf('firmas\%s.png',$nombre_recibe));
         $rutaLogo = public_path('images\americas.png');
 
         file_put_contents($ruta1, $firmaImg1);
@@ -200,8 +241,22 @@ class Pdf extends Controller
 
 
     // Registro de campañas y gestores
-    public function registroCamGestor(){
-        return view('registro_camps_gestores');
+    public function registroCamGestor(Request $request){
+        if($request->session()->has('gestor_session')){
+            $usuario = $request->session()->get('gestor_session');
+            if($usuario->rol == 'administrador'){
+                return view('registro_camps_gestores');
+            }
+        }        
+        return redirect()->route('home');
     }
 
+    // Destrozar la sesion al cerrar
+    public function SignOut(Request $request){
+
+        $request->session()->flush();
+
+        return redirect()->route('home');
+    }
+    
 }
