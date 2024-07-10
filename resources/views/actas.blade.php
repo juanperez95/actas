@@ -21,10 +21,12 @@
       <select id="option" v-model.number="seleccion_operacion" class="form-select">
         <option value="1">ACTA DE RESPONSABILIDAD AL GESTOR</option>
         <option value="2">ACTA DE CAMBIO A INVENTARIO DE OPERACION</option>
+        <option value="3">ACTA DE RETORNOS DE EQUIPO</option>
       </select>
       <!-- Componentes de formularios -->
       <form-gestor v-if="seleccion_operacion===1"></form-gestor>
       <form-operacion  v-if="seleccion_operacion===2"></form-operacion>
+      <form-retorno  v-if="seleccion_operacion===3"></form-retorno>
     </div>
 
 </body>

@@ -29,9 +29,4 @@ class DevolucionEquipoController extends Controller
         return response()->json($devolucion, 201);
     }
 
-    public function generarPDF(DevolucionEquipo $devolucion)
-    {
-        $pdf = PDF::loadView('pdf.devolucion-equipo', compact('devolucion'));
-        return $pdf->download('devolucion-equipo.pdf');
-    }
 }

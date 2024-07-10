@@ -38,3 +38,10 @@ Route::get('/Actas_de_responsabilidad/Componentes',[ComponentesController::class
 Route::post('/Actas_de_responsabilidad/Componentes/Buscar_com/{id}',[ComponentesController::class,'BuscarComponente'])->name('buscar_componentes');
 Route::put('/Actas_de_responsabilidad/Componentes/Update/{id}',[ComponentesController::class,'ModificarComponente'])->name('editar_componentes');
 Route::delete('/Actas_de_responsabilidad/Componentes/Destroy/{id}',[ComponentesController::class,'BorrarComponente'])->name('borrar_componentes');
+
+//Acta de retornos
+Route::get('/devolucion-equipo', function () {
+    return view('devolucion-equipo');
+});
+
+Route::post('/api/devolucion-equipo', [DevolucionEquipoController::class, 'store']);
