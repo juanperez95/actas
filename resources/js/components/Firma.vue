@@ -7,14 +7,16 @@
       height="100"
     ></canvas
     ><br />
-    <h6>{{firma_d}}</h6>
+    <h6>{{firma_d}}: <b>{{Nombre_de_quien_entrega ? Nombre_de_quien_entrega.toUpperCase() : ''}}</b></h6>
     <button type="button" @click="clearSignature" class="btn btn-outline-danger">Borrar</button>
   </div>
 </template>
   
   <script>
+  
+
 export default {
-  props: ["firma_d"],
+  props: ["firma_d", "Nombre_de_quien_entrega"],
   data() {
     return {
       drawing: false,
@@ -34,6 +36,7 @@ export default {
     canvas.addEventListener("touchcancel", this.stopDrawing);
   },
   methods: {
+    
     getPointerPos(evt) {
       const canvas = this.$refs.signaturePad;
       const rect = canvas.getBoundingClientRect();
@@ -70,6 +73,7 @@ export default {
       return canvas.toDataURL("image/png");
     },
   },
+  
 };
 </script>
   

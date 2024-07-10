@@ -6,7 +6,7 @@
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="numeroCaso" class="form-label">Número de Caso:</label>
-              <input type="text" id="numeroCaso" class="form-control" v-model="formData.numeroCaso">
+              <input type="text" id="numeroCaso" class="form-control" @click="getSession" v-model="formData.numeroCaso">
             </div>
             <div class="col-md-6 mb-3">
               <label for="nombres" class="form-label">Nombre:</label>
@@ -173,8 +173,8 @@
             <textarea id="observaciones" class="form-control" v-model="formData.observaciones" rows="3"></textarea>
             <br>
             <div  class="container firmas" > 
-              <firma firma_d="Firma de quien entrega" class="mb-3"/>
-              <firma firma_d="Firma de quien recibe" class="mb-3"/>
+              <firma firma_d="Firma de quien entrega" :Nombre_de_quien_entrega=" formData.nombres" class="mb-3"/>
+              <firma firma_d="Firma de quien recibe"  :Nombre_de_quien_entrega= "usuario_session[0].nombre_gestor" class="mb-3"/>
             </div>
             
           </div>
@@ -194,6 +194,7 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import Firma from './Firma.vue';
@@ -230,8 +231,10 @@ export default {
         tieneDiadema: 'No',
         Diademaserial: '',
         observaciones: '',
+        NombreRecibe: this.getSession(),
       },
       firma: null
+
     };
   },
   computed: {
@@ -253,9 +256,12 @@ export default {
           this.formData.estadoMonitor
         ))
       );
-    }
+    },
+    ...mapState(["usuario_session"])
+
   },
   methods: {
+    ...mapMutations(["getSession"]),
     toggleFields() {
       // Lógica para mostrar/ocultar campos según las selecciones
     },
@@ -298,8 +304,6 @@ export default {
     },
     generarPDF() {
       this.showNotification('info', 'Generando PDF...');
-      // Aquí iría la lógica para generar el PDF
-      // ...
       this.showNotification('success', 'PDF generado con éxito');
     },
     showNotification(icon, text) {
