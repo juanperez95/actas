@@ -30,16 +30,16 @@
           </div>
 
           <div class="mb-3">
-            <label for="dispositivo" class="form-label">Dispositivo:</label>
-            <select id="dispositivo" class="form-select" v-model="formData.dispositivo" @change="toggleFields">
+            <label for="dispositivo" class="form-label">Tipo de Dispositivo:</label>
+            <select id="dispositivo" class="form-select form-control" v-model="formData.dispositivo">
               <option value="">Seleccione</option>
               <option value="Portatil">Portátil</option>
               <option value="Escritorio">Escritorio</option>
             </select>
           </div>
 
-          <div v-if="formData.dispositivo === 'Portatil'" class="border p-3 rounded mb-3">
-            <h4 class="mb-3">Detalles del Portátil</h4>
+          <div class="border p-3 rounded mb-3">
+            <h4 class="mb-3">Detalles del Dispositivo</h4>
             <div class="row">
               <div class="col-md-4 mb-3">
                 <label for="serialDispositivo" class="form-label">Serial del Dispositivo:</label>
@@ -51,71 +51,14 @@
               </div>
               <div class="col-md-4 mb-3">
                 <label for="estadoDispositivo" class="form-label">Estado del Dispositivo:</label>
-                <select id="estadoDispositivo" class="form-select" v-model="formData.estadoDispositivo">
+                <select id="estadoDispositivo" class="form-select form-control" v-model="formData.estadoDispositivo">
                   <option value="Bueno">Bueno</option>
                   <option value="Dañado">Dañado</option>
                   <option value="Dado de baja">Dado de baja</option>
                 </select>
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-6 mb-3">
-                <label for="diadema" class="form-label">Diadema:</label>
-                <select id="diadema" class="form-select" v-model="formData.diadema" @change="toggleFields">
-                  <option value="No">No</option>
-                  <option value="Si">Sí</option>
-                </select>
-              </div>
-              <div class="col-md-6 mb-3" v-if="formData.diadema === 'Si'">
-                <label for="serialDiadema" class="form-label">Serial de la Diadema:</label>
-                <input type="text" id="serialDiadema" class="form-control" v-model="formData.serialDiadema">
-              </div>
-            </div>
-          </div>
 
-          <div v-if="formData.dispositivo === 'Escritorio'" class="border p-3 rounded mb-3">
-            <h4 class="mb-3">Detalles del Escritorio</h4>
-            <div class="row">
-              <div class="col-md-4 mb-3">
-                <label for="raton" class="form-label">Ratón:</label>
-                <select id="raton" class="form-select" v-model="formData.raton" @change="toggleFields">
-                  <option value="No">No</option>
-                  <option value="Si">Sí</option>
-                </select>
-              </div>
-              <div class="col-md-4 mb-3" v-if="formData.raton === 'Si'">
-                <label for="estadoRaton" class="form-label">Estado del Ratón:</label>
-                <select id="estadoRaton" class="form-select" v-model="formData.estadoRaton">
-                  <option value="Bueno">Bueno</option>
-                  <option value="Dañado">Dañado</option>
-                  <option value="Dado de baja">Dado de baja</option>
-                </select>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-4 mb-3">
-                <label for="teclado" class="form-label">Teclado:</label>
-                <select id="teclado" class="form-select" v-model="formData.teclado" @change="toggleFields">
-                  <option value="No">No</option>
-                  <option value="Si">Sí</option>
-                </select>
-              </div>
-              <div class="col-md-4 mb-3" v-if="formData.teclado === 'Si'">
-                <label for="estadoTeclado" class="form-label">Estado del Teclado:</label>
-                <select id="estadoTeclado" class="form-select" v-model="formData.estadoTeclado">
-                  <option value="Bueno">Bueno</option>
-                  <option value="Dañado">Dañado</option>
-                  <option value="Dado de baja">Dado de baja</option>
-                </select>
-              </div>
-              <div class="col-md-4 mb-3">
-                <label for="camara" class="form-label">Cámara:</label>
-                <select id="camara" class="form-select" v-model="formData.camara">
-                  <option value="No">No</option>
-                  <option value="Si">Sí</option>
-                </select>
-              </div>
-            </div>
             <div class="row">
               <div class="col-md-4 mb-3">
                 <label for="serialMonitor" class="form-label">Serial del Monitor:</label>
@@ -127,22 +70,78 @@
               </div>
               <div class="col-md-4 mb-3">
                 <label for="estadoMonitor" class="form-label">Estado del Monitor:</label>
-                <select id="estadoMonitor" class="form-select" v-model="formData.estadoMonitor">
+                <select id="estadoMonitor" class="form-select form-control" v-model="formData.estadoMonitor">
                   <option value="Bueno">Bueno</option>
                   <option value="Dañado">Dañado</option>
                   <option value="Dado de baja">Dado de baja</option>
                 </select>
               </div>
             </div>
+
             <div class="row">
-              <div class="col-md-6 mb-3">
-                <label for="segundoMonitor" class="form-label">¿Segundo Monitor?:</label>
-                <select id="segundoMonitor" class="form-select" v-model="formData.segundoMonitor" @change="toggleFields">
+              <div class="col-md-4 mb-3">
+                <label for="teclado" class="form-label">Teclado:</label>
+                <select id="teclado" class="form-select form-control" v-model="formData.teclado">
+                  <option value="No">No</option>
+                  <option value="Si">Sí</option>
+                </select>
+              </div>
+              <div class="col-md-4 mb-3" v-if="formData.teclado === 'Si'">
+                <label for="estadoTeclado" class="form-label">Estado del Teclado:</label>
+                <select id="estadoTeclado" class="form-select form-control" v-model="formData.estadoTeclado">
+                  <option value="Bueno">Bueno</option>
+                  <option value="Dañado">Dañado</option>
+                  <option value="Dado de baja">Dado de baja</option>
+                </select>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label for="raton" class="form-label">Ratón:</label>
+                <select id="raton" class="form-select form-control" v-model="formData.raton">
                   <option value="No">No</option>
                   <option value="Si">Sí</option>
                 </select>
               </div>
             </div>
+
+            <div class="row">
+              <div class="col-md-4 mb-3" v-if="formData.raton === 'Si'">
+                <label for="estadoRaton" class="form-label">Estado del Ratón:</label>
+                <select id="estadoRaton" class="form-select form-control" v-model="formData.estadoRaton">
+                  <option value="Bueno">Bueno</option>
+                  <option value="Dañado">Dañado</option>
+                  <option value="Dado de baja">Dado de baja</option>
+                </select>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label for="diadema" class="form-label">Diadema:</label>
+                <select id="diadema" class="form-select form-control" v-model="formData.diadema">
+                  <option value="No">No</option>
+                  <option value="Si">Sí</option>
+                </select>
+              </div>
+              <div class="col-md-4 mb-3" v-if="formData.diadema === 'Si'">
+                <label for="serialDiadema" class="form-label">Serial de la Diadema:</label>
+                <input type="text" id="serialDiadema" class="form-control" v-model="formData.serialDiadema">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4 mb-3">
+                <label for="camara" class="form-label">Cámara:</label>
+                <select id="camara" class="form-select form-control" v-model="formData.camara">
+                  <option value="No">No</option>
+                  <option value="Si">Sí</option>
+                </select>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label for="segundoMonitor" class="form-label">¿Segundo Monitor?:</label>
+                <select id="segundoMonitor" class="form-select form-control" v-model="formData.segundoMonitor">
+                  <option value="No">No</option>
+                  <option value="Si">Sí</option>
+                </select>
+              </div>
+            </div>
+
             <div v-if="formData.segundoMonitor === 'Si'" class="row">
               <div class="col-md-6 mb-3">
                 <label for="serialMonitor2" class="form-label">Serial del Segundo Monitor:</label>
@@ -153,30 +152,16 @@
                 <input type="text" id="activoMonitor2" class="form-control" v-model="formData.activoMonitor2">
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-6 mb-3">
-                <label for="tieneDiadema" class="form-label">¿Diadema?:</label>
-                <select id="tieneDiadema" class="form-select" v-model="formData.tieneDiadema" @change="toggleFields">
-                  <option value="No">No</option>
-                  <option value="Si">Sí</option>
-                </select>
-              </div>
-              <div class="col-md-6 mb-3" v-if="formData.tieneDiadema === 'Si'">
-                <label for="Diademaserial" class="form-label">Serial de la Diadema:</label>
-                <input type="text" id="Diademaserial" class="form-control" v-model="formData.Diademaserial">
-              </div>
-            </div>
           </div>
 
           <div class="mb-3">
             <label for="observaciones" class="form-label">Observaciones:</label>
             <textarea id="observaciones" class="form-control" v-model="formData.observaciones" rows="3"></textarea>
-            <br>
-            <div  class="container firmas" > 
-              <firma firma_d="Firma de quien entrega" :Nombre_de_quien_entrega=" formData.nombres" class="mb-3"/>
-              <firma firma_d="Firma de quien recibe"  :Nombre_de_quien_entrega= "usuario_session[0].nombre_gestor" class="mb-3"/>
-            </div>
-            
+          </div>
+
+          <div class="container firmas">
+            <firma firma_d="Firma de quien entrega" :Nombre_de_quien_entrega="formData.nombres" class="mb-3"/>
+            <firma firma_d="Firma de quien recibe" :Nombre_de_quien_entrega="usuario_session[0].nombre_gestor" class="mb-3"/>
           </div>
 
           <div class="d-flex justify-content-between">
@@ -222,6 +207,9 @@ export default {
         teclado: 'No',
         estadoTeclado: '',
         camara: 'No',
+        serialCpu: '',
+        activoCpu: '',
+        estadoCpu: '',
         serialMonitor: '',
         activoMonitor: '',
         estadoMonitor: '',
@@ -232,8 +220,10 @@ export default {
         Diademaserial: '',
         observaciones: '',
         NombreRecibe: this.getSession(),
+        firma1: null,
+        firma2: null,
       },
-      firma: null
+   
 
     };
   },
@@ -251,6 +241,9 @@ export default {
           this.formData.activoDispositivo &&
           this.formData.estadoDispositivo
         ) : (
+          this.formData.serialCpu &&
+          this.formData.activoCpu &&
+          this.formData.estadoCpu &&
           this.formData.serialMonitor &&
           this.formData.activoMonitor &&
           this.formData.estadoMonitor
@@ -286,6 +279,9 @@ export default {
         estadoDispositivo: '',
         diadema: 'No',
         serialDiadema: '',
+        serialCpu: '',
+        activoCpu: '',
+        estadoCpu: '',
         raton: 'No',
         estadoRaton: '',
         teclado: 'No',
@@ -321,5 +317,17 @@ export default {
 </script>
 
 <style scoped>
-/* Puedes agregar estilos específicos aquí si lo deseas */
+.form-control,
+.form-select {
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+}
+
+.form-select {
+  padding-right: 2.25rem;
+  background-position: right 0.75rem center;
+}
 </style>
