@@ -13,8 +13,8 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: rgb(255, 177, 50);
-            background: linear-gradient(0deg, rgba(255, 177, 50, 1) 0%, rgba(215, 91, 30, 1) 100%);
+            background: rgb(150,47,164);
+            background: linear-gradient(0deg, rgba(150,47,164,1) 0%, rgba(92,30,157,1) 100%);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -59,7 +59,7 @@
         button {
             width: 100%;
             padding: 10px;
-            background-color: #B7002C;
+            background-color: #AD1A8C;
             color: white;
             border: none;
             border-radius: 4px;
