@@ -10,7 +10,7 @@
             font-family: Arial, sans-serif;
             margin: 12px;
         }
-        h1, h2, h4 {
+        h1, h2, h3 {
             text-align: center;
             font-size:14px;
         }
@@ -44,7 +44,7 @@
 </head>
 <body>
 
-<h4>ACTA DE RESPONSABILIDAD DE EQUIPOS DE TRABAJO</h4>
+<h3>ACTA DE RESPONSABILIDAD AL GESTOR</h3>
 
 <p>Señor (@): <b>{{$nombre_persona}}</b></p>
 <p>CC: <b>{{$documento_persona}}</b></p>

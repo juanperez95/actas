@@ -34,7 +34,7 @@ const store = new Vuex.Store({
             .then(res=>{               
                 state.usuario_session[0] = res.data;
             }).catch(error=>{
-
+                
             })
         }
     }

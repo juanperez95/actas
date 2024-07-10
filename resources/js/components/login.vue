@@ -8,10 +8,10 @@
         </div>
         <div class="input-group">
           <i class="fas fa-lock"></i>
-          <input v-model="datos_login.password" type="password" placeholder="Contraseña" minlength="4" maxlength="16">
+          <input v-model="datos_login.password" type="password" placeholder="Contraseña" minlength="4" maxlength="16" required>
         </div>
         <button type="submit"><span :class="cargar"></span> {{titulo}}</button>
-        <div class="alert alert-warning mt-4">
+        <div class="alert alert-warning mt-4" style="background:#e3cdff; color: #952FA4">
           <p style="font-size:12px"><b>Nota:</b>Tenga en cuenta que para asignar la <b>clave</b> debe escribirla solo una vez en el campo de contraseña, seguido presione <b>iniciar sesion.</b></p>
         </div>
       </form>
@@ -21,7 +21,6 @@
 <script>
 import axios from 'axios';
 import Swal from 'sweetalert2';
-
 
 
   export default {
@@ -50,8 +49,8 @@ import Swal from 'sweetalert2';
               Swal.fire({title:'¡Exitoso!',text:'¡Clave correctamente asignada!',icon:'success',toast:true,position: "top-end",timer:2000});
               break;
             case 2:
-              window.location.href = '/Actas_de_responsabilidad';
-              history.replaceState(null, '', '/Actas_de_responsabilidad');
+              window.location.href = '/Actas';
+              history.replaceState(null, '', '/Actas');
               break;
             case 4:
               Swal.fire({title:'¡Ups!',text:'¿Eres tu?, Digita nuevamente la contraseña',icon:'info',toast:true,position: "top-end",timer:2000});

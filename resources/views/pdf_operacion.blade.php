@@ -9,7 +9,7 @@
             font-family: sans-serif;
             margin: 12px;
         }
-        h1, h2 {
+        h1, h2, h3 {
             text-align: center;
             font-size: 14px;
         }
@@ -37,7 +37,7 @@
             flex-direction:row;
         }
         p{
-            font-size:12px;
+            font-size:11px;
         }
     </style>
 </head>
@@ -45,7 +45,7 @@
 <script src="{{asset('js/styles.js')}}"></script>
 <img src="data:image/png;base64,{{ $rutaLogo }}" alt="" width="30%">
 
-<h3 align="center">ACTA DE RESPONSABILIDAD DE EQUIPOS DE TRABAJO</h3>
+<h3>ACTA CAMBIO DE INVENTARIO A OPERACION</h3>
 
 <p>Señor(@) <b>{{$nombre_encargado}}</b></p>
 <p>CC: <b>{{$documento_encargado}}</b></p>

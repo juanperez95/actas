@@ -385,9 +385,11 @@ export default {
             case 1: // Generar alerta del pdf
               datos = {
                 title:'¡Generando PDF!',
-                timer:2000,
-                imageUrl: 'https://play-lh.googleusercontent.com/9XKD5S7rwQ6FiPXSyp9SzLXfIue88ntf9sJ9K250IuHTL7pmn2-ZB0sngAX4A2Bw4w',
-                imageHeight: 180,
+                timer:3000,
+                icon:'success',
+                toast:true,
+                position:"top-end",
+                showConfirmButton: false,
               };
               break;
             case 2: // Generar alerta de error
@@ -402,7 +404,9 @@ export default {
                 text:'Llene los campos de serial y activo',
                 icon:'error',
                 showConfirmButton: false,
-                timer:1000,
+                timer:3000,
+                toast:true,
+                position:"top-end"
               };
             break;
             case 4: // Generar alerta de error al no llenar los campos del formulario
@@ -410,6 +414,10 @@ export default {
                 title:'¡Oops!',
                 text:'¡Valide los campos del formulario!',
                 icon:'warning',
+                toast:true,
+                position:"top-end",
+                timer:3000,
+                showConfirmButton: false,
               };
             break;
             

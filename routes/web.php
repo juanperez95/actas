@@ -2,12 +2,13 @@
 
 use App\Http\Controllers\CampanasActas;
 use App\Http\Controllers\ComponentesController;
+use App\Http\Controllers\DevolucionEquipoController;
 use App\Http\Controllers\GestoresActas;
 use App\Http\Controllers\Pdf;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [Pdf::class,'index']);
-Route::get('/Actas_de_responsabilidad',[Pdf::class,'Home'])->name('home');
+Route::get('/Actas',[Pdf::class,'Home'])->name('home');
 Route::post('/PDF_OP',[Pdf::class,'pdfOperacion'])->name('pdf_operacion');
 Route::post('/PDF_G',[Pdf::class,'pdfGestor'])->name('pdf_gestor');
 

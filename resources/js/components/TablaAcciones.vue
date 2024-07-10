@@ -1,5 +1,6 @@
 <template>
     <div>
+
         <br>
         <div class="m-2 p-4 input-group mb-3" style="display: flex; justify-content:space-between; gap:50px; align-items:center;">
             <select name="" id="" class="form-select" @click="mostrarGestores(); llenarCampos()" v-model.number="g_seleccionado">

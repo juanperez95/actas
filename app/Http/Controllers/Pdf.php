@@ -103,7 +103,8 @@ class Pdf extends Controller
         $rutaLogo = $data['rutaLogo'];
 
         $opciones = new Options();
-        $opciones->set('isRemoteEnabled', true);
+        $opciones->set('isHtml5ParserEnabled', true);
+        // $opciones->set('isRemoteEnabled', true);
 
 
         try{
@@ -127,7 +128,7 @@ class Pdf extends Controller
             'ruta1',
             'ruta2',
             'rutaLogo'));
-    
+
             $pdf->loadHtml($vista);
             $pdf->render();
 
@@ -201,9 +202,9 @@ class Pdf extends Controller
             'ruta2',
             'rutaLogo'
         ));
-
         $pdf->loadHtml($vista);
-        $pdf->render();
+        $pdf->render();        
+
 
         return $pdf->stream('gestor.pdf');
     }
