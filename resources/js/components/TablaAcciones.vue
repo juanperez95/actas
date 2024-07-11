@@ -3,7 +3,7 @@
 
         <br>
         <div class="m-2 p-4 input-group mb-3" style="display: flex; justify-content:space-between; gap:50px; align-items:center;">
-            <select name="" id="" class="form-select" @click="mostrarGestores(); llenarCampos()" v-model.number="g_seleccionado">
+            <select name="" id="" class="form-select" @click="mostrarGestores(); llenarCampos();" v-model.number="g_seleccionado">
                 <option value="0">Seleccione un gestor</option>
                 <option :value="g.id" v-for="g in gestor" :key="g.id">{{g.nombre_gestor.toUpperCase()}}</option>
             </select>
@@ -20,10 +20,14 @@
             </select>
         </div>
         
+
         <div class="m-3 p-4 input-group mb-3">
             <!-- <div class="text-center"><span :class="[cargar]"></span></div> -->
             <!-- Tabla de gestor con sus datos -->
             <table class="table" v-if="g_seleccionado !== 0">
+                
+                
+                
                 <thead>
                     <h4>Gestores</h4>
                     <tr>
@@ -35,7 +39,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="g_found in campos_gestor" :key="g_found.id">
+                    <tr v-for="g_found in campos_gestor" :key="g_found.id">                       
                         <td scope="row"><input type="text" class="form-control"  v-model="datos_gestor.cedula"></td>
                         <td scope="row"><input type="text" class="form-control"  v-model="datos_gestor.nombre_gestor"></td>
                         <td scope="row"><input type="text" class="form-control"  v-model="datos_gestor.correo"></td>
@@ -50,9 +54,19 @@
                             <button class="btn btn-outline-primary mt-2 m-2" @click="resetPassword"><i class="fa-solid fa-key"></i> Restablecer contraseña</button>
                             <button class="btn btn-outline-danger mt-2 m-2" @click="eliminarGestor"><i class="fa-solid fa-eraser"></i>   Eliminar</button>
                         </td>
-                    </tr>
+                    </tr>   
                 </tbody>
             </table>
+            <h4>Ultimas actas generadas del gestor</h4>
+            <div class="container p-2 cartas">
+                <div class="card" v-for="acta in actas" :key="acta.id">
+                    <div class="card-body">
+                      <h5 class="card-title"><b>{{acta.tipo_acta ? acta.tipo_acta.toUpperCase() : ''}}</b><br>N° Caso: {{acta.numero_caso}}</h5>
+                      <p class="card-text"><b>Fecha creacion: {{acta.fecha_creacion}}</b></p>
+                      <a href="#" class="btn btn-outline-danger"><span><i class="fa-solid fa-file-pdf"></i></span> Descargar PDF</a>
+                    </div>
+                </div>              
+            </div>                 
             <!-- Tabla de campaña con sus datos -->
             <table class="table" v-if="cam_escogida !== ''">
                 <thead>
@@ -93,13 +107,26 @@
                     </tr>
                 </tbody>
             </table>
+
         </div>
     </div>
 </template>
 
+<style scoped>
+.cartas{
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(250px,1fr));
+    gap: 10px;
+}
+
+</style>
+
+
 <script>
 import axios from 'axios';
 import Swal from 'sweetalert2';
+
+
 // Acceder a funciones y datos de manera global
 import { mapMutations, mapState } from 'vuex';
 
@@ -107,6 +134,7 @@ import { mapMutations, mapState } from 'vuex';
 export default {
     data() {
         return {
+            actas:[],
             gestor:[],
             camapaña:[],
             // ID del gestor escogido en la lista desplegable
@@ -185,6 +213,7 @@ export default {
                     this.datos_gestor.boolean_rol_admin = true;                
 
                 }
+                this.mostrarHistorial();
             })
             .catch((error)=>{
                 console.log(error);
@@ -322,7 +351,20 @@ export default {
             }).catch(error=>{
                 console.log(error);
             });
+        },
+
+        // Mostrar las ultimas actas de un gestor
+        mostrarHistorial(){
+            axios.post(`/Actas_de_responsabilidad/Historial/${this.g_seleccionado}`)
+            .then(res=>{
+                this.actas = res.data;
+            })
+            .catch(err=>{
+                console.log(err);
+            });
         }
+
+
     },
 }
 </script>

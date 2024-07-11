@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\GestoreActas;
+use App\Models\Historial_pdf;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 
@@ -15,6 +16,41 @@ use Illuminate\Support\Facades\Auth;
 
 class Pdf extends Controller
 {
+    // Metodo para guardar los pdf en el servidor y guardarlos en la base de datos.
+    public function SavePDFServerDB($nombre_pdf, $dataPDF,$fecha,Request $request ,$opcion = null, $n_caso = null){
+        $tipo_acta = null;
+        switch ($opcion) {
+            case 1:
+                $tipo_acta = 'acta_operacion';
+                break;
+            case 2:
+                $tipo_acta = 'acta_gestores';
+                break;
+            case 3:
+                $tipo_acta = 'acta_retornos';
+                break;
+            
+        }
+        $horas = Carbon::now()->format('s.u');
+        $salidaPDF = $dataPDF->output();
+        $rutaPdf = public_path('pdf/');
+        $nombrePdf = $nombre_pdf.'_'.$fecha.'_'.$horas.'.pdf';
+        file_put_contents($rutaPdf.$nombrePdf,$salidaPDF);
+        $rutaURL = 'pdf/'.$nombrePdf;
+        // Guardar en la base de datos
+        $sesion_inicio = $request->session()->get('gestor_session')->id;
+
+        $historial = new Historial_pdf();
+        $historial->tipo_acta = $tipo_acta;
+        $historial->ruta_pdf = $rutaPdf.$nombrePdf;
+        $historial->fk_id_gestor = $sesion_inicio;
+        $historial->fecha_creacion = $fecha;
+        $historial->numero_caso = $n_caso;
+        $historial->save();
+
+
+    
+    }
     // Inicio de sesion vista
     public function Login(Request $request){
         // Validar si hay una sesion iniciada
@@ -96,7 +132,7 @@ class Pdf extends Controller
         $firma2 = $request->input('firma2');
 
         // Decodificar las dos firmas
-        $data = $this->encodeImagen($firma1, $firma2,$nombre_gestor,$nombre_encargado);
+        $data = $this->encodeImagen($firma1, $firma2);
 
         $ruta1 = $data['ruta1'];
         $ruta2 = $data['ruta2'];
@@ -131,6 +167,9 @@ class Pdf extends Controller
 
             $pdf->loadHtml($vista);
             $pdf->render();
+            
+            // Guardar el pdf en el servidor y base de datos.
+            $this->SavePDFServerDB($op_solicitante,$pdf,$fecha_entrega,$request,1,$n_caso);
 
         }catch(Exception $e){
             error_log($e->getMessage());
@@ -172,7 +211,7 @@ class Pdf extends Controller
         $firma2 = $request->input('firma2');
 
         // Codificar las imagenes
-        $data =$this->encodeImagen($firma1,$firma2,$nombre_persona,$nombre_gestor);
+        $data =$this->encodeImagen($firma1,$firma2);
         $rutaLogo = $data['rutaLogo'];
         $ruta1 = $data['ruta1'];
         $ruta2 = $data['ruta2'];
@@ -204,13 +243,13 @@ class Pdf extends Controller
         ));
         $pdf->loadHtml($vista);
         $pdf->render();        
-
+        $this->SavePDFServerDB($nombre_persona.'_A_'.$nombre_gestor,$pdf,$fecha_entregaActivo,$request,2,$numero_caso);
 
         return $pdf->stream('gestor.pdf');
     }
 
     // Funcion para codificar imagenes de las firmas y logo de la compañia
-    public function encodeImagen($firma1, $firma2, $nombre_entrega,$nombre_recibe){
+    public function encodeImagen($firma1, $firma2){
         $firma1 = str_replace('data:image/png;base64,', '', $firma1);
         $firma2 = str_replace('data:image/png;base64,', '', $firma2);
 
@@ -221,8 +260,8 @@ class Pdf extends Controller
         $firmaImg2 = base64_decode($firma2);
 
         // Guardar imagenes en el servidor
-        $ruta1 = public_path(sprintf('firmas\%s.png',$nombre_entrega));
-        $ruta2 = public_path(sprintf('firmas\%s.png',$nombre_recibe));
+        $ruta1 = public_path(sprintf('firmas\%s.png','Firma1'));
+        $ruta2 = public_path(sprintf('firmas\%s.png','Firma2'));
         $rutaLogo = public_path('images\americas.png');
 
         file_put_contents($ruta1, $firmaImg1);
@@ -259,5 +298,6 @@ class Pdf extends Controller
 
         return redirect()->route('home');
     }
+
     
 }

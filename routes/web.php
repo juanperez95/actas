@@ -4,6 +4,7 @@ use App\Http\Controllers\CampanasActas;
 use App\Http\Controllers\ComponentesController;
 use App\Http\Controllers\DevolucionEquipoController;
 use App\Http\Controllers\GestoresActas;
+use App\Http\Controllers\Historiales_actas;
 use App\Http\Controllers\Pdf;
 use Illuminate\Support\Facades\Route;
 
@@ -30,7 +31,7 @@ Route::post('/Actas_de_responsabilidad/Campanas/Registro',[CampanasActas::class,
 Route::post('/Actas_de_responsabilidad/Campanas/BuscarCamp',[CampanasActas::class,'BuscarCamp'])->name('buscar_cam');
 Route::delete('/Actas_de_responsabilidad/Campanas/Destroy/{id}',[CampanasActas::class,'EliminarCam'])->name('borrar_cam');
 Route::put('/Actas_de_responsabilidad/Campanas/Update/{id}',[CampanasActas::class,'ModificarCam'])->name('editar_cam');
-
+    
 // Registro de campañas y registros
 Route::get('/Actas_de_responsabilidad/Registro/Camps_y_gestores',[Pdf::class,'registroCamGestor'])->name('registro_camps_gestor');
 
@@ -53,3 +54,6 @@ Route::post('/api/devolucion-equipo', [DevolucionEquipoController::class, 'store
 Route::get('/Actas_de_responsabilidad/Login',[Pdf::class,'Login'])->name('inicio_sesion');
 Route::post('/Actas_de_responsabilidad/Login/Validate',[Pdf::class,'InicioSesionValidate'])->name('validar_inicio_sesion');
 Route::get('/Actas_de_responsabilidad/Login/Destroy',[Pdf::class,'SignOut'])->name('cerrar_sesion');
+
+// Rutas de historial
+Route::post('/Actas_de_responsabilidad/Historial/{id}',[Historiales_actas::class,'AccederDatos'])->name('historial_actas');

@@ -14,8 +14,8 @@ background: radial-gradient(circle, rgba(149,71,244,1) 0%, rgba(152,35,130,1) 10
       <img src="{{ asset('images/americas.png') }}" alt="Descripción de la imagen" class="logo">
       <div>
 
-        <a href="{{route('cerrar_sesion')}}"><i class="fa-solid fa-right-from-bracket"></i>  Cerrar Sesion</a><br>
-        <a href="{{route('registro_camps_gestor')}}"><i class="fa-solid fa-gear"></i>  Configuracion Avanzada</a>
+        <a class="enlaces" href="{{route('cerrar_sesion')}}"><i class="fa-solid fa-right-from-bracket"></i>  Cerrar Sesion</a><br>
+        <a class="enlaces" href="{{route('registro_camps_gestor')}}"><i class="fa-solid fa-gear"></i>  Configuracion</a>
       </div>
     </div>
     

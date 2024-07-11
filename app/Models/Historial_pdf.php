@@ -14,10 +14,17 @@ class Historial_pdf extends Model
 
     protected $fillable = [
         'id',
-        'elemento',
-        'n_serial',
-        'n_activo',
+        'tipo_acta',
+        'ruta_pdf',
+        'fk_id_gestor',
+        'fecha_creacion',
+        'numero_caso'
     ];
 
     protected $table = 'historial_actas';
+
+    // Acceder a los atributos del gestor
+    public function getGestor(){
+        return $this->belongsTo(GestoreActas::class, 'id');
+    }
 }

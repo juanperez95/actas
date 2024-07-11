@@ -35,7 +35,6 @@ class GestoresActas extends Controller
         $gestor->nombre_gestor = $request->input('nombre_gestor');
         $gestor->correo = $request->input('correo');
         $gestor->rol = $request->input('rol');
-        $gestor->password = '';
         $gestor->save();
         return true;
     }

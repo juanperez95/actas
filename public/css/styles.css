@@ -95,3 +95,9 @@ padding: 0;
 .b-anchof{
   width: 200px;
 }
+
+.enlaces{
+  text-decoration: none;
+  font-size: 18px;
+  color:rgb(223, 79, 79)
+}

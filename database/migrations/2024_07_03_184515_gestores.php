@@ -17,7 +17,7 @@ return new class extends Migration
             $table->bigInteger('cedula');
             $table->string('nombre_gestor');
             $table->string('correo');
-            $table->string('password');
+            $table->string('password')->nullable(true);
             $table->string('rol');
             $table->timestamps();
         });
