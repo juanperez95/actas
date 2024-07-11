@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ACTA DE ENTREGA DE EQUIPOS</title>
+    <title>ACTA DE RETORNO DE EQUIPOS</title>
     <style>
         body {
             font-family: sans-serif;
@@ -45,7 +45,7 @@
 <script src="{{asset('js/styles.js')}}"></script>
 <img src="{{$rutaLogo}}" alt="Logo" width="30%">
 
-<h3>ACTA DE ENTREGA DE EQUIPOS</h3>
+<h3>ACTA DE RETORNO DE EQUIPOS</h3>
 
 <p>Número de Caso: <b>{{$numeroCaso}}</b></p>
 <p>Nombre: <b>{{$nombres}}</b></p>
