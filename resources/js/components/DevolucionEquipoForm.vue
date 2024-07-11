@@ -184,10 +184,10 @@
           </div>
 
           <div class="d-flex justify-content-between">
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-danger">
               <i class="fas fa-file-pdf me-2"></i>Generar PDF
             </button>
-            <button type="reset" class="btn btn-secondary" @click="limpiarTodo">
+            <button type="reset" class="btn btn-info" @click="limpiarTodo">
               <i class="fas fa-eraser me-2"></i>Limpiar
             </button>
           </div>
@@ -210,6 +210,8 @@ export default {
   data() {
     return {
       formData: {
+        dispositivo:'',
+        Tipoescritorio: '',
         numeroCaso: '',
         nombres: '',
         campana: '',
@@ -249,6 +251,8 @@ export default {
   computed: {
     isFormValid() {
       return (
+        this.formData.dispositivo &&
+        this.formData.Tipoescritorio &&
         this.formData.numeroCaso &&
         this.formData.nombres &&
         this.formData.campana &&
@@ -287,6 +291,8 @@ export default {
     limpiarTodo() {
       // Lógica para reiniciar el formulario
       this.formData = {
+        dispositivo:'',
+        Tipoescritorio: '',
         numeroCaso: '',
         nombres: '',
         campana: '',
@@ -317,7 +323,8 @@ export default {
         observaciones: '',
       };
     },
-    generarPDF() {
+    generarPDFGestor: async function() {
+      this.cargar = 'spinner-border spinner-border-sm';
       this.showNotification('info', 'Generando PDF...');
       this.showNotification('success', 'PDF generado con éxito');
     },
