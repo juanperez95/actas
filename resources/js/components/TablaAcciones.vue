@@ -30,7 +30,7 @@
                 
                 <thead>
                     <h4>Gestores</h4>
-                    <tr>
+                    <tr class="cabeceras_tabla">
                         <th scope="row">N° Documento</th>
                         <th scope="row">Nombre gestor</th>
                         <th scope="row">Correo</th>
@@ -44,15 +44,15 @@
                         <td scope="row"><input type="text" class="form-control"  v-model="datos_gestor.nombre_gestor"></td>
                         <td scope="row"><input type="text" class="form-control"  v-model="datos_gestor.correo"></td>
                         <td scope="row">
-                            <input type="radio" class="form-check-input p-2 m-1" value="administrador" v-model="datos_gestor.rol" name="roles" :checked="datos_gestor.boolean_rol_admin">
+                            <input type="radio" class="form-check-input p-2 m-2 morado_check" value="administrador" v-model="datos_gestor.rol" name="roles" :checked="datos_gestor.boolean_rol_admin">
                             <label for="" class="form-check-label">Admin</label><br>
-                            <input type="radio" class="form-check-input p-2 m-1" value="gestor" v-model="datos_gestor.rol" name="roles" :checked="datos_gestor.boolean_rol">
+                            <input type="radio" class="form-check-input p-2 m-2 morado_check " value="gestor" v-model="datos_gestor.rol" name="roles" :checked="datos_gestor.boolean_rol">
                             <label for="" class="form-check-label">Gestor</label>
                         </td>
                         <td scope="row">
-                            <button class="btn btn-outline-primary mt-2 m-2" @click="editarGestor"><span :class="[carga_update]"></span> Editar</button>
-                            <button class="btn btn-outline-primary mt-2 m-2" @click="resetPassword"><i class="fa-solid fa-key"></i> Restablecer contraseña</button>
-                            <button class="btn btn-outline-danger mt-2 m-2" @click="eliminarGestor"><i class="fa-solid fa-eraser"></i>   Eliminar</button>
+                            <button class="btn morado_boton mt-2 m-2" @click="editarGestor"><span :class="[carga_update]"></span> Editar</button>
+                            <button class="btn morado_boton mt-2 m-2" @click="resetPassword"><i class="fa-solid fa-key"></i> Restablecer contraseña</button>
+                            <button class="btn morado_boton mt-2 m-2" @click="eliminarGestor"><i class="fa-solid fa-eraser"></i>   Eliminar</button>
                         </td>
                     </tr>   
                 </tbody>
@@ -71,7 +71,7 @@
             <table class="table" v-if="cam_escogida !== ''">
                 <thead>
                     <h4>Campañas</h4>
-                    <tr>
+                    <tr class="cabeceras_tabla">
                         <th scope="row">Nombre Campaña</th>
                         <th scope="row">Codigo Campaña</th>
                         <th scope="row">Acciones</th>
@@ -82,8 +82,8 @@
                         <td scope="row"><input type="text" class="form-control" v-model="datos_camapaña.nombre_camp"></td>
                         <td scope="row"><input type="text" class="form-control" disabled :value="camp.id"></td>
                         <td scope="row">
-                            <button class="btn btn-outline-primary mt-2 m-2" @click="editarCamp"><span :class="[carga_update]"></span> Editar</button>
-                            <button class="btn btn-outline-danger mt-2 m-2" @click="eliminarCam"><i class="fa-solid fa-eraser"></i>   Eliminar</button>
+                            <button class="btn morado_boton mt-2 m-2" @click="editarCamp"><span :class="[carga_update]"></span> Editar</button>
+                            <button class="btn morado_boton mt-2 m-2" @click="eliminarCam"><i class="fa-solid fa-eraser"></i>   Eliminar</button>
                         </td>
                     </tr>
                 </tbody>
@@ -92,7 +92,7 @@
             <table class="table" v-if="componente_escogido !== ''">
                 <thead>
                     <h4>Campañas</h4>
-                    <tr>
+                    <tr class="cabeceras_tabla">
                         <th scope="row">Nombre Componente</th>
                         <th scope="row">Acciones</th>
                     </tr>
@@ -101,8 +101,8 @@
                     <tr v-for="compo in campos_componente" :key="compo.id">
                         <td scope="row"><input type="text" class="form-control" v-model="datos_componente.nombre_componente"></td>
                         <td scope="row">
-                            <button class="btn btn-outline-primary mt-2 m-2" @click="editarComponente"><span :class="[carga_update]"></span> Editar</button>
-                            <button class="btn btn-outline-danger mt-2 m-2" @click="eliminarComponente"><i class="fa-solid fa-eraser"></i>   Eliminar</button>
+                            <button class="btn morado_boton mt-2 m-2" @click="editarComponente"><span :class="[carga_update]"></span> Editar</button>
+                            <button class="btn morado_boton mt-2 m-2" @click="eliminarComponente"><i class="fa-solid fa-eraser"></i>   Eliminar</button>
                         </td>
                     </tr>
                 </tbody>
@@ -113,11 +113,38 @@
 </template>
 
 <style scoped>
+.morado_check{
+    background-color: #982993;
+    color: #915c8e;
+}
+.morado_check:active{
+    border-color: #982993;
+}
 .cartas{
     display: grid;
     grid-template-columns: repeat(auto-fill,minmax(250px,1fr));
     gap: 10px;
 }
+.cabeceras_tabla th{
+    background-color: #982993;
+    color: aliceblue;
+}
+.morado_boton{
+    border-color: #982993;
+    border:none;
+    color: #982993;
+    transition: transform 0.1s ease-in;
+}
+.morado_boton:hover{
+    background-color: #F8FAFC;
+    color: #915c8e;
+    transform: scale(1.10);
+}
+.morado_boton:active{
+    background-color: #F8FAFC;
+    color: #915c8e;
+}
+
 
 </style>
 
@@ -362,9 +389,7 @@ export default {
             .catch(err=>{
                 console.log(err);
             });
-        }
-
-
+        },
     },
 }
 </script>

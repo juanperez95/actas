@@ -47,7 +47,7 @@ class Pdf extends Controller
         $historial->fk_id_gestor = $sesion_inicio;
         // Validar que la llave de la camapaña se encuentre en la DB.
         if($operacion != null){
-            $historial->fk_id_camp = CampanasActas::where('nombre_camp',$operacion)->fisrt()->id;
+            $historial->fk_id_camp = CampanasActas::where('nombre_camp',$operacion)->first()->id;          
         }
         $historial->fecha_creacion = $fecha;
         $historial->numero_caso = $n_caso;

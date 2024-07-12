@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modal-cam" data-bs-whatever="@mdo"><i class="fa-brands fa-font-awesome"></i>   Registrar Campaña</button>
+        <button type="button" class="btn morado_boton" data-bs-toggle="modal" data-bs-target="#modal-cam" data-bs-whatever="@mdo"><i class="fa-brands fa-font-awesome"></i>   Registrar Campaña</button>
 
         <div class="modal fade" id="modal-cam" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -18,8 +18,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-outline-danger" @click="registrarCamp"><span :class="[cargar]"></span>    Registrar Campaña</button>
+                <button type="button" class="btn morado_boton" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn morado_boton" @click="registrarCamp"><span :class="[cargar]"></span>    Registrar Campaña</button>
             </div>
             </div>
         </div>
@@ -111,3 +111,21 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+.morado_boton{
+    border-color: #982993;
+    border:none;
+    color: #982993;
+    transition: transform 0.1s ease-in;
+}
+.morado_boton:hover{
+    background-color: white;
+    color: #915c8e;
+    transform: scale(1.10);
+}
+.morado_boton:active{
+    background-color: white;
+    color: #915c8e;
+}
+</style>

@@ -6,6 +6,7 @@
   <title>Registro de gestores y campañas</title>
   <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
   <meta name="csrf-token" content="{{ csrf_token() }}">
+  
 </head>
 <body style="background: rgb(149,71,244);
 background: radial-gradient(circle, rgba(149,71,244,1) 0%, rgba(152,35,130,1) 100%);">

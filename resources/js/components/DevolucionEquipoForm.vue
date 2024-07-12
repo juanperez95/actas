@@ -349,10 +349,9 @@ export default {
   },
   computed: {
     isFormValid() {
-      console.log(this.formData.nombres,this.formData.serialCpu,this.formData.serialMonitor,this.formData.numeroCaso,
-      this.formData.NombreRecibe,this.formData.correoPersonal,this.formData.campana);
       if(this.formData.nombres == '' || this.formData.serialMonitor == '' || this.formData.serialDispositivo == '' &&
-      this.formData.numeroCaso == '' || this.formData.NombreRecibe == '' || this.formData.correoPersonal == '' || this.formData.campana == ''){
+      this.formData.numeroCaso == '' || this.formData.NombreRecibe == '' || this.formData.correoPersonal == '' || this.formData.campana == ''
+      && this.formData.Tipoescritorio == ''){
         return false;
       }
       return true;
