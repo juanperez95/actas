@@ -6,6 +6,7 @@ const store = new Vuex.Store({
         componentes_vuex:[],
         lista_gestores:['a'],
         usuario_session:[],
+        lista_operaciones:[],
     },
     mutations:{
         // Mostrar componentes de manera global
@@ -36,7 +37,18 @@ const store = new Vuex.Store({
             }).catch(error=>{
                 
             })
+        },
+        // Mostrar campañas
+        mostrarCamps(state){
+            axios.get('/Actas_de_responsabilidad/Campanas')
+            .then((cam)=>{
+                state.lista_operaciones = cam.data;
+            })
+            .catch((error)=>{
+                console.log(error);
+            })
         }
+
     }
 });
 

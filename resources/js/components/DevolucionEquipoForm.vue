@@ -5,18 +5,20 @@
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="numeroCaso" class="form-label">Número de Caso:</label>
-              <input type="text" id="numeroCaso" class="form-control" @click="getSession" v-model="formData.numeroCaso">
+              <input type="text" id="numeroCaso" class="form-control" v-model="formData.numeroCaso" @click="cargarUsuarioSession">
             </div>
             <div class="col-md-6 mb-3">
               <label for="nombres" class="form-label">Nombre:</label>
               <input type="text" id="nombres" class="form-control" v-model="formData.nombres">
             </div>
           </div>
-
           <div class="row">
             <div class="col-md-4 mb-3">
               <label for="campana" class="form-label">Campaña:</label>
-              <input type="text" id="campana" class="form-control" v-model="formData.campana">
+              <input type="text" id="campana" class="form-control" v-model="formData.campana" list="listaOp" @click="mostrarCamps">
+              <datalist id="listaOp">
+                <option :value="cam.nombre_camp" v-for="cam in lista_operaciones" :key="cam.id">{{cam.nombre_camp.toUpperCase()}}</option>
+              </datalist>
             </div>
 
             <div class="col-md-4 mb-3">
@@ -179,11 +181,11 @@
 
           <div class="container firmas">
             <firma ref="signaturePad" firma_d="Firma de quien entrega" :Nombre_de_quien_entrega="formData.nombres" class="mb-3"/>
-            <firma ref="signaturePad2" firma_d="Firma de quien recibe" :Nombre_de_quien_entrega="NombreRecibe" class="mb-3"/>
+            <firma ref="signaturePad2" firma_d="Firma de quien recibe" :Nombre_de_quien_entrega="formData.NombreRecibe" class="mb-3"/>
           </div>
 
           <div class="d-flex justify-content-between p-3 mt-2">
-            <button type="submit" class="btn btn-outline-danger" @click="generarPDFRetorno">
+            <button type="submit" class="btn btn-outline-danger" @click="submitForm">
               <i class="fas fa-file-pdf me-2"></i>Generar PDF
             </button>
             <button type="reset" class="btn btn-outline-secondary" @click="limpiarTodo">
@@ -208,7 +210,6 @@ export default {
   },
   mounted(){
     this.getSession();
-    this.formData.NombreRecibe = this.usuario_session[0].nombre_gestor;
   },
   data() {
     return {
@@ -216,7 +217,7 @@ export default {
         dispositivo:'',
         Tipoescritorio: '',
         numeroCaso: '',
-        nombres: '',
+        nombres: ''.toUpperCase(),
         campana: '',
         correoPersonal: '',
         correoJefe: '',
@@ -243,7 +244,7 @@ export default {
         tieneDiadema: 'No',
         Diademaserial: '',
         observaciones: '',
-        NombreRecibe: '',
+        NombreRecibe: ''.toUpperCase(),
         firma1: null,
         firma2: null,
       },
@@ -251,41 +252,14 @@ export default {
 
     };
   },
-  computed: {
-    isFormValid() {
-      return (
-        this.formData.dispositivo &&
-        this.formData.Tipoescritorio &&
-        this.formData.numeroCaso &&
-        this.formData.nombres &&
-        this.formData.campana &&
-        this.formData.correoPersonal &&
-        this.formData.correoJefe &&
-        this.formData.dispositivo &&
-        (this.formData.dispositivo === 'Portatil' ? (
-          this.formData.serialDispositivo &&
-          this.formData.activoDispositivo &&
-          this.formData.estadoDispositivo
-        ) : (
-          this.formData.serialCpu &&
-          this.formData.activoCpu &&
-          this.formData.estadoCpu &&
-          this.formData.serialMonitor &&
-          this.formData.activoMonitor &&
-          this.formData.estadoMonitor
-        ))
-      );
-    },
-    ...mapState(["usuario_session"])
-
-  },
   methods: {
-    ...mapMutations(["getSession"]),
+    ...mapMutations(["getSession",'mostrarCamps']),
     async submitForm() {
+      console.log(this.isFormValid);
       if (this.isFormValid) {
         this.generarPDFRetorno();
       } else {
-        this.showNotification('error', 'Por favor, complete todos los campos requeridos.');
+        this.showNotification('warning', 'Por favor, complete todos los campos requeridos.');
       }
     },
     limpiarTodo() {
@@ -339,7 +313,7 @@ export default {
         .then((res)=>{
           if(res.status == 200){
             var enlace = document.getElementById('down');
-            enlace.download = (new Date().getDate().toLocaleString() +'_'+ (new Date().getMonth()+1).toString() +'_'+ (new Date().getFullYear()).toString() + '_' + new Date().getTime().toString()) + '_GESTOR_RETORNO_A ' + this.formData.nombres + '--' + this.formData.NombreRecibe + '.pdf';
+            enlace.download = (new Date().getDate().toLocaleString() +'_'+ (new Date().getMonth()+1).toString() +'_'+ (new Date().getFullYear()).toString() + '_' + new Date().getTime().toString()) + '_GESTOR_RETORNO_A ' + (this.formData.nombres.toUpperCase()) + '--' + (this.formData.NombreRecibe.toUpperCase()) + '.pdf';
             enlace.href = URL.createObjectURL(res.data);
             enlace.click();
             URL.revokeObjectURL(enlace.href);
@@ -363,8 +337,31 @@ export default {
         showConfirmButton: false,
         timer: 3000
       });
+    },
+    cargarUsuarioSession(){
+      try {
+        this.formData.NombreRecibe = this.usuario_session[0].nombre_gestor;
+        
+      } catch (error) {
+        // Console.log(error);
+      }
     }
-  }
+  },
+  computed: {
+    isFormValid() {
+      console.log(this.formData.nombres,this.formData.serialCpu,this.formData.serialMonitor,this.formData.numeroCaso,
+      this.formData.NombreRecibe,this.formData.correoPersonal,this.formData.campana);
+      if(this.formData.nombres == '' || this.formData.serialMonitor == '' || this.formData.serialDispositivo == '' &&
+      this.formData.numeroCaso == '' || this.formData.NombreRecibe == '' || this.formData.correoPersonal == '' || this.formData.campana == ''){
+        return false;
+      }
+      return true;
+
+
+    },
+    ...mapState(["usuario_session",'lista_operaciones'])
+
+  },
 };
 </script>
 

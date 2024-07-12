@@ -15,7 +15,7 @@
           
           <!-- Iterar todas las campañas de la base de datos -->
           <datalist id="lista">
-            <option :value="cam.nombre_camp.toUpperCase()" v-for="cam in lista_camps" :key="cam.id">{{cam.nombre_camp.toUpperCase()}}</option>
+            <option :value="cam.nombre_camp.toUpperCase()" v-for="cam in lista_operaciones" :key="cam.id">{{cam.nombre_camp.toUpperCase()}}</option>
           </datalist>
         </li>
         <li>Estado de Entrega del Nuevo Activo
@@ -225,8 +225,6 @@ export default{
             // Mostrar un spinner para señalar la carga de la respuesta.
             cargar:'fa-solid fa-file-pdf',
             // Guardar los gestores de la base de datos.
-            lista_camps:[],
-            // Cargar las campañas
             cargar1:'',
             // Cargar gestores
             cargar2:'',
@@ -237,7 +235,7 @@ export default{
       this.form_data.observaciones_entregado = 'N/A'
     },
     methods: {
-      ...mapMutations(['mostrarComponentes','mostrarGestores','getSession']),
+      ...mapMutations(['mostrarComponentes','mostrarGestores','getSession','mostrarCamps']),
       generarPDF: async function(){
           this.cargar = 'spinner-border spinner-border-sm';
           if(this.validarInformacion()){
@@ -433,21 +431,9 @@ export default{
           Swal.fire(datos);
 
         },
-        // Mostrar campañas
-        mostrarCamps(){
-          this.cargar2 = 'spinner-border spinner-border-sm';
-          axios.get('/Actas_de_responsabilidad/Campanas')
-          .then((cam)=>{
-            this.lista_camps = cam.data;
-          })
-          .catch((error)=>{
-            console.log(error);
-          })
-          this.cargar2 = '';
-        }
     },
     computed:{
-      ...mapState(['componentes_vuex','lista_gestores','usuario_session'])
+      ...mapState(['componentes_vuex','lista_gestores','usuario_session','lista_operaciones'])
     },
     
 }

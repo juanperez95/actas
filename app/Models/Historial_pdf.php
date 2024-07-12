@@ -17,6 +17,7 @@ class Historial_pdf extends Model
         'tipo_acta',
         'ruta_pdf',
         'fk_id_gestor',
+        'fk_id_camp',
         'fecha_creacion',
         'numero_caso'
     ];
@@ -26,5 +27,10 @@ class Historial_pdf extends Model
     // Acceder a los atributos del gestor
     public function getGestor(){
         return $this->belongsTo(GestoreActas::class, 'id');
+    }
+
+    // Acceder a los atributos de la camapaña
+    public function getCamp(){
+        return $this->belongsTo(CampanasActas::class, 'id');
     }
 }

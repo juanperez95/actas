@@ -39,6 +39,9 @@
         p{
             font-size:11px;
         }
+        .firmas_p{
+            font-size: 15px;
+        }
     </style>
 </head>
 <body>
@@ -131,14 +134,14 @@
         <tr>
             <td>
                 <div class="container">
-                    <p>Firma de quien entrega: <img src="data:image/png;base64,{{$ruta1}}" alt="" width="30%"></p>
-                    <p>Nombre: <b>{{$nombres}}</b></p>
+                    <p class="firmas_p">Firma de quien entrega: <img src="data:image/png;base64,{{$ruta1}}" alt="" width="30%"></p>
+                    <p class="firmas_p">Nombre: <b>{{$nombres}}</b></p>
                 </div>
             </td>
             <td>
                 <div class="container">
-                    <p>Firma de quien recibe: <img src="data:image/png;base64,{{$ruta2}}" alt="" width="30%"></p>
-                    <p>Nombre Gestor: <b>{{$nombreRecibe}}</b></p>
+                    <p class="firmas_p">Firma de quien recibe: <img src="data:image/png;base64,{{$ruta2}}" alt="" width="30%"></p>
+                    <p class="firmas_p">Nombre Gestor: <b>{{$nombreRecibe}}</b></p>
                 </div>
             </td>
         </tr>

@@ -290,7 +290,7 @@ export default {
             .then((res)=>{
                 Swal.fire({
                     icon:'success',
-                    text:'¡Actulizacion exitosa!'
+                    text:'¡Actualizacion exitosa!'
                 });
             })
             this.carga_update = 'fa-solid fa-pen';

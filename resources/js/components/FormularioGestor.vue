@@ -34,9 +34,8 @@
         <li>
           Operación Solicitante
           <span :class="[cargar1]"></span><input type="text" placeholder="Ingrese la operación" class="form-select" v-model="form_data.op_solicitante" list="listaOp" @click="mostrarCamps"/>
-          
           <datalist id="listaOp">
-            <option :value="cam.nombre_camp.toUpperCase()" v-for="cam in lista_camps" :key="cam.id">{{cam.nombre_camp.toUpperCase()}}</option>
+            <option :value="cam.nombre_camp.toUpperCase()" v-for="cam in lista_operaciones" :key="cam.id">{{cam.nombre_camp.toUpperCase()}}</option>
           </datalist>
         </li>
       </ul>
@@ -233,7 +232,6 @@ export default {
       },
       // Mostrar un spinner para señalar la carga de la respuesta.
       cargar:'fa-solid fa-file-pdf',
-      lista_camps:[],
       campos_gestor:[],
       // Cargar las campañas
       cargar1:'',
@@ -243,7 +241,7 @@ export default {
   },
   methods: {
     // Datos de uso global
-    ...mapMutations(['mostrarComponentes','mostrarGestores','getSession']),
+    ...mapMutations(['mostrarComponentes','mostrarGestores','getSession','mostrarCamps']),
     llenarCampos: async function(){
       await axios.post('/Actas_de_responsabilidad/Gestores/BuscarGestorName',this.form_data)
       .then(res=>{
@@ -424,25 +422,11 @@ export default {
           }
           Swal.fire(datos);
     },
-    // Mostrar a todos los gestores.
-    
-    // Mostrar campañas
-    mostrarCamps(){
-      this.cargar2 = 'spinner-border spinner-border-sm';
-      axios.get('/Actas_de_responsabilidad/Campanas')
-      .then((cam)=>{
-        this.lista_camps = cam.data;
-      })
-      .catch((error)=>{
-        console.log(error);
-      })
-      this.cargar2 = '';
-    }
 
   },
   computed:{
     // De manera global mostrar los componentes
-    ...mapState(['componentes_vuex','lista_gestores','usuario_session'])
+    ...mapState(['componentes_vuex','lista_gestores','usuario_session','lista_operaciones'])
   },
   mounted(){
     this.form_data.observaciones_elemento = 'N/A';

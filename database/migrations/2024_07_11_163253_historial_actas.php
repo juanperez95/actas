@@ -15,8 +15,12 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('tipo_acta')->nullable(true);
             $table->string('ruta_pdf')->nullable(true);
+            // Foranea de Gestor
             $table->unsignedBigInteger('fk_id_gestor');
             $table->foreign('fk_id_gestor')->references('id')->on('gestores')->onDelete('cascade');
+            // Foranea de Campaña (Operacion) 
+            $table->unsignedBigInteger('fk_id_camp')->nullable(true);
+            $table->foreign('fk_id_camp')->references('id')->on('camps')->onDelete('cascade');
             $table->date('fecha_creacion');
             $table->string('numero_caso')->nullable(true);
             $table->timestamps();

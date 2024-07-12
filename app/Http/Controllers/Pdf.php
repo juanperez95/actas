@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CampanasActas;
 use App\Models\GestoreActas;
 use App\Models\Historial_pdf;
 use Carbon\Carbon;
@@ -17,7 +18,7 @@ use Illuminate\Support\Facades\Auth;
 class Pdf extends Controller
 {
     // Metodo para guardar los pdf en el servidor y guardarlos en la base de datos.
-    public function SavePDFServerDB($nombre_pdf, $dataPDF,$fecha,Request $request ,$opcion = null, $n_caso = null){
+    public function SavePDFServerDB($nombre_pdf, $dataPDF,$fecha,Request $request ,$opcion = null, $n_caso = null, $operacion = null){
         $tipo_acta = null;
         switch ($opcion) {
             case 1:
@@ -42,8 +43,12 @@ class Pdf extends Controller
 
         $historial = new Historial_pdf();
         $historial->tipo_acta = $tipo_acta;
-        $historial->ruta_pdf = $rutaPdf.$nombrePdf;
+        $historial->ruta_pdf = $rutaURL;
         $historial->fk_id_gestor = $sesion_inicio;
+        // Validar que la llave de la camapaña se encuentre en la DB.
+        if($operacion != null){
+            $historial->fk_id_camp = CampanasActas::where('nombre_camp',$operacion)->fisrt()->id;
+        }
         $historial->fecha_creacion = $fecha;
         $historial->numero_caso = $n_caso;
         $historial->save();
@@ -169,7 +174,7 @@ class Pdf extends Controller
             $pdf->render();
             
             // Guardar el pdf en el servidor y base de datos.
-            $this->SavePDFServerDB($op_solicitante,$pdf,$fecha_entrega,$request,1,$n_caso);
+            $this->SavePDFServerDB($op_solicitante,$pdf,$fecha_entrega,$request,1,$n_caso,$op_solicitante);
 
         }catch(Exception $e){
             error_log($e->getMessage());
@@ -244,7 +249,7 @@ class Pdf extends Controller
             $pdf->render();
 
             // Guardar el pdf en el servidor y base de datos.
-            $this->SavePDFServerDB($nombres.'_A_'.$nombreRecibe,$pdf,Carbon::now()->toDateString(),$request,3,$numeroCaso);
+            $this->SavePDFServerDB($nombres.'_A_'.$nombreRecibe,$pdf,Carbon::now()->toDateString(),$request,3,$numeroCaso,$campana);
 
         }catch(Exception $e){
             error_log($e->getMessage());
