@@ -9,7 +9,7 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Registro de campañas</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body"> 
                 <form action="#">
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Nombre componente:</label>
@@ -24,10 +24,10 @@
             </div>
         </div>
         </div>
-    </div>
+    </div> 
 </template>
 
-<script>
+<script> 
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
@@ -38,7 +38,7 @@ export default {
             datos_componente:{
                 nombre_componente:''
             },
-            datos_componente_recibido:[],
+            datos_componente_recibido:[], 
         }
     },
     methods: {
@@ -58,7 +58,7 @@ export default {
                     if(!respuesta.data){
                         this.notificaciones(1);
                     }else{
-                        this.notificaciones(3);
+                        this.notificaciones(3); 
                         
                     }
                 })

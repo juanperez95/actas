@@ -43,7 +43,7 @@
 </head>
 <body>
 <script src="{{asset('js/styles.js')}}"></script>
-<img src="{{$rutaLogo}}" alt="Logo" width="30%">
+<img src="data:image/png;base64,{{$rutaLogo}}" alt="Logo" width="30%">
 
 <h3>ACTA DE RETORNO DE EQUIPOS</h3>
 
@@ -131,14 +131,14 @@
         <tr>
             <td>
                 <div class="container">
-                    <p>Firma de quien entrega: <img src="{{$firma1}}" alt="" width="30%"></p>
+                    <p>Firma de quien entrega: <img src="data:image/png;base64,{{$ruta1}}" alt="" width="30%"></p>
                     <p>Nombre: <b>{{$nombres}}</b></p>
                 </div>
             </td>
             <td>
                 <div class="container">
-                    <p>Firma de quien recibe: <img src="{{$firma2}}" alt="" width="30%"></p>
-                    <p>Nombre Gestor: <b>{{$nombre_gestor}}</b></p>
+                    <p>Firma de quien recibe: <img src="data:image/png;base64,{{$ruta2}}" alt="" width="30%"></p>
+                    <p>Nombre Gestor: <b>{{$nombreRecibe}}</b></p>
                 </div>
             </td>
         </tr>

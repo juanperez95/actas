@@ -12,6 +12,7 @@ Route::get('/', [Pdf::class,'index']);
 Route::get('/Actas',[Pdf::class,'Home'])->name('home');
 Route::post('/PDF_OP',[Pdf::class,'pdfOperacion'])->name('pdf_operacion');
 Route::post('/PDF_G',[Pdf::class,'pdfGestor'])->name('pdf_gestor');
+Route::post('/PDF_RTN',[Pdf::class,'pdfRetorno'])->name('pdf_retorno');
 
 // Acciones con los gestores de la base de datos
 Route::get('/Actas_de_responsabilidad/Gestores',[GestoresActas::class,'MostrarGestores'])->name('mostrar_gestor');

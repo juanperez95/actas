@@ -179,6 +179,83 @@ class Pdf extends Controller
         return $pdf->stream('prueba.pdf');
     }
 
+    // Generar PDF de los retornos
+    public function pdfRetorno(Request $request){
+        ini_set('max_execution_time', 120); 
+        $dispositivo = $request->dispositivo;
+        $tipoEscritorio = $request->Tipoescritorio;
+        $numeroCaso = $request->numeroCaso;
+        $nombres = $request->nombres;
+        $campana = $request->campana;
+        $correoPersonal = $request->correoPersonal;
+        $correoJefe = $request->correoJefe;
+        $serialDispositivo = $request->serialDispositivo;
+        $activoDispositivo = $request->activoDispositivo;
+        $estadoDispositivo = $request->estadoDispositivo;
+        $diadema = $request->diadema;
+        $serialDiadema = $request->serialDiadema;
+        $raton = $request->raton;
+        $estadoRaton = $request->estadoRaton;
+        $teclado = $request->teclado;
+        $estadoTeclado = $request->estadoTeclado;
+        $camara = $request->camara;
+        $serialCpu = $request->serialCpu;
+        $activoCpu = $request->activoCpu;
+        $estadoCpu = $request->estadoCpu;
+        $serialMonitor = $request->serialMonitor;
+        $activoMonitor = $request->activoMonitor;
+        $estadoMonitor = $request->estadoMonitor;
+        $segundoMonitor = $request->segundoMonitor;
+        $serialMonitor2 = $request->serialMonitor2;
+        $activoMonitor2 = $request->activoMonitor2;
+        $tieneDiadema = $request->tieneDiadema;
+        $diademaSerial = $request->Diademaserial;
+        $observaciones = $request->observaciones;
+        $nombreRecibe = $request->NombreRecibe;
+        $firma1 = $request->firma1;
+        $firma2 = $request->firma2;
+
+        // Decodificar las dos firmas
+        $data = $this->encodeImagen($firma1, $firma2);
+
+        $ruta1 = $data['ruta1'];
+        $ruta2 = $data['ruta2'];
+        $rutaLogo = $data['rutaLogo'];
+
+
+        // Compactar todas la variables para enviarlas al PDF
+        $datos_pdf = compact('dispositivo', 'tipoEscritorio', 
+        'numeroCaso', 'nombres', 'campana', 'correoPersonal', 
+        'correoJefe', 'serialDispositivo', 'activoDispositivo', 
+        'estadoDispositivo', 'diadema', 'serialDiadema', 'raton', 
+        'estadoRaton', 'teclado', 'estadoTeclado', 'camara', 'serialCpu', 
+        'activoCpu', 'estadoCpu', 'serialMonitor', 'activoMonitor', 'estadoMonitor',
+         'segundoMonitor', 'serialMonitor2', 'activoMonitor2', 'tieneDiadema', 'diademaSerial',
+          'observaciones', 'nombreRecibe', 'ruta1', 'ruta2','rutaLogo');
+
+        $opciones = new Options();
+        $opciones->set('isHtml5ParserEnabled', true);
+
+        try{
+            $pdf = new Dompdf($opciones);   
+            $vista = view('pdf_retornos',$datos_pdf);
+
+            $pdf->loadHtml($vista);
+            $pdf->render();
+
+            // Guardar el pdf en el servidor y base de datos.
+            $this->SavePDFServerDB($nombres.'_A_'.$nombreRecibe,$pdf,Carbon::now()->toDateString(),$request,3,$numeroCaso);
+
+        }catch(Exception $e){
+            error_log($e->getMessage());
+        }
+
+        // Finalizar la descarga
+        return $pdf->stream('retorno.pdf');
+
+    }
+
+
 
     // Generar PDF del gestor
     public function pdfGestor(Request $request){

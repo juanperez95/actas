@@ -2,7 +2,6 @@
   <div class="container mt-5">
     <div class="card shadow-lg">
       <div class="card-body">
-        <form @submit.prevent="submitForm">
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="numeroCaso" class="form-label">Número de Caso:</label>
@@ -179,19 +178,19 @@
           </div>
 
           <div class="container firmas">
-            <firma firma_d="Firma de quien entrega" :Nombre_de_quien_entrega="formData.nombres" class="mb-3"/>
-            <firma firma_d="Firma de quien recibe" :Nombre_de_quien_entrega="usuario_session[0].nombre_gestor" class="mb-3"/>
+            <firma ref="signaturePad" firma_d="Firma de quien entrega" :Nombre_de_quien_entrega="formData.nombres" class="mb-3"/>
+            <firma ref="signaturePad2" firma_d="Firma de quien recibe" :Nombre_de_quien_entrega="NombreRecibe" class="mb-3"/>
           </div>
 
-          <div class="d-flex justify-content-between">
-            <button type="submit" class="btn btn-danger">
+          <div class="d-flex justify-content-between p-3 mt-2">
+            <button type="submit" class="btn btn-outline-danger" @click="generarPDFRetorno">
               <i class="fas fa-file-pdf me-2"></i>Generar PDF
             </button>
-            <button type="reset" class="btn btn-info" @click="limpiarTodo">
+            <button type="reset" class="btn btn-outline-secondary" @click="limpiarTodo">
               <i class="fas fa-eraser me-2"></i>Limpiar
             </button>
           </div>
-        </form>
+          <a href="#" download="" id="down"></a>
       </div>
     </div>
   </div>
@@ -206,6 +205,10 @@ import Firma from './Firma.vue';
 export default {
   components:{
     Firma,
+  },
+  mounted(){
+    this.getSession();
+    this.formData.NombreRecibe = this.usuario_session[0].nombre_gestor;
   },
   data() {
     return {
@@ -240,7 +243,7 @@ export default {
         tieneDiadema: 'No',
         Diademaserial: '',
         observaciones: '',
-        NombreRecibe: this.getSession(),
+        NombreRecibe: '',
         firma1: null,
         firma2: null,
       },
@@ -278,12 +281,9 @@ export default {
   },
   methods: {
     ...mapMutations(["getSession"]),
-    toggleFields() {
-      // Lógica para mostrar/ocultar campos según las selecciones
-    },
     async submitForm() {
       if (this.isFormValid) {
-        this.generarPDF();
+        this.generarPDFRetorno();
       } else {
         this.showNotification('error', 'Por favor, complete todos los campos requeridos.');
       }
@@ -323,10 +323,36 @@ export default {
         observaciones: '',
       };
     },
-    generarPDFGestor: async function() {
+    generarPDFRetorno: async function() {
       this.cargar = 'spinner-border spinner-border-sm';
+
+      // Asignar firmas a laravel
+      this.formData.firma1 = this.$refs.signaturePad.getSignatureDataUrl();
+      this.formData.firma2 = this.$refs.signaturePad2.getSignatureDataUrl();
+
+
       this.showNotification('info', 'Generando PDF...');
-      this.showNotification('success', 'PDF generado con éxito');
+
+      await axios.post('/PDF_RTN',this.formData,{
+          responseType:'blob'
+        })
+        .then((res)=>{
+          if(res.status == 200){
+            var enlace = document.getElementById('down');
+            enlace.download = (new Date().getDate().toLocaleString() +'_'+ (new Date().getMonth()+1).toString() +'_'+ (new Date().getFullYear()).toString() + '_' + new Date().getTime().toString()) + '_GESTOR_RETORNO_A ' + this.formData.nombres + '--' + this.formData.NombreRecibe + '.pdf';
+            enlace.href = URL.createObjectURL(res.data);
+            enlace.click();
+            URL.revokeObjectURL(enlace.href);
+          }else{
+            // this.notificacion(2);
+          }
+        }).catch((err)=>{
+          console.log(err);
+        })
+
+        this.showNotification('success', 'PDF generado con éxito');
+      
+      
     },
     showNotification(icon, text) {
       Swal.fire({
