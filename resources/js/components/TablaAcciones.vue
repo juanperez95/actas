@@ -40,9 +40,9 @@
                 </thead>
                 <tbody>
                     <tr v-for="g_found in campos_gestor" :key="g_found.id">                       
-                        <td scope="row"><input type="text" class="form-control"  v-model="datos_gestor.cedula"></td>
-                        <td scope="row"><input type="text" class="form-control"  v-model="datos_gestor.nombre_gestor"></td>
-                        <td scope="row"><input type="text" class="form-control"  v-model="datos_gestor.correo"></td>
+                        <td scope="row"><input type="text" class="form-control bordes_input_tabla"  v-model="datos_gestor.cedula"></td>
+                        <td scope="row"><input type="text" class="form-control bordes_input_tabla"  v-model="datos_gestor.nombre_gestor"></td>
+                        <td scope="row"><input type="text" class="form-control bordes_input_tabla"  v-model="datos_gestor.correo"></td>
                         <td scope="row">
                             <input type="radio" class="form-check-input p-2 m-2 morado_check" value="administrador" v-model="datos_gestor.rol" name="roles" :checked="datos_gestor.boolean_rol_admin">
                             <label for="" class="form-check-label">Admin</label><br>
@@ -57,16 +57,27 @@
                     </tr>   
                 </tbody>
             </table>
-            <h4>Ultimas actas generadas del gestor</h4>
-            <div class="container p-2 cartas">
-                <div class="card" v-for="acta in actas" :key="acta.id">
-                    <div class="card-body">
-                      <h5 class="card-title"><b>{{acta.tipo_acta ? acta.tipo_acta.toUpperCase() : ''}}</b><br>N° Caso: {{acta.numero_caso}}</h5>
-                      <p class="card-text"><b>Fecha creacion: {{acta.fecha_creacion}}</b></p>
-                      <a href="#" class="btn btn-outline-danger"><span><i class="fa-solid fa-file-pdf"></i></span> Descargar PDF</a>
-                    </div>
-                </div>              
-            </div>                 
+            <!-- Tabla de historial -->
+            <table class="table">
+                <thead>
+                    <tr class="cabeceras_tabla">
+                        <th>Ultimas actas generadas del gestor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <div class="p-2 cartas">
+                            <div class="card" v-for="acta in actas" :key="acta.id">
+                                <div class="card-body colorCartas">
+                                  <h5 class="card-title"><b>{{acta.tipo_acta ? acta.tipo_acta.toUpperCase() : ''}}</b><br>N° Caso: {{acta.numero_caso}}</h5>
+                                  <p class="card-text"><b>Fecha creacion: {{acta.fecha_creacion}}</b></p>
+                                  <button type="button" class="btn boton_morado_pdf" @click="downloadPdfAgain(acta.ruta_pdf)"><span><i class="fa-solid fa-file-pdf"></i></span> Descargar PDF</button>
+                                </div>
+                            </div>              
+                        </div>           
+                    </tr>
+                </tbody>
+            </table>
             <!-- Tabla de campaña con sus datos -->
             <table class="table" v-if="cam_escogida !== ''">
                 <thead>
@@ -79,8 +90,8 @@
                 </thead>
                 <tbody>
                     <tr v-for="camp in campos_cam" :key="camp.id">
-                        <td scope="row"><input type="text" class="form-control" v-model="datos_camapaña.nombre_camp"></td>
-                        <td scope="row"><input type="text" class="form-control" disabled :value="camp.id"></td>
+                        <td scope="row"><input type="text" class="form-control bordes_input_tabla" v-model="datos_camapaña.nombre_camp"></td>
+                        <td scope="row"><input type="text" class="form-control bordes_input_tabla" disabled :value="camp.id"></td>
                         <td scope="row">
                             <button class="btn morado_boton mt-2 m-2" @click="editarCamp"><span :class="[carga_update]"></span> Editar</button>
                             <button class="btn morado_boton mt-2 m-2" @click="eliminarCam"><i class="fa-solid fa-eraser"></i>   Eliminar</button>
@@ -99,7 +110,7 @@
                 </thead>
                 <tbody>
                     <tr v-for="compo in campos_componente" :key="compo.id">
-                        <td scope="row"><input type="text" class="form-control" v-model="datos_componente.nombre_componente"></td>
+                        <td scope="row"><input type="text" class="form-control bordes_input_tabla" v-model="datos_componente.nombre_componente"></td>
                         <td scope="row">
                             <button class="btn morado_boton mt-2 m-2" @click="editarComponente"><span :class="[carga_update]"></span> Editar</button>
                             <button class="btn morado_boton mt-2 m-2" @click="eliminarComponente"><i class="fa-solid fa-eraser"></i>   Eliminar</button>
@@ -107,7 +118,7 @@
                     </tr>
                 </tbody>
             </table>
-
+            <a href="" download="" id="tryPdf"></a>
         </div>
     </div>
 </template>
@@ -119,6 +130,7 @@
 }
 .morado_check:active{
     border-color: #982993;
+
 }
 .cartas{
     display: grid;
@@ -143,6 +155,31 @@
 .morado_boton:active{
     background-color: #F8FAFC;
     color: #915c8e;
+}
+
+.bordes_input_tabla{
+    border-style: none;
+    background-color: #F8FAFC;
+    transition: box-shadow 0.5s ease-in;
+    box-shadow: 0px 0px 0px #982993;
+    cursor: pointer;
+}
+.bordes_input_tabla:focus{
+    box-shadow: 0px 0px 0px #982993;
+}
+.boton_morado_pdf{
+    border-color: blueviolet;
+    color: blueviolet;
+    transition: background-color 0.1s ease-in;
+}
+.boton_morado_pdf:hover{
+    background-color: #982993;
+    color: #fff;
+    transition: background-color 0.2s ease-in;
+}
+.colorCartas{
+    color: blueviolet;
+    box-shadow: 0px 0px 3px #915c8e;
 }
 
 
@@ -390,6 +427,24 @@ export default {
                 console.log(err);
             });
         },
+
+        // Generar la descarga con los archivos que estan en el servidor
+        downloadPdfAgain(filename){
+            axios.post(`/Actas_de_responsabilidad/Historial/DownloadPDF`,{ruta:filename},{responseType:'blob'})
+            .then(res=>{
+                // Descargar el pdf desde laravel
+                var link = document.getElementById('tryPdf');
+                link.download = (new Date().getDate().toLocaleString() +'_'+ (new Date().getMonth()+1).toString() +'_'+ (new Date().getFullYear()).toString() + '_' + new Date().getTime().toString()) + 'OPERACION_'+ '222' +'.pdf';
+                link.href = URL.createObjectURL(res.data);
+                link.click();
+
+                URL.revokeObjectURL(link.href);
+            })
+            .catch(err=>{
+                console.log(err)
+            });
+
+        }
     },
 }
 </script>

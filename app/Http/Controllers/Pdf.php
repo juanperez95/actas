@@ -370,7 +370,7 @@ class Pdf extends Controller
                 return view('registro_camps_gestores');
             }
         }        
-        return redirect()->route('home');
+        return abort(403);
     }
 
     // Destrozar la sesion al cerrar

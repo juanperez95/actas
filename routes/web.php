@@ -58,4 +58,4 @@ Route::get('/Actas_de_responsabilidad/Login/Destroy',[Pdf::class,'SignOut'])->na
 
 // Rutas de historial
 Route::post('/Actas_de_responsabilidad/Historial/{id}',[Historiales_actas::class,'AccederDatos'])->name('historial_actas');
-Route::get('/Actas_de_responsabilidad/Historial/DownloadPDF/{id}',[Historiales_actas::class,'AccederDatos'])->name('download_actas');
+Route::post('/Actas_de_responsabilidad/Historial/DownloadPDF/{ruta}',[Historiales_actas::class,'DownloadAgainPDF'])->name('download_actas');

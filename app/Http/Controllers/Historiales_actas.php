@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Historial_pdf;
+use Dompdf\Dompdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 
 class Historiales_actas extends Controller
 {
@@ -13,10 +15,11 @@ class Historiales_actas extends Controller
     }
 
     // Opcion que permite volver a descargar
-    public function DownloadAgainPDF($fileName){
-        if(file_exists(public_path($fileName))){
-            return response()->download(public_path($fileName));
-        }
-        return abort(404);
+    public function DownloadAgainPDF(Request $request){
+        $dompdf = new Dompdf();
+        $html = file_get_contents(public_path($request->input('ruta')));
+        $dompdf->loadHtml($html);
+        $dompdf->render();
+        return $dompdf->stream('try.pdf');
     }
 }
