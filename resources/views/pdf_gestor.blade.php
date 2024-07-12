@@ -25,7 +25,7 @@
             padding: 6px;
             text-align: center;
             color: aliceblue;
-            background-color: rgb(0, 0, 0);
+            background-color: #8A2991;
         }
         td {
             border: 1px solid #000;
