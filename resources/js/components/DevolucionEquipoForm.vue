@@ -185,10 +185,10 @@
           </div>
 
           <div class="d-flex justify-content-between p-3 mt-2">
-            <button type="submit" class="btn btn-outline-danger" @click="submitForm">
+            <button type="submit" class="btn morado_boton" @click="submitForm">
               <i class="fas fa-file-pdf me-2"></i>Generar PDF
             </button>
-            <button type="reset" class="btn btn-outline-secondary" @click="limpiarTodo">
+            <button type="reset" class="btn morado_boton" @click="limpiarTodo">
               <i class="fas fa-eraser me-2"></i>Limpiar
             </button>
           </div>
@@ -197,6 +197,26 @@
     </div>
   </div>
 </template>
+
+<style scoped>
+
+.morado_boton{
+  border-color: #982993;
+  border:none;
+  color: #982993;
+  transition: transform 0.1s ease-in;
+}
+.morado_boton:hover{
+  background-color: #F8FAFC;
+  color: #915c8e;
+  transform: scale(0.90);
+}
+.morado_boton:active{
+  background-color: #F8FAFC;
+  color: #915c8e;
+}
+</style>
+
 
 <script>
 import { mapState, mapMutations } from 'vuex';

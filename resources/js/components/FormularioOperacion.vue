@@ -11,7 +11,7 @@
         <li>Motivo de Solicitud <input type="text" placeholder="Ingrese el motivo" v-model="form_data.motivo_solicitud" class="form-control"></li>
         <li>Operación Solicitante <span :class="[cargar1]"></span>
           <!-- Lista que permite escribir las opciones -->
-          <input type="text" list="lista" class="form-control"  v-model="form_data.op_solicitante" @click="mostrarCamps" placeholder="Ingrese la operacion solicitante">
+          <input type="text" list="lista" class="form-control"  v-model="form_data.op_solicitante" @click="mostrarCamps" @touchstart="mostrarCamps" placeholder="Ingrese la operacion solicitante">
           
           <!-- Iterar todas las campañas de la base de datos -->
           <datalist id="lista">
@@ -34,7 +34,7 @@
         </li>
       </ul>
       <p>Activos relacionados:</p>
-      <table>
+      <table class="table cabeceras_tabla">
         <tr>
           <th>Elemento Recogido</th>
           <th>Serial</th>
@@ -44,7 +44,7 @@
         </tr>
         <tr>
           <td>
-            <select name="" id="" class="form-select" v-model="form_data.elemento_recogido" @click="mostrarComponentes">
+            <select name="" id="" class="form-select" v-model="form_data.elemento_recogido" @click="mostrarComponentes" @touchstart="mostrarComponentes">
               <option :value="componente.nombre_componente" v-for="componente in componentes_vuex" :key="componente.id">{{componente.nombre_componente.toUpperCase()}}</option>             
             </select>
           </td>
@@ -52,13 +52,13 @@
           <td><input type="text" placeholder="Ingrese el activo" v-model="form_data.activo_recogido" class="form-control"></td>
           <td><input type="text" placeholder="Ingrese las observaciones" v-model="form_data.observaciones_recogido" class="form-control" @keyup.enter="agregarRecogidos"></td>
           <td>
-            <button class="btn btn-outline-danger" @click="agregarRecogidos"><i class="fa-solid fa-plus"></i> Agregar</button>
+            <button class="btn morado_boton" @click="agregarRecogidos" @touchstart="agregarRecogidos"><i class="fa-solid fa-plus"></i> Agregar</button>
           </td>
         </tr>
       </table>
         <!-- vista de agregados de equipos recogidos -->
-        <div class="container">
-          <table class="table">
+        <div class="p-1" v-if="form_data.data_recogido.length !== 0">
+          <table class="table cabeceras_tabla">
             <thead>
               <tr>
                 <th>Elemento</th>
@@ -73,14 +73,14 @@
                 <td scope="col">{{data.serial_recogido}}</td>
                 <td scope="col">{{data.activo_recogido}}</td>
                 <td scope="col">
-                  <button class="btn btn-outline-danger" @click="quitarRecogidos(data)"><i class="fa-solid fa-trash"></i></button>
+                  <button class="btn morado_boton" @click="quitarRecogidos(data)" @touchstart="quitarRecogidos(data)"><i class="fa-solid fa-trash"></i></button>
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
         <!-- Tabla entregados -->
-      <table>
+      <table class="table cabeceras_tabla">
         <tr>
           <th>Elemento Entregado</th>
           <th>Serial</th>
@@ -90,7 +90,7 @@
         </tr>
         <tr>
           <td>
-            <select name="" id="" class="form-select" v-model="form_data.elemento_entregado" @click="mostrarComponentes">
+            <select name="" id="" class="form-select" v-model="form_data.elemento_entregado" @click="mostrarComponentes" @touchstart="mostrarComponentes">
               <option :value="componente.nombre_componente" v-for="componente in componentes_vuex" :key="componente.id">{{componente.nombre_componente.toUpperCase()}}</option>             
             </select>
           </td>
@@ -98,15 +98,15 @@
           <td><input type="text" placeholder="Ingrese el activo" v-model="form_data.activo_entregado" class="form-control"></td>
           <td><input type="text" placeholder="Ingrese las observaciones" v-model="form_data.observaciones_entregado" class="form-control" @keyup.enter="agregarEntregados"></td>
           <td>
-            <button @click="agregarEntregados" class="btn btn-outline-danger"><i class="fa-solid fa-plus"></i> Agregar</button>
+            <button @click="agregarEntregados" @touchstart="agregarEntregados" class="btn morado_boton"><i class="fa-solid fa-plus"></i> Agregar</button>
           </td>
         </tr>
       </table>
 
       <!-- Vista de elementos entregados -->
-      <div class="container">
+      <div class="p-1" v-if="form_data.data_entregado.length !== 0">
 
-        <table class="table">
+        <table class="table cabeceras_tabla">
           <thead>
             <tr>
               <th>Elemento</th>
@@ -121,7 +121,7 @@
               <td scope="col">{{data.serial_entregado}}</td>
               <td scope="col">{{data.activo_entregado}}</td>
               <td scope="col">
-                <button class="btn btn-outline-danger" @click="quitarEntregados(data)"><i class="fa-solid fa-trash"></i></button>
+                <button class="btn morado_boton" @click="quitarEntregados(data)" @touchstart="quitarEntregados(data)"><i class="fa-solid fa-trash"></i></button>
               </td>
             </tr>
           </tbody>
@@ -136,7 +136,7 @@
         <Firma ref="signaturePad2" firma_d="Firma Operacion" class="mb-3"></Firma>
       </div>
       <table>
-        <tr>
+        <tr> 
           <th></th>
           <th></th>
         </tr>
@@ -144,7 +144,7 @@
           <td>
               <p>Gestor de Soluciones Tecnológica   <span :class="[cargar2]"></span></p>
               <!-- Mostrar los gestores que se encuentran en la base de datos -->
-              <select v-model="form_data.nombre_gestor" id="gestores_operacion"  @click="getSession" class="form-select">
+              <select v-model="form_data.nombre_gestor" id="gestores_operacion"  @click="getSession" @touchstart="getSession" class="form-select">
                 <option :value="gestor.nombre_gestor" v-for="gestor in usuario_session" :key="gestor.id">{{gestor.nombre_gestor ? gestor.nombre_gestor.toUpperCase() : ''}}</option>
               </select>
             </td>
@@ -166,18 +166,41 @@
       </table>
       <div class="container-fluid b-finales">
         <!-- Llamar a la funcion para generar el pdf -->
-        <button class="btn btn-outline-danger b-anchof" @click="generarPDF"><span :class="[cargar]"></span>Generar PDF</button>
-        <button class="btn btn-outline-danger b-anchof" @click="limpiarTodo"><span class="fa-solid fa-eraser"/> Limpiar formulario</button>
+        <button class="btn morado_boton b-anchof" @click="generarPDF" @touchstart="generarPDF"><span :class="[cargar]"></span>Generar PDF</button>
+        <button class="btn morado_boton b-anchof" @click="limpiarTodo" @touchstart="limpiarTodo"><span class="fa-solid fa-eraser"/> Limpiar formulario</button>
       </div>
+      <a href="#" download="" id="link"></a>
     </div>
-  <a href="#" download="" id="link"></a>
-  <br>
+    <br>
   <div class="container-fluid" align="center">
 
     <p style="font-size:12px">Derechos reservados MaxJP 2024 1.1</p>
   </div>
   </div>
 </template>
+
+<style scoped>
+.cabeceras_tabla th{
+  background-color: #982993;
+  color: aliceblue;
+}
+.morado_boton{
+  border-color: #982993;
+  border:none;
+  color: #982993;
+  transition: transform 0.1s ease-in;
+}
+.morado_boton:hover{
+  background-color: #F8FAFC;
+  color: #915c8e;
+  transform: scale(0.90);
+}
+.morado_boton:active{
+  background-color: #F8FAFC;
+  color: #915c8e;
+}
+</style>
+
 
 
 <script>
@@ -232,10 +255,11 @@ export default{
     },
     mounted() {
       this.form_data.observaciones_recogido = 'N/A'
-      this.form_data.observaciones_entregado = 'N/A'
+      this.form_data.observaciones_entregado = 'N/A';
+      this.cerrarSesionAuto();
     },
     methods: {
-      ...mapMutations(['mostrarComponentes','mostrarGestores','getSession','mostrarCamps']),
+      ...mapMutations(['mostrarComponentes','mostrarGestores','getSession','mostrarCamps','cerrarSesionAuto']),
       generarPDF: async function(){
           this.cargar = 'spinner-border spinner-border-sm';
           if(this.validarInformacion()){

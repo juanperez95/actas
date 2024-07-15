@@ -3,7 +3,7 @@
     <div id="gestores">
       <p>
         Gestor que entrega:
-        <select class="form-select" v-model="form_data.nombre_persona" @click="getSession();llenarCampos();">
+        <select class="form-select" v-model="form_data.nombre_persona" @click="getSession();llenarCampos();" @touchstart="getSession();llenarCampos();">
           <option :value="gestor.nombre_gestor" v-for="gestor in usuario_session" :key="gestor.nombre_gestor">{{gestor.nombre_gestor ? gestor.nombre_gestor.toUpperCase() : ''}}</option>
         </select>
       </p>
@@ -17,7 +17,7 @@
       </p>
       <p>
         El presente formato se tiene con fin de entregar la responsabilidad del activo solicitado al gestor {{cargar1}}
-        <span :class="[cargar2]"></span><select class="form-select" v-model="form_data.nombre_gestor" @click="mostrarGestores">
+        <span :class="[cargar2]"></span><select class="form-select" v-model="form_data.nombre_gestor" @click="mostrarGestores" @touchstart="mostrarGestores">
           <option :value="gestor.nombre_gestor" v-for="gestor in lista_gestores" :key="gestor.nombre_gestor">{{gestor.nombre_gestor ? gestor.nombre_gestor.toUpperCase() : ''}}</option>
         </select>
       </p>
@@ -33,7 +33,7 @@
         </li>
         <li>
           Operación Solicitante
-          <span :class="[cargar1]"></span><input type="text" placeholder="Ingrese la operación" class="form-select" v-model="form_data.op_solicitante" list="listaOp" @click="mostrarCamps"/>
+          <span :class="[cargar1]"></span><input type="text" placeholder="Ingrese la operación" class="form-select" v-model="form_data.op_solicitante" list="listaOp" @click="mostrarCamps" @touchstart="mostrarCamps"/>
           <datalist id="listaOp">
             <option :value="cam.nombre_camp.toUpperCase()" v-for="cam in lista_operaciones" :key="cam.id">{{cam.nombre_camp.toUpperCase()}}</option>
           </datalist>
@@ -41,7 +41,7 @@
       </ul>
       <p>Activos relacionados:</p>
       <!-- Tabla de elementos entregados -->
-      <table>
+      <table class="table cabeceras_tabla">
         <tr>
           <th>Elemento</th>
           <th>Serial</th>
@@ -51,7 +51,7 @@
         </tr>
         <tr>
           <td>
-            <select name="" id="" class="form-select" v-model="form_data.ingreso_elemento" @click="mostrarComponentes">
+            <select name="" id="" class="form-select" v-model="form_data.ingreso_elemento" @click="mostrarComponentes" @touchstart="mostrarComponentes">
               <option :value="componente.nombre_componente" v-for="componente in componentes_vuex" :key="componente.id">{{componente.nombre_componente.toUpperCase()}}</option>             
             </select>
           </td>
@@ -65,15 +65,15 @@
             <input type="text" placeholder="Ingrese las observaciones" v-model="form_data.observaciones_elemento" @keyup.enter="agregarElementos" class="form-control"/>
           </td>
           <td>
-            <button class="btn btn-outline-danger" @click="agregarElementos"><i class="fa-solid fa-plus"></i> Agregar</button>
+            <button class="btn morado_boton" @click="agregarElementos" @touchstart="agregarElementos"><i class="fa-solid fa-plus"></i> Agregar</button>
           </td>
         </tr>
       </table>
 
       <!-- Lista de elementos agregados -->
 
-      <div class="container p-3">
-        <table class="table">
+      <div class="p-1" v-if="form_data.data_elemento.length !== 0">
+        <table class="table cabeceras_tabla">
           <thead>
             <tr>
               <th>Elemento</th>
@@ -88,7 +88,7 @@
               <td scope="col">{{data.serial_elemento.toUpperCase()}}</td>
               <td scope="col">{{data.activo_elemento.toUpperCase()}}</td>
               <td scope="col">
-                <button class="btn btn-outline-danger" @click="quitarElementos(data)"><i class="fa-solid fa-trash"></i></button>
+                <button class="btn morado_boton" @click="quitarElementos(data)" @touchstart="quitarElementos"><i class="fa-solid fa-trash"></i></button>
               </td>
             </tr>
           </tbody>
@@ -97,7 +97,7 @@
 
       <!-- Elementos recogidos -->
 
-      <table>
+      <table class="table cabeceras_tabla">
         <tr>
           <th>Elemento</th>
           <th>Serial</th>
@@ -107,7 +107,7 @@
         </tr>
         <tr>
           <td>
-            <select name="" id="" class="form-select" v-model="form_data.ingreso_elemento_r" @click="mostrarComponentes">
+            <select name="" id="" class="form-select" v-model="form_data.ingreso_elemento_r" @click="mostrarComponentes" @touchstart="mostrarComponentes">
               <option :value="componente.nombre_componente" v-for="componente in componentes_vuex" :key="componente.id">{{componente.nombre_componente.toUpperCase()}}</option>             
             </select>
           </td>
@@ -121,15 +121,15 @@
             <input type="text" placeholder="Ingrese las observaciones" v-model="form_data.observaciones_elemento_r" @keyup.enter="agregarRecogido" class="form-control"/>
           </td>
           <td>
-            <button class="btn btn-outline-danger" @click="agregarRecogido"><i class="fa-solid fa-plus"></i> Agregar</button>
+            <button class="btn morado_boton" @click="agregarRecogido" @touchstart="agregarRecogido"><i class="fa-solid fa-plus"></i> Agregar</button>
           </td>
         </tr>
       </table>
 
       <!-- Lista de elementos agregados -->
 
-      <div class="container p-3">
-        <table class="table">
+      <div class="p-1" v-if="form_data.data_elemento_r.length !== 0">
+        <table class="table cabeceras_tabla">
           <thead>
             <tr>
               <th>Elemento</th>
@@ -144,7 +144,7 @@
               <td scope="col">{{data.serial_elemento.toUpperCase()}}</td>
               <td scope="col">{{data.activo_elemento.toUpperCase()}}</td>
               <td scope="col">
-                <button class="btn btn-outline-danger" @click="quitarRecogido(data)"><i class="fa-solid fa-trash"></i></button>
+                <button class="btn morado_boton" @click="quitarRecogido(data)" @touchstart="quitarRecogido"><i class="fa-solid fa-trash"></i></button>
               </td>
             </tr>
           </tbody>
@@ -182,8 +182,8 @@
       </table>
     </div>
     <div class="container-fluid b-finales">
-      <button class="btn btn-outline-danger mt-2 b-anchof" @click="generarPDFGestor"><span :class="[cargar]"></span>  Generar PDF</button>
-      <button class="btn btn-outline-danger mt-2 b-anchof" @click="limpiarTodo"><span class="fa-solid fa-eraser"/>  Limpiar Formulario</button>
+      <button class="btn morado_boton mt-2 b-anchof" @click="generarPDFGestor" @touchstart="generarPDFGestor"><span :class="[cargar]"></span>  Generar PDF</button>
+      <button class="btn morado_boton mt-2 b-anchof" @click="limpiarTodo" @touchstart="limpiarTodo"><span class="fa-solid fa-eraser"/>  Limpiar Formulario</button>
     </div>
 
     <a href="" download="" id="enlace"></a>
@@ -194,6 +194,28 @@
     </div>
   </div>
 </template>
+
+<style scoped>
+.cabeceras_tabla th{
+  background-color: #982993;
+  color: aliceblue;
+}
+.morado_boton{
+  border-color: #982993;
+  border:none;
+  color: #982993;
+  transition: transform 0.1s ease-in;
+}
+.morado_boton:hover{
+  background-color: #F8FAFC;
+  color: #915c8e;
+  transform: scale(0.90);
+}
+.morado_boton:active{
+  background-color: #F8FAFC;
+  color: #915c8e;
+}
+</style>
 
 <script>
 import axios from 'axios'
@@ -241,7 +263,7 @@ export default {
   },
   methods: {
     // Datos de uso global
-    ...mapMutations(['mostrarComponentes','mostrarGestores','getSession','mostrarCamps']),
+    ...mapMutations(['mostrarComponentes','mostrarGestores','getSession','mostrarCamps','longitudElementos']),
     llenarCampos: async function(){
       await axios.post('/Actas_de_responsabilidad/Gestores/BuscarGestorName',this.form_data)
       .then(res=>{

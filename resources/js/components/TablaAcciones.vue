@@ -5,13 +5,13 @@
         <div class="m-2 p-4 input-group mb-3" style="display: flex; justify-content:space-between; gap:50px; align-items:center;">
             <select name="" id="" class="form-select" @click="mostrarGestores(); llenarCampos();" v-model.number="g_seleccionado">
                 <option value="0">Seleccione un gestor</option>
-                <option :value="g.id" v-for="g in gestor" :key="g.id">{{g.nombre_gestor.toUpperCase()}}</option>
+                <option :value="g.id" v-for="g in lista_gestores" :key="g.id">{{g.nombre_gestor.toUpperCase()}}</option>
             </select>
             <!-- <input type="text" name="" list="camps" class="form-control" placeholder="Buscar campaña" @click="mostrarCamps();llenarCamposCamps();" v-model.number="cam_escogida" @keyup.enter="llenarCamposCamps();"> -->
             
             <select class="form-select" @click="mostrarCamps();llenarCamposCamps();" v-model="cam_escogida">
                 <option value="">Seleccione una campaña</option>
-                <option :value="cam.id" v-for="cam in camapaña" :key="cam.id" >{{cam.nombre_camp.toUpperCase()}}</option>
+                <option :value="cam.id" v-for="cam in lista_operaciones" :key="cam.id" >{{cam.nombre_camp.toUpperCase()}}</option>
             </select>
             <!-- Parte de componente -->
             <select class="form-select" @click="mostrarComponente();llenarCamposComponente()" v-model="componente_escogido">
@@ -58,20 +58,39 @@
                 </tbody>
             </table>
             <!-- Tabla de historial -->
-            <table class="table">
+            <table class="table" v-if="g_seleccionado !== 0">
                 <thead>
                     <tr class="cabeceras_tabla">
                         <th>Ultimas actas generadas del gestor</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr>                  
+                        <div class="buscador_fechas">
+                            <input type="text" class="form-control" placeholder="Numero caso" v-model="buscar_caso" @input="buscarCasos">
+                            <input type="date" name="" id="" class="form-control" v-model="fechas.fecha_inicio" required>
+                            <input type="date" name="" id="" class="form-control" v-model="fechas.fecha_fin" required>
+                            <button class="btn morado_boton" @click="buscarCasosAvanzado">Buscar fechas</button>    
+                            <!-- Buscar actas por gestor -->
+                            <select name="" id="" class="form-select" @click="mostrarGestores();filtroActasGestor()" v-model.number="gestor">
+                                <option value="">Seleccione un gestor</option>
+                                <option :value="g.id" v-for="g in lista_gestores" :key="g.id">{{g.nombre_gestor.toUpperCase()}}</option>
+                            </select>
+                            <!-- Filtrar actas por campaña -->
+                            <select class="form-select" @click="mostrarCamps();filtroActasCam();" v-model="cam_f">
+                                <option value="">Seleccione una campaña</option>
+                                <option :value="cam.id" v-for="cam in lista_operaciones" :key="cam.id" >{{cam.nombre_camp.toUpperCase()}}</option>
+                            </select>
+
+
+                        </div>      
                         <div class="p-2 cartas">
                             <div class="card" v-for="acta in actas" :key="acta.id">
                                 <div class="card-body colorCartas">
-                                  <h5 class="card-title"><b>{{acta.tipo_acta ? acta.tipo_acta.toUpperCase() : ''}}</b><br>N° Caso: {{acta.numero_caso}}</h5>
-                                  <p class="card-text"><b>Fecha creacion: {{acta.fecha_creacion}}</b></p>
-                                  <button type="button" class="btn boton_morado_pdf" @click="downloadPdfAgain(acta.ruta_pdf)"><span><i class="fa-solid fa-file-pdf"></i></span> Descargar PDF</button>
+                                    <h5 class="card-title"><b><span><i class="fa-regular fa-file"></i></span>     {{acta.tipo_acta ? acta.tipo_acta.toUpperCase() : ''}}</b><br>N° Caso: {{acta.numero_caso}}</h5>
+
+                                    <p class="card-text"><b>Fecha creacion: {{acta.fecha_creacion}}</b></p>
+                                    <button type="button" class="btn boton_morado_pdf" @click="downloadPdfAgain(acta.id)"><span><i class="fa-solid fa-file-pdf"></i></span> Descargar PDF</button>
                                 </div>
                             </div>              
                         </div>           
@@ -124,6 +143,11 @@
 </template>
 
 <style scoped>
+.buscador_fechas{
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(250px,1fr));
+    gap: 10px;
+}
 .morado_check{
     background-color: #982993;
     color: #915c8e;
@@ -150,7 +174,7 @@
 .morado_boton:hover{
     background-color: #F8FAFC;
     color: #915c8e;
-    transform: scale(1.10);
+    transform: scale(0.90);
 }
 .morado_boton:active{
     background-color: #F8FAFC;
@@ -198,9 +222,13 @@ import { mapMutations, mapState } from 'vuex';
 export default {
     data() {
         return {
+            // Filtro por medio de camapañas
+            cam_f:'',
+            // Buscar por medio del gestor
+            gestor:'',
+            // Buscar casos por medio del numero de caso
+            buscar_caso:'',
             actas:[],
-            gestor:[],
-            camapaña:[],
             // ID del gestor escogido en la lista desplegable
             g_seleccionado:0,
             // ID de la campaña escogida
@@ -211,6 +239,7 @@ export default {
             campos_componente:[],
             cargar:'',
             componente_escogido:'',
+            // Datos de gestor
             datos_gestor:{
                 nombre_gestor:'',
                 cedula:'',
@@ -225,40 +254,20 @@ export default {
             datos_componente:{
                 nombre_componente:''
             },
+            // Filtrado por fechas
+            fechas:{
+                fecha_inicio:'',
+                fecha_fin:'',
+            },
             // Cargas al editar
             carga_update:'fa-solid fa-pen'
         }
     },
     computed:{
-        ...mapState(['componentes_vuex']),
+        ...mapState(['componentes_vuex','lista_operaciones','lista_gestores']),
     },
     methods: {
-        ...mapMutations(['mostrarComponentes']),
-        // Mostrar gestores
-        mostrarGestores: async function(){
-            this.cargar = 'spinner-grow spinner-grow-sm';
-            this.control_tabla = 1;
-            await axios.get('/Actas_de_responsabilidad/Gestores/Admin')
-            .then((gestor)=>{
-                this.gestor = gestor.data;
-            })
-            .catch((error)=>{
-                console.log(error);
-            });
-            this.cargar = '';
-        },
-        // Mostrar lasw campañas disponibles
-        mostrarCamps: async function(){
-            this.cargar = 'spinner-grow spinner-grow-sm';
-            await axios.get('/Actas_de_responsabilidad/Campanas')
-            .then((cam)=>{
-                this.camapaña = cam.data;
-            })
-            .catch((error)=>{
-                console.log(error);
-            })
-            this.cargar = '';
-        },
+        ...mapMutations(['mostrarComponentes','mostrarCamps','mostrarGestores']),
         llenarCampos: async function(){
             await axios.post('/Actas_de_responsabilidad/Gestores/BuscarGestor',{id:this.g_seleccionado})
             .then((gestor)=>{
@@ -429,21 +438,62 @@ export default {
         },
 
         // Generar la descarga con los archivos que estan en el servidor
-        downloadPdfAgain(filename){
-            axios.post(`/Actas_de_responsabilidad/Historial/DownloadPDF`,{ruta:filename},{responseType:'blob'})
+        downloadPdfAgain(id){
+            axios.post(`/Actas_de_responsabilidad/Historial/DownloadPDF/${id}`,{},{responseType:'blob'})
             .then(res=>{
                 // Descargar el pdf desde laravel
                 var link = document.getElementById('tryPdf');
-                link.download = (new Date().getDate().toLocaleString() +'_'+ (new Date().getMonth()+1).toString() +'_'+ (new Date().getFullYear()).toString() + '_' + new Date().getTime().toString()) + 'OPERACION_'+ '222' +'.pdf';
+                link.download = (new Date().getDate().toLocaleString() +'_'+ (new Date().getMonth()+1).toString() +'_'+ (new Date().getFullYear()).toString() + '_' + new Date().getTime().toString()) + 'RECUPERADO'+'.pdf';
                 link.href = URL.createObjectURL(res.data);
                 link.click();
-
                 URL.revokeObjectURL(link.href);
             })
             .catch(err=>{
                 console.log(err)
             });
 
+        },
+        // Buscar actas en la barra de busqueda
+        buscarCasos: async function(){
+            await axios.post(`/Actas_de_responsabilidad/Historial/BuscarCaso/${this.buscar_caso}`)
+            .then(res=>{
+                this.actas = res.data;
+            })
+            .catch(err=>{
+
+            });
+        },
+        // Buscar actas en la barra de busqueda por medio de fechas
+        buscarCasosAvanzado(){
+            axios.post(`/Actas_de_responsabilidad/Historial/BuscarCasoAvanzado/${this.fechas.fecha_inicio}/${this.fechas.fecha_fin}`)
+            .then(res=>{
+                this.actas = res.data;
+            })
+            .catch(err=>{
+
+            });
+        },
+        // Filtrar actas por gestor
+        filtroActasGestor(){
+            axios.get(`/Actas_de_responsabilidad/Gestores/Filtro/${this.gestor}`)
+            .then(res=>{
+                this.actas = res.data;
+                // console.log(res.data);
+            })
+            .catch(err=>{
+                // console.log(err);
+            });
+        },
+        // Filtrar actas por campaña
+        filtroActasCam(){
+            axios.get(`/Actas_de_responsabilidad/Campanas/Filtro/${this.cam_f}`)
+            .then(res=>{
+                this.actas = res.data;
+                // console.log(res.data);
+            })
+            .catch(err=>{
+                // console.log(err);
+            });
         }
     },
 }

@@ -381,5 +381,15 @@ class Pdf extends Controller
         return redirect()->route('home');
     }
 
+    // Destrozar la sesion al cerrar , automatizadamente
+    public function SignOutAuto(Request $request){
+
+        if($request->session()->has('gestor_session')){
+            $request->session()->flush();   
+            return true;
+        }
+        return false;
+    }
+
     
 }

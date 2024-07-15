@@ -24,6 +24,7 @@ Route::delete('/Actas_de_responsabilidad/Gestores/Destroy/{id}',[GestoresActas::
 Route::put('/Actas_de_responsabilidad/Gestores/Update/{id}',[GestoresActas::class,'ModificarGestores'])->name('editar_gestor');
 Route::get('/Actas_de_responsabilidad/Gestores/Session',[GestoresActas::class,'getSessionGestor'])->name('inicio_gestor');
 Route::post('/Actas_de_responsabilidad/Gestores/ResetPass/{id}',[GestoresActas::class,'ResetPassGestor'])->name('restablecer_gestor');
+Route::get('/Actas_de_responsabilidad/Gestores/Filtro/{fk_gestor}',[Historiales_actas::class,'BuscarHistorialGestor'])->name('historial_gestor');
 
 
 // Acciones con las campañas
@@ -32,6 +33,7 @@ Route::post('/Actas_de_responsabilidad/Campanas/Registro',[CampanasActas::class,
 Route::post('/Actas_de_responsabilidad/Campanas/BuscarCamp',[CampanasActas::class,'BuscarCamp'])->name('buscar_cam');
 Route::delete('/Actas_de_responsabilidad/Campanas/Destroy/{id}',[CampanasActas::class,'EliminarCam'])->name('borrar_cam');
 Route::put('/Actas_de_responsabilidad/Campanas/Update/{id}',[CampanasActas::class,'ModificarCam'])->name('editar_cam');
+Route::get('/Actas_de_responsabilidad/Campanas/Filtro/{fk_cam}',[Historiales_actas::class,'BuscarHistorialCamp'])->name('historial_cam');
     
 // Registro de campañas y registros
 Route::get('/Actas_de_responsabilidad/Registro/Camps_y_gestores',[Pdf::class,'registroCamGestor'])->name('registro_camps_gestor');
@@ -55,7 +57,10 @@ Route::post('/api/devolucion-equipo', [DevolucionEquipoController::class, 'store
 Route::get('/Actas_de_responsabilidad/Login',[Pdf::class,'Login'])->name('inicio_sesion');
 Route::post('/Actas_de_responsabilidad/Login/Validate',[Pdf::class,'InicioSesionValidate'])->name('validar_inicio_sesion');
 Route::get('/Actas_de_responsabilidad/Login/Destroy',[Pdf::class,'SignOut'])->name('cerrar_sesion');
+Route::get('/Actas_de_responsabilidad/Login/DestroyAuto',[Pdf::class,'SignOutAuto'])->name('cerrar_sesion_auto');
 
 // Rutas de historial
 Route::post('/Actas_de_responsabilidad/Historial/{id}',[Historiales_actas::class,'AccederDatos'])->name('historial_actas');
-Route::post('/Actas_de_responsabilidad/Historial/DownloadPDF/{ruta}',[Historiales_actas::class,'DownloadAgainPDF'])->name('download_actas');
+Route::post('/Actas_de_responsabilidad/Historial/DownloadPDF/{id}',[Historiales_actas::class,'DownloadAgainPDF'])->name('download_actas');
+Route::post('/Actas_de_responsabilidad/Historial/BuscarCaso/{id}',[Historiales_actas::class,'BuscarHistorialBasic'])->name('buscar_actas');
+Route::post('/Actas_de_responsabilidad/Historial/BuscarCasoAvanzado/{f_inicio}/{f_fin}',[Historiales_actas::class,'BuscarHistorialHard'])->name('buscar_actas');

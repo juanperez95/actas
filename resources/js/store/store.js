@@ -4,7 +4,7 @@ import axios from 'axios';
 const store = new Vuex.Store({
     state:{
         componentes_vuex:[],
-        lista_gestores:['a'],
+        lista_gestores:[],
         usuario_session:[],
         lista_operaciones:[],
     },
@@ -47,8 +47,32 @@ const store = new Vuex.Store({
             .catch((error)=>{
                 console.log(error);
             })
-        }
+        },
+        // Cerrar la sesion despues de un tiempo estimado
+        cerrarSesionAuto(state){
+            let tiempo = null;
+            function start(){
+                tiempo = setTimeout(()=>{
+                    axios.get('/Actas_de_responsabilidad/Login/DestroyAuto')
+                    .then(res=>{
+                        if(res.data){
+                            window.location.href = "/Actas";
+                        }
+                    })
+                    .catch(err=>{
+                        console.log(err);
+                    });
+                },30000);
+            }
+            function reset(){
+                clearInterval(tiempo);
+                start();
+            };
 
+            document.addEventListener('mousemove',reset);
+
+
+        }
     }
 });
 

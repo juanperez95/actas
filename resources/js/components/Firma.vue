@@ -8,7 +8,7 @@
     ></canvas
     ><br />
     <h6>{{firma_d}}: <b>{{Nombre_de_quien_entrega ? Nombre_de_quien_entrega.toUpperCase() : ''}}</b></h6>
-    <button type="button" @click="clearSignature" class="btn btn-outline-danger">Borrar</button>
+    <button type="button" @click="clearSignature" class="btn morado_boton">Borrar</button>
   </div>
 </template>
   
@@ -77,10 +77,25 @@ export default {
 };
 </script>
   
-  <style>
+<style>
 #signature-pad {
   border: 1px solid #000;
   touch-action: none;
 }
+.morado_boton{
+  border-color: #982993;
+  color: #982993;
+  transition: transform 0.1s ease-in;
+}
+.morado_boton:hover{
+  background-color: #F8FAFC;
+  color: #915c8e;
+  transform: scale(0.90);
+}
+.morado_boton:active{
+  background-color: #F8FAFC;
+  color: #915c8e;
+}
+
 </style>
   

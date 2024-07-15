@@ -46,7 +46,7 @@ class GestoresActas extends Controller
 
     // Mostrar a todos los gestores de la base de datos
     public function MostrarGestores(){
-        $gestores = GestoreActas::where('rol','gestor')->get();
+        $gestores = GestoreActas::all();
         // Devolver la respuesta en formato JSON
         return response()->json($gestores);
     }
