@@ -6,17 +6,14 @@
   <title>Acta de Responsabilidad de Equipos de Trabajo</title>
   <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
   <meta name="csrf-token" content="{{ csrf_token() }}">
+  <link rel="icon" href="{{asset('images/americas.png')}}" type="image/png">
 </head>
 <body style="background: rgb(149,71,244);
 background: radial-gradient(circle, rgba(149,71,244,1) 0%, rgba(152,35,130,1) 100%);">
   <div class="container">
     <div style="display:flex;justify-content:space-between;">
       <img src="{{ asset('images/americas.png') }}" alt="Descripción de la imagen" class="logo">
-      <div>
 
-        <a class="enlaces" href="{{route('cerrar_sesion')}}"><i class="fa-solid fa-right-from-bracket"></i>  Cerrar Sesion</a><br>
-        <a class="enlaces" href="{{route('registro_camps_gestor')}}"><i class="fa-solid fa-gear"></i>  Configuracion</a>
-      </div>
     </div>
     
     <h2>ACTAS</h2>
@@ -26,6 +23,9 @@ background: radial-gradient(circle, rgba(149,71,244,1) 0%, rgba(152,35,130,1) 10
     
     <label for="option">Seleccione una opción:</label>
     <div id="app">
+      <div>
+        <navbar-actas/>
+      </div>
       <select id="option" v-model.number="seleccion_operacion" class="form-select">
         <option value="1">ACTA DE RESPONSABILIDAD AL GESTOR</option>
         <option value="2">ACTA DE CAMBIO A INVENTARIO DE OPERACION</option>

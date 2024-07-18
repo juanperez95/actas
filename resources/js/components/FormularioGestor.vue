@@ -194,28 +194,7 @@
     </div>
   </div>
 </template>
-
-<style scoped>
-.cabeceras_tabla th{
-  background-color: #982993;
-  color: aliceblue;
-}
-.morado_boton{
-  border-color: #982993;
-  border:none;
-  color: #982993;
-  transition: transform 0.1s ease-in;
-}
-.morado_boton:hover{
-  background-color: #F8FAFC;
-  color: #915c8e;
-  transform: scale(0.90);
-}
-.morado_boton:active{
-  background-color: #F8FAFC;
-  color: #915c8e;
-}
-</style>
+ 
 
 <script>
 import axios from 'axios'
@@ -232,6 +211,7 @@ export default {
   data(){
     return {
       form_data:{
+        tipo_formulario:'gestores',
         // Datos basicos
         nombre_persona:'',
         numero_caso:'',
@@ -263,7 +243,7 @@ export default {
   },
   methods: {
     // Datos de uso global
-    ...mapMutations(['mostrarComponentes','mostrarGestores','getSession','mostrarCamps','longitudElementos']),
+    ...mapMutations(['mostrarComponentes','mostrarGestores','getSession','mostrarCamps','longitudElementos','cerrarSesionAuto']),
     llenarCampos: async function(){
       await axios.post('/Actas_de_responsabilidad/Gestores/BuscarGestorName',this.form_data)
       .then(res=>{
@@ -453,6 +433,7 @@ export default {
   mounted(){
     this.form_data.observaciones_elemento = 'N/A';
     this.form_data.observaciones_elemento_r = 'N/A';
+    this.cerrarSesionAuto();
   },
 };
 </script>

@@ -37,6 +37,7 @@ Route::get('/Actas_de_responsabilidad/Campanas/Filtro/{fk_cam}',[Historiales_act
     
 // Registro de campañas y registros
 Route::get('/Actas_de_responsabilidad/Registro/Camps_y_gestores',[Pdf::class,'registroCamGestor'])->name('registro_camps_gestor');
+Route::get('/Actas_de_responsabilidad/Registro/AdminPage',[Pdf::class,'adminPage'])->name('pagina_admin');
 
 
 // Acciones con componentes en la base de datos

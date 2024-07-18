@@ -179,30 +179,6 @@
   </div>
 </template>
 
-<style scoped>
-.cabeceras_tabla th{
-  background-color: #982993;
-  color: aliceblue;
-}
-.morado_boton{
-  border-color: #982993;
-  border:none;
-  color: #982993;
-  transition: transform 0.1s ease-in;
-}
-.morado_boton:hover{
-  background-color: #F8FAFC;
-  color: #915c8e;
-  transform: scale(0.90);
-}
-.morado_boton:active{
-  background-color: #F8FAFC;
-  color: #915c8e;
-}
-</style>
-
-
-
 <script>
 import axios from 'axios'
 
@@ -216,10 +192,12 @@ export default{
       Firma
     },
     name:'form-operacion',
+    
     // Recoger los datos del formulario
     data(){
         return {    
             form_data:{
+                tipo_formulario:'operacion',
                 // Datos basicos de la persona
                 nombre_encargado:'',
                 documento_encargado:null,
@@ -254,12 +232,15 @@ export default{
         }
     },
     mounted() {
+      this.validateActas('operacion');
       this.form_data.observaciones_recogido = 'N/A'
       this.form_data.observaciones_entregado = 'N/A';
-      this.cerrarSesionAuto();
+      this.cerrarSesionAuto(this.form_data)
+      console.log(this.datos_form);
+
     },
     methods: {
-      ...mapMutations(['mostrarComponentes','mostrarGestores','getSession','mostrarCamps','cerrarSesionAuto']),
+      ...mapMutations(['mostrarComponentes','mostrarGestores','getSession','mostrarCamps','cerrarSesionAuto','validateActas']),
       generarPDF: async function(){
           this.cargar = 'spinner-border spinner-border-sm';
           if(this.validarInformacion()){
@@ -457,7 +438,7 @@ export default{
         },
     },
     computed:{
-      ...mapState(['componentes_vuex','lista_gestores','usuario_session','lista_operaciones'])
+      ...mapState(['componentes_vuex','lista_gestores','usuario_session','lista_operaciones','datos_form'])
     },
     
 }

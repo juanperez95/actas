@@ -198,24 +198,6 @@
   </div>
 </template>
 
-<style scoped>
-
-.morado_boton{
-  border-color: #982993;
-  border:none;
-  color: #982993;
-  transition: transform 0.1s ease-in;
-}
-.morado_boton:hover{
-  background-color: #F8FAFC;
-  color: #915c8e;
-  transform: scale(0.90);
-}
-.morado_boton:active{
-  background-color: #F8FAFC;
-  color: #915c8e;
-}
-</style>
 
 
 <script>
@@ -234,6 +216,7 @@ export default {
   data() {
     return {
       formData: {
+        tipo_formulario:'retornos',
         dispositivo:'',
         Tipoescritorio: '',
         numeroCaso: '',

@@ -362,14 +362,21 @@ class Pdf extends Controller
     }
 
 
-    // Registro de campañas y gestores
+    // Validar el rol para permitir acciones de administrador
     public function registroCamGestor(Request $request){
         if($request->session()->has('gestor_session')){
             $usuario = $request->session()->get('gestor_session');
             if($usuario->rol == 'administrador'){
-                return view('registro_camps_gestores');
+                return true;
             }
         }        
+        return false;
+    }
+    // Pagina de administrador
+    public function adminPage(Request $request){
+        if($request->session()->has('gestor_session')){
+           return view('registro_camps_gestores');
+        }
         return abort(403);
     }
 
@@ -378,7 +385,7 @@ class Pdf extends Controller
 
         $request->session()->flush();
 
-        return redirect()->route('home');
+        return true;
     }
 
     // Destrozar la sesion al cerrar , automatizadamente

@@ -220,6 +220,9 @@ import { mapMutations, mapState } from 'vuex';
 
 
 export default {
+    mounted() {
+        this.cerrarSesionAuto();
+    },
     data() {
         return {
             // Filtro por medio de camapañas
@@ -267,7 +270,7 @@ export default {
         ...mapState(['componentes_vuex','lista_operaciones','lista_gestores']),
     },
     methods: {
-        ...mapMutations(['mostrarComponentes','mostrarCamps','mostrarGestores']),
+        ...mapMutations(['mostrarComponentes','mostrarCamps','mostrarGestores','cerrarSesionAuto']),
         llenarCampos: async function(){
             await axios.post('/Actas_de_responsabilidad/Gestores/BuscarGestor',{id:this.g_seleccionado})
             .then((gestor)=>{

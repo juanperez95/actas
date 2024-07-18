@@ -55,5 +55,4 @@ class Historiales_actas extends Controller
         }
         return response()->json($historial);
     }
-
 }
