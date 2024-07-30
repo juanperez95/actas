@@ -198,7 +198,9 @@ class Pdf extends Controller
         $activoDispositivo = $request->activoDispositivo;
         $estadoDispositivo = $request->estadoDispositivo;
         $diadema = $request->diadema;
+        $marcaDiadema = $request->marcaDiadema;
         $serialDiadema = $request->serialDiadema;
+        $estadoDiadema = $request->estadoDiadema;
         $raton = $request->raton;
         $estadoRaton = $request->estadoRaton;
         $teclado = $request->teclado;
@@ -235,7 +237,7 @@ class Pdf extends Controller
         'estadoDispositivo', 'diadema', 'serialDiadema', 'raton', 
         'estadoRaton', 'teclado', 'estadoTeclado', 'camara', 'serialCpu', 
         'activoCpu', 'estadoCpu', 'serialMonitor', 'activoMonitor', 'estadoMonitor',
-         'segundoMonitor', 'serialMonitor2', 'activoMonitor2', 'tieneDiadema', 'diademaSerial',
+         'segundoMonitor', 'serialMonitor2', 'activoMonitor2', 'tieneDiadema',  'marcaDiadema', 'estadoDiadema',
           'observaciones', 'nombreRecibe', 'ruta1', 'ruta2','rutaLogo');
 
         $opciones = new Options();

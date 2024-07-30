@@ -158,8 +158,8 @@
       <p>Con la firma de esta acta el gestor que solicita el elemento se hará responsable de este en su totalidad hasta que sea entregada a la operación la cual deberá de ser certificada por un acta de entrega similar, firmada por la operación y cargada a GLPI.</p>
       <hr>
       <div class="container firmas">
-        <Firma ref="signaturePad" firma_d="Firma de quien entrega" class="mb-3"></Firma>
-        <Firma ref="signaturePad2" firma_d="Firma de quien recibe" class="mb-3"></Firma>
+        <Firma ref="signaturePad" firma_d="Firma de quien entrega" class="mb-3" cargo_persona=""></Firma>
+        <Firma ref="signaturePad2" firma_d="Firma de quien recibe" class="mb-3" cargo_persona=""></Firma>
       </div>
       <table>
         <tr>

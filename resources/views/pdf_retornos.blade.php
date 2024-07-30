@@ -19,7 +19,7 @@
             margin-bottom: 20px;
             font-size:12px;
         }
-        th{
+        th {
             border: 1px solid #000;
             padding: 6px;
             text-align: center;
@@ -33,13 +33,13 @@
         }
         .signature {
             margin-top: 40px;
-            display:flex;
-            flex-direction:row;
+            display: flex;
+            flex-direction: row;
         }
-        p{
-            font-size:11px;
+        p {
+            font-size: 11px;
         }
-        .firmas_p{
+        .firmas_p {
             font-size: 15px;
         }
     </style>
@@ -103,8 +103,14 @@
     <tr>
         <th>Diadema</th>
         <td>{{$diadema}}</td>
+        <th>Marca de la Diadema</th>
+        <td>{{$marcaDiadema ?? 'N/A'}}</td>
+    </tr>
+    <tr>
         <th>Serial de la Diadema</th>
         <td>{{$serialDiadema ?? 'N/A'}}</td>
+        <th>Estado de la Diadema</th>
+        <td>{{$estadoDiadema ?? 'N/A'}}</td>
     </tr>
     <tr>
         <th>Cámara</th>

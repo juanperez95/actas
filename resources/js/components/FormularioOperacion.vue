@@ -132,8 +132,8 @@
       <hr>
       <!-- Componente firmas -->
       <div class="container firmas">
-        <Firma ref="signaturePad" firma_d="Firma de quien entrega" class="mb-3"></Firma>
-        <Firma ref="signaturePad2" firma_d="Firma Operacion" class="mb-3"></Firma>
+        <Firma ref="signaturePad" firma_d="Firma de quien entrega" class="mb-3" cargo_persona=""></Firma>
+        <Firma ref="signaturePad2" firma_d="Firma Operacion" class="mb-3" cargo_persona=""></Firma>
       </div>
       <table>
         <tr> 
