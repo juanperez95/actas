@@ -61,7 +61,8 @@ export default {
                         timer:3000,
                         title:'¡Ups!',
                         text:'No tienes permisos para acceder a configuracion',
-                        icon:'info'
+                        icon:'info',
+                        showConfirmButton:false,
                     })
                 }
             })

@@ -77,13 +77,13 @@ class Pdf extends Controller
                 $usuario->save();
                 return 1;
                 // Si se asigno clave posteriormente inicia ya la cuenta
-            }else if($usuario->password != ''){
+            }else if($usuario->password != '' && $usuario->usuario_activo){
                 // Validar si la clave ingresada coincide con la de la BD
                 if($usuario->password == md5($request->input('password'))){
                     $request->session()->put('gestor_session',$usuario);
                     return 2;
                 }
-                // Si no entra a la condicion significa que no digito bien la contraseña
+                // Si no entra a la condicion significa que no digito bien la contraseña o no esta activo el usuario
                 return 4;
             }
         }
@@ -135,12 +135,14 @@ class Pdf extends Controller
         // Recoger las firmas 
         $firma1 = $request->input('firma1');
         $firma2 = $request->input('firma2');
+        $firma3 = $request->input('firma3');
 
         // Decodificar las dos firmas
-        $data = $this->encodeImagen($firma1, $firma2);
+        $data = $this->encodeImagen($firma1, $firma2, $firma3);
 
         $ruta1 = $data['ruta1'];
         $ruta2 = $data['ruta2'];
+        $ruta3 = $data['ruta3'];
         $rutaLogo = $data['rutaLogo'];
 
         $opciones = new Options();
@@ -168,6 +170,7 @@ class Pdf extends Controller
             'nombre_operacion',
             'ruta1',
             'ruta2',
+            'ruta3',
             'rutaLogo'));
 
             $pdf->loadHtml($vista);
@@ -333,34 +336,42 @@ class Pdf extends Controller
     }
 
     // Funcion para codificar imagenes de las firmas y logo de la compañia
-    public function encodeImagen($firma1, $firma2){
+    public function encodeImagen($firma1, $firma2, $firma3){
         $firma1 = str_replace('data:image/png;base64,', '', $firma1);
         $firma2 = str_replace('data:image/png;base64,', '', $firma2);
+        $firma3 = str_replace('data:image/png;base64,', '', $firma3);
 
         $firma1 = str_replace(' ', '+', $firma1);
         $firma2 = str_replace(' ', '+', $firma2);
+        $firma3 = str_replace(' ', '+', $firma3);
 
         $firmaImg1 = base64_decode($firma1);
         $firmaImg2 = base64_decode($firma2);
+        $firmaImg3 = base64_decode($firma3);
 
         // Guardar imagenes en el servidor
         $ruta1 = public_path(sprintf('firmas\%s.png','Firma1'));
         $ruta2 = public_path(sprintf('firmas\%s.png','Firma2'));
+        $ruta3 = public_path(sprintf('firmas\%s.png','Firma3'));
         $rutaLogo = public_path('images\americas.png');
 
         file_put_contents($ruta1, $firmaImg1);
         file_put_contents($ruta2, $firmaImg2);
+        file_put_contents($ruta3, $firmaImg3);
 
         $ruta1 = File::get($ruta1);
         $ruta1 = base64_encode($ruta1);
 
         $ruta2 = File::get($ruta2);
         $ruta2 = base64_encode($ruta2);
+        
+        $ruta3 = File::get($ruta3);
+        $ruta3 = base64_encode($ruta3);
 
         $rutaLogo = File::get($rutaLogo);
         $rutaLogo = base64_encode($rutaLogo);
 
-        return compact('ruta1', 'ruta2', 'rutaLogo');
+        return compact('ruta1', 'ruta2', 'ruta3', 'rutaLogo');
     }
 
 

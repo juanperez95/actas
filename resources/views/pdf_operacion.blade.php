@@ -135,6 +135,16 @@
                 </div>
             </td>
         </tr>
+        <tr>
+            <td colspan="2">
+                <div class="container">
+                    <p>Firma Operación:<img src="data:image/png;base64,{{$ruta3}}" alt="" width="30%"></p>
+                    <p>Nombre encargado: <b>{{$nombre_encargado}}</b></p>
+                    <p>Cargo: <b>{{$cargo_operacion}}</b></p>
+                    <p>Nombre Operacion: <b>{{$op_solicitante}}</b></p>
+                </div>
+            </td>
+        </tr>
     </table>
 </div>
 

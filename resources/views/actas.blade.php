@@ -27,7 +27,7 @@ background: radial-gradient(circle, rgba(149,71,244,1) 0%, rgba(152,35,130,1) 10
         <navbar-actas/>
       </div>
       <select id="option" v-model.number="seleccion_operacion" class="form-select">
-        <option value="1">ACTA DE RESPONSABILIDAD AL GESTOR</option>
+        {{-- <option value="1">ACTA DE RESPONSABILIDAD AL GESTOR</option> --}}
         <option value="2">ACTA DE CAMBIO A INVENTARIO DE OPERACION</option>
         <option value="3">ACTA DE RETORNOS DE EQUIPO</option>
       </select>

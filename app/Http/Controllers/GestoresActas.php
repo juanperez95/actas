@@ -23,6 +23,7 @@ class GestoresActas extends Controller
             $gestor->correo = $request->input('correo');
             $gestor->rol = $request->input('rol');
             $gestor->password = '';
+            $gestor->usuario_activo = true;
             $gestor->save();
             return response()->json(false);
         }
@@ -38,15 +39,36 @@ class GestoresActas extends Controller
         $gestor->save();
         return true;
     }
-    // Eliminar
+    // Inactivar usuario
     public function EliminarGestores($id){
-        GestoreActas::find($id)->delete();
+        $gestores = GestoreActas::find($id);
+        $gestores->usuario_activo = false;
+        $gestores->save();
+        return response()->json(true);
+    }
+    // Activar usuario
+    public function ActivarGestor($id){
+        $gestores = GestoreActas::find($id);
+        $gestores->usuario_activo = true;
+        $gestores->save();
+        return response()->json(true);
+    }
+
+    // Bloquear usuario por intentos en el login
+    public function BlockGestor($id){
+        try{
+            $gestores = GestoreActas::where('cedula',$id)->first();
+            $gestores->usuario_activo = false;
+            $gestores->save();
+        }catch(Exception $e){
+            error_log($e);
+        }
         return response()->json(true);
     }
 
     // Mostrar a todos los gestores de la base de datos
     public function MostrarGestores(){
-        $gestores = GestoreActas::all();
+        $gestores = GestoreActas::where('usuario_activo',true)->get();
         // Devolver la respuesta en formato JSON
         return response()->json($gestores);
     }

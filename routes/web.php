@@ -25,6 +25,8 @@ Route::put('/Actas_de_responsabilidad/Gestores/Update/{id}',[GestoresActas::clas
 Route::get('/Actas_de_responsabilidad/Gestores/Session',[GestoresActas::class,'getSessionGestor'])->name('inicio_gestor');
 Route::post('/Actas_de_responsabilidad/Gestores/ResetPass/{id}',[GestoresActas::class,'ResetPassGestor'])->name('restablecer_gestor');
 Route::get('/Actas_de_responsabilidad/Gestores/Filtro/{fk_gestor}',[Historiales_actas::class,'BuscarHistorialGestor'])->name('historial_gestor');
+Route::get('/Actas_de_responsabilidad/Gestores/Activar_usuario/{id}',[GestoresActas::class,'ActivarGestor'])->name('activar_gestor');
+Route::get('/Actas_de_responsabilidad/Gestores/BloquearUsuario/{id}',[GestoresActas::class,'BlockGestor'])->name('bloquear_gestor');
 
 
 // Acciones con las campañas

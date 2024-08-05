@@ -33,27 +33,50 @@ import Swal from 'sweetalert2';
         },
         titulo:'Iniciar sesion',
         cargar:'',
+        // Contador para bloquear usuario por seguridad
+        contador:0,
       }
     },
     methods: {
       login: async function() {
+        
         this.cargar = 'spinner-border spinner-border-sm';
         this.titulo = '';
         await axios.post('/Actas_de_responsabilidad/Login/Validate',this.datos_login)
         .then(res=>{
           switch (res.data) {
             case 0:
-              Swal.fire({title:'¡Ups!',text:'Este usuario no existe',icon:'warning',toast:true,position: "top-end",timer:2000});
+              Swal.fire({title:'¡Ups!',text:'Este usuario no existe',icon:'warning',toast:true,position: "top-end",timer:2000, showConfirmButton:false});
               break;
             case 1:
-              Swal.fire({title:'¡Exitoso!',text:'¡Clave correctamente asignada!',icon:'success',toast:true,position: "top-end",timer:2000});
+              Swal.fire({title:'¡Exitoso!',text:'¡Clave correctamente asignada!',icon:'success',toast:true,position: "top-end",timer:2000, showConfirmButton:false});
               break;
             case 2:
               window.location.href = '/Actas';
               history.replaceState(null, '', '/Actas');
+              this.contador = 0;
               break;
             case 4:
-              Swal.fire({title:'¡Ups!',text:'¿Eres tu?, Digita nuevamente la contraseña',icon:'info',toast:true,position: "top-end",timer:2000});
+              // Aumentar las veces que intenta acceder al perfil, si es igual a 6 se bloquea
+              this.contador += 1;
+              if(this.contador >= 4){
+                axios.get(`/Actas_de_responsabilidad/Gestores/BloquearUsuario/${this.datos_login.cedula}`)
+                  .then(res=>{
+                      if(res.data){
+                          Swal.fire({
+                              icon: 'info',
+                              text: '¡Tu usuario ha sido bloqueado!'
+                          });
+                          this.contador = 0;
+                      }
+                  })
+                  .catch(err=>{
+                      // console.log(err);
+                  });
+              }else{
+                // console.log(this.contador);
+                Swal.fire({title:'¡Ups!',text:`¿Eres tu?, Digita nuevamente la contraseña ${this.contador}/3 intentos`,icon:'info',toast:true,position: "top-end",timer:2000, showConfirmButton:false});
+              }
               break;      
           }
           this.cargar = '';
