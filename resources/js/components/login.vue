@@ -36,6 +36,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { onMounted } from 'vue';
 import feather from 'feather-icons';
+import { fas } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 
 library.add(fas);   
