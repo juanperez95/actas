@@ -13,6 +13,7 @@ import Navbar from './components/Navbar.vue';
 import 'bootstrap';
 import '@fortawesome/fontawesome-free/css/all.css';
 import store from './store/store';
+import "../css/app.css"
 
 
 const app = createApp({
