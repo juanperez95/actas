@@ -6,11 +6,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
     <title>Login</title>
 </head>
 
 <body>
     <style>
+
+.bg-custom {
+            background: rgb(150,47,164);
+            background: linear-gradient(0deg, rgba(150,47,164,1) 0%, rgba(92,30,157,1) 100%);
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+    
+    <!-- <style>
         body {
             font-family: Arial, sans-serif;
             background: rgb(150,47,164);
@@ -70,7 +82,7 @@
         button:hover {
             background-color: #830724;
         }
-    </style>
+    </style> -->
     <div id="app">
         {{-- Utilizar vue --}}
         <login />
