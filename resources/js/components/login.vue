@@ -17,12 +17,8 @@
           </span>
           <input type="password" v-model="datos_login.password" placeholder="Password" class="w-full pl-10 pr-3 py-2 bg-white bg-opacity-50 rounded-md text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-600">
         </div>
-        <button type="submit" class="w-full bg-purple-600 text-white py-2 rounded-md hover:bg-purple-700 transition duration-300" :disabled="cargar">
-          <span v-if="!cargar">{{ titulo }}</span>
-          <template v-else>
-            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-            <span class="sr-only">Loading...</span>
-          </template>
+        <button type="submit" class="w-full bg-purple-600 text-white py-2 rounded-md hover:bg-purple-700 transition duration-300">
+          <span :class="cargar"></span> {{titulo}}
         </button> 
 
       </form>
