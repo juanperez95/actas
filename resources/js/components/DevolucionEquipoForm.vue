@@ -1,227 +1,220 @@
 <template>
-  <div class="container mt-5">
     <div class="card shadow-lg">
       <div class="card-body">
         <div class="row">
           <div class="col-md-6 mb-3">
-            <label for="numeroCaso" class="form-label">Número de Caso:</label>
-            <input type="text" id="numeroCaso" class="form-control" v-model="formData.numeroCaso"
-              @click="cargarUsuarioSession">
-          </div>
+            <section class="sm:grid grid-cols-5 mt-5 p-2 border-2 gap-8 justify-center items-center">
+              <article class="text-2xl bg-fuchsia-950 text-white col-span-5 p-2">Datos del usuario</article>
+              <article>
+                <label for="numeroCaso" class="form-label">Número de Caso:</label>
+                <input type="text" id="numeroCaso" :class="inputs" v-model="formData.numeroCaso"
+                  @click="cargarUsuarioSession">
+              </article>
+              <article>
+                <label for="nombres" class="form-label">Nombre:</label>
+                <input type="text" id="nombres" :class="inputs" v-model="formData.nombres">
+              </article>
+              <article>
+                <label for="campana" class="form-label">Campaña:</label>
+                <input type="text" id="campana" :class="inputs" v-model="formData.campana" list="listaOp"
+                  @click="mostrarCamps">
+                  <datalist id="listaOp">
+                    <option :value="cam.nombre_camp" v-for="cam in lista_operaciones" :key="cam.id">
+                      {{ cam.nombre_camp.toUpperCase() }}</option>
+                  </datalist>
+              </article>
+              <article>
+                <label for="correoPersonal" class="form-label">Correo Personal:</label>
+                <input type="email" id="correoPersonal" :class="inputs" v-model="formData.correoPersonal">
+              </article>
+              <article>
+                <label for="correoJefe" class="form-label">Correo del Jefe:</label>
+                <input type="email" id="correoJefe" :class="inputs" v-model="formData.correoJefe">
+              </article>
+            </section>
+        </div>
+      </div>
+
+      <div class="border p-3 rounded mb-3">
+        <section class="sm:border-2 mt-5 p-2 grid grid-cols-3 gap-8 justify-center items-center">
+          <h4 class="text-2xl p-2 bg-fuchsia-950 text-white col-span-3">Detalles del Dispositivo</h4>
+
           <div class="col-md-6 mb-3">
-            <label for="nombres" class="form-label">Nombre:</label>
-            <input type="text" id="nombres" class="form-control" v-model="formData.nombres">
+            <label for="dispositivo" class="form-label">Tipo de dispositivo:</label>
+            <select id="dispositivo" :class="[inputs,'p-3']" v-model="formData.dispositivo">
+              <option value="">Seleccione</option>
+              <option value="Portatil">Portátil</option>
+              <option value="Escritorio">Escritorio</option>
+            </select>
           </div>
-        </div>
+          <div class="col-md-6 mb-3" v-if="formData.dispositivo === 'Escritorio'">
+            <label for="Tipoescritorio" class="form-label">Tipo de escritorio:</label>
+            <select id="Tipoescritorio" :class="[inputs,'p-3']" v-model="formData.Tipoescritorio">
+              <option value="Torre">Torre</option>
+              <option value="Micro">Micro</option>
+            </select>
+          </div>
+          <div class="mb-1">
+            <label for="serialDispositivo" class="form-label">Serial del Dispositivo:</label>
+            <input type="text" id="serialDispositivo" :class="inputs" v-model="formData.serialDispositivo">
+          </div>
+          <div class="mb-1">
+            <label for="activoDispositivo" class="form-label">Activo del Dispositivo:</label>
+            <input type="text" id="activoDispositivo" :class="inputs" v-model="formData.activoDispositivo">
+          </div>
+
+
+          <div class="col-md-4 mt-3">
+            <label for="estadoDispositivo" class="form-label">Estado del Dispositivo:</label>
+            <select id="estadoDispositivo" :class="[inputs,'p-3']" v-model="formData.estadoDispositivo">
+              <option value="Bueno">Bueno</option>
+              <option value="Dañado">Dañado</option>
+              <option value="Dado de baja">Dado de baja</option>
+            </select>
+          </div>
+
+        </section>
         <div class="row">
-          <div class="col-md-4 mb-3">
-            <label for="campana" class="form-label">Campaña:</label>
-            <input type="text" id="campana" class="form-control" v-model="formData.campana" list="listaOp"
-              @click="mostrarCamps">
-            <datalist id="listaOp">
-              <option :value="cam.nombre_camp" v-for="cam in lista_operaciones" :key="cam.id">
-                {{ cam.nombre_camp.toUpperCase() }}</option>
-            </datalist>
-          </div>
-
-          <div class="col-md-4 mb-3">
-            <label for="correoPersonal" class="form-label">Correo Personal:</label>
-            <input type="email" id="correoPersonal" class="form-control" v-model="formData.correoPersonal">
-          </div>
-
-          <div class="col-md-4 mb-3">
-            <label for="correoJefe" class="form-label">Correo del Jefe:</label>
-            <input type="email" id="correoJefe" class="form-control" v-model="formData.correoJefe">
-          </div>
-        </div>
-
-        <div class="border p-3 rounded mb-3">
-          <h4 class="mb-3">Detalles del Dispositivo</h4>
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label for="dispositivo" class="form-label">Tipo de dispositivo:</label>
-              <select id="dispositivo" class="form-select form-control" v-model="formData.dispositivo">
-                <option value="">Seleccione</option>
-                <option value="Portatil">Portátil</option>
-                <option value="Escritorio">Escritorio</option>
-              </select>
-            </div>
-
-            <div class="col-md-6 mb-3" v-if="formData.dispositivo === 'Escritorio'">
-              <label for="Tipoescritorio" class="form-label">Tipo de escritorio:</label>
-              <select id="Tipoescritorio" class="form-select form-control" v-model="formData.Tipoescritorio">
-                <option value="Torre">Torre</option>
-                <option value="Micro">Micro</option>
-              </select>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-4 mb-3">
-              <label for="serialDispositivo" class="form-label">Serial del Dispositivo:</label>
-              <input type="text" id="serialDispositivo" class="form-control" v-model="formData.serialDispositivo">
-            </div>
-
-            <div class="col-md-4 mb-3">
-              <label for="activoDispositivo" class="form-label">Activo del Dispositivo:</label>
-              <input type="text" id="activoDispositivo" class="form-control" v-model="formData.activoDispositivo">
-            </div>
-
-            <div class="col-md-4 mb-3">
-              <label for="estadoDispositivo" class="form-label">Estado del Dispositivo:</label>
-              <select id="estadoDispositivo" class="form-select form-control" v-model="formData.estadoDispositivo">
-                <option value="Bueno">Bueno</option>
-                <option value="Dañado">Dañado</option>
-                <option value="Dado de baja">Dado de baja</option>
-              </select>
-            </div>
-
+          <section class="grid grid-cols-3 p-2 mt-5 border-2 gap-8 ">
+            <h3 class="text-white col-span-3 bg-fuchsia-950 p-2 text-2xl">Detalles del monitor</h3>
             <div class="col-md-4 mb-3">
               <label for="serialMonitor" class="form-label">Serial del Monitor:</label>
-              <input type="text" id="serialMonitor" class="form-control" v-model="formData.serialMonitor">
+              <input type="text" id="serialMonitor" :class="inputs" v-model="formData.serialMonitor">
             </div>
             <div class="col-md-4 mb-3">
               <label for="activoMonitor" class="form-label">Activo del Monitor:</label>
-              <input type="text" id="activoMonitor" class="form-control" v-model="formData.activoMonitor">
+              <input type="text" id="activoMonitor" :class="inputs" v-model="formData.activoMonitor">
             </div>
-
             <div class="col-md-4 mb-3">
               <label for="estadoMonitor" class="form-label">Estado del Monitor:</label>
-              <select id="estadoMonitor" class="form-select form-control" v-model="formData.estadoMonitor">
+              <select id="estadoMonitor" :class="[inputs,'p-3']" v-model="formData.estadoMonitor">
                 <option value="Bueno">Bueno</option>
                 <option value="Dañado">Dañado</option>
                 <option value="Dado de baja">Dado de baja</option>
               </select>
             </div>
-          </div>
+          </section>
+        </div>
 
-          <div class="row">
+        <div class="row">
+          <section class="grid grid-cols-2 border-2 mt-5 p-2 gap-8 mb-8">
+            <h4 class="text-white col-span-2 bg-fuchsia-950 p-2 text-2xl">Detalles de los perisfericos</h4>
             <div class="col-md-6 mb-3">
               <label for="raton" class="form-label">Ratón:</label>
-              <select id="raton" class="form-select form-control" v-model="formData.raton">
+              <select id="raton" :class="[inputs,'p-3']" v-model="formData.raton">
                 <option value="No">No</option>
                 <option value="Si">Sí</option>
               </select>
             </div>
-
             <div class="col-md-6 mb-3" v-if="formData.raton === 'Si'">
               <label for="estadoRaton" class="form-label">Estado del Ratón:</label>
-              <select id="estadoRaton" class="form-select form-control" v-model="formData.estadoRaton">
+              <select id="estadoRaton" :class="[inputs,'p-3']" v-model="formData.estadoRaton">
                 <option value="Bueno">Bueno</option>
                 <option value="Dañado">Dañado</option>
                 <option value="Dado de baja">Dado de baja</option>
               </select>
             </div>
-          </div>
 
-          <div class="row">
             <div class="col-md-6 mb-3">
               <label for="teclado" class="form-label">Teclado:</label>
-              <select id="teclado" class="form-select form-control" v-model="formData.teclado">
+              <select id="teclado" :class="[inputs,'p-3']" v-model="formData.teclado">
                 <option value="No">No</option>
                 <option value="Si">Sí</option>
               </select>
             </div>
-
             <div class="col-md-6 mb-3" v-if="formData.teclado === 'Si'">
               <label for="estadoTeclado" class="form-label">Estado del Teclado:</label>
-              <select id="estadoTeclado" class="form-select form-control" v-model="formData.estadoTeclado">
+              <select id="estadoTeclado" :class="[inputs,'p-3']" v-model="formData.estadoTeclado">
                 <option value="Bueno">Bueno</option>
                 <option value="Dañado">Dañado</option>
                 <option value="Dado de baja">Dado de baja</option>
               </select>
             </div>
-          </div>
-
-          <div class="row">
             <div class="col-md-6 mb-3">
               <label for="diadema" class="form-label">Diadema:</label>
-              <select id="diadema" class="form-select form-control" v-model="formData.diadema">
+              <select id="diadema" :class="[inputs,'p-3']" v-model="formData.diadema">
                 <option value="No">No</option>
                 <option value="Si">Sí</option>
               </select>
             </div>
             <div class="col-md-5 mb-4" v-if="formData.diadema === 'Si'">
               <label for="marcaDiadema" class="form-label">Marca de la Diadema:</label>
-              <select id="marcaDiadema" class="form-select form-control" v-model="formData.marcaDiadema">
+              <select id="marcaDiadema" :class="[inputs,'p-3']" v-model="formData.marcaDiadema">
                 <option value="PLANTRONICS">PLANTRONICS</option>
                 <option value="JABRA">JABRA</option>
                 <option value="XKIM">XKIM</option>
               </select>
             </div>
-          </div>
-
-          <div class="m3" style="display: grid; grid-template-columns: repeat(2,1fr); align-items: center;">
             <div class="col-md-10  mb-9" v-if="formData.diadema === 'Si'">
               <label for="serialDiadema" class="form-label">Serial de la Diadema:</label>
-              <input type="text" id="serialDiadema" class="form-control" v-model="formData.serialDiadema">
+              <input type="text" id="serialDiadema" :class="inputs" v-model="formData.serialDiadema">
             </div>
-
             <div class="col-md-10 mb-9" v-if="formData.diadema === 'Si'">
               <label for="estadoDiadema" class="form-label">Estado de la Diadema:</label>
-              <select id="estadoDiadema" class="form-select form-control" v-model="formData.estadoDiadema">
+              <select id="estadoDiadema" :class="[inputs,'p-3']" v-model="formData.estadoDiadema">
                 <option value="Bueno">Bueno</option>
                 <option value="Dañado">Dañado</option>
                 <option value="Dado de baja">Dado de baja</option>
               </select>
             </div>
-          </div>
-
-
-          <div class="row">
             <div class="col-md-6 mb-3">
               <label for="camara" class="form-label">Cámara:</label>
-              <select id="camara" class="form-select form-control" v-model="formData.camara">
+              <select id="camara" :class="[inputs,'p-3']" v-model="formData.camara">
                 <option value="No">No</option>
                 <option value="Si">Sí</option>
               </select>
             </div>
+          </section>
 
-            <div class="col-md-6 mb-3">
-              <label for="segundoMonitor" class="form-label">¿Segundo Monitor?:</label>
-              <select id="segundoMonitor" class="form-select form-control" v-model="formData.segundoMonitor">
-                <option value="No">No</option>
-                <option value="Si">Sí</option>
-              </select>
-            </div>
-          </div>
+        </div>
 
-          <div v-if="formData.segundoMonitor === 'Si'" class="row">
-            <div class="col-md-6 mb-3">
-              <label for="serialMonitor2" class="form-label">Serial del Segundo Monitor:</label>
-              <input type="text" id="serialMonitor2" class="form-control" v-model="formData.serialMonitor2">
-            </div>
-            <div class="col-md-6 mb-3">
-              <label for="activoMonitor2" class="form-label">Activo del Segundo Monitor:</label>
-              <input type="text" id="activoMonitor2" class="form-control" v-model="formData.activoMonitor2">
-            </div>
+        <div class="row">
+
+          <div class="col-md-6 mb-3">
+            <label for="segundoMonitor" class="form-label">¿Segundo Monitor?:</label>
+            <select id="segundoMonitor" :class="[inputs,'p-3']" v-model="formData.segundoMonitor">
+              <option value="No">No</option>
+              <option value="Si">Sí</option>
+            </select>
           </div>
         </div>
 
-        <div class="mb-3">
-          <label for="observaciones" class="form-label">Observaciones:</label>
-          <textarea id="observaciones" class="form-control" v-model="formData.observaciones" rows="3"></textarea>
+        <div v-if="formData.segundoMonitor === 'Si'" class="row">
+          <div class="col-md-6 mb-3">
+            <label for="serialMonitor2" class="form-label">Serial del Segundo Monitor:</label>
+            <input type="text" id="serialMonitor2" :class="inputs" v-model="formData.serialMonitor2">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="activoMonitor2" class="form-label">Activo del Segundo Monitor:</label>
+            <input type="text" id="activoMonitor2" :class="inputs" v-model="formData.activoMonitor2">
+          </div>
         </div>
       </div>
 
-
-
-      <div class="container firmas">
-        <firma ref="signaturePad" firma_d="Firma de quien entrega" :Nombre_de_quien_entrega="formData.nombres" cargo_persona=""
-          class="mb-3" />
-        <firma ref="signaturePad2" firma_d="Firma de quien recibe" :Nombre_de_quien_entrega="formData.NombreRecibe" cargo_persona="GESTOR DE SOLUCIONES TECNOLOGICAS(TIMAC)"
-          class="mb-3" />
+      <div class="mb-3">
+        <label for="observaciones" class="form-label">Observaciones:</label>
+        <textarea id="observaciones" :class="inputs" v-model="formData.observaciones" rows="3"></textarea>
       </div>
-
-      <div class="d-flex justify-content-between p-3 mt-2">
-        <button type="submit" class="btn morado_boton" @click="submitForm">
-          <i class="fas fa-file-pdf me-2"></i>Generar PDF
-        </button>
-        <button type="reset" class="btn morado_boton" @click="limpiarTodo">
-          <i class="fas fa-eraser me-2"></i>Limpiar
-        </button>
-      </div>
-      <a href="#" download="" id="down"></a>
     </div>
+
+
+
+    <div class="container firmas">
+      <firma ref="signaturePad" firma_d="Firma de quien entrega" :Nombre_de_quien_entrega="formData.nombres"
+        cargo_persona="" class="mb-3" />
+      <firma ref="signaturePad2" firma_d="Firma de quien recibe" :Nombre_de_quien_entrega="formData.NombreRecibe"
+        cargo_persona="GESTOR DE SOLUCIONES TECNOLOGICAS(TIMAC)" class="mb-3" />
+    </div>
+
+    <div class="flex justify-around p-6 m-2">
+      <button type="submit" :class="[botones]" @click="submitForm">
+        <i class="fas fa-file-pdf me-2"></i>Generar PDF
+      </button>
+      <button type="reset" :class="[botones]" @click="limpiarTodo">
+        <i class="fas fa-eraser me-2"></i>Limpiar
+      </button>
+    </div>
+    <a href="#" download="" id="down"></a>
   </div>
 </template>
 
@@ -392,7 +385,7 @@ export default {
 
 
     },
-    ...mapState(["usuario_session", 'lista_operaciones'])
+    ...mapState(["usuario_session", 'lista_operaciones','inputs','botones','color_label'])
 
   },
 };

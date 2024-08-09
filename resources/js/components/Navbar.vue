@@ -1,8 +1,8 @@
 <template>
-    <div>
-        <div class="collapse navbar barra_nav" id="navbarToggleExternalContent" data-bs-theme="dark">
+    <div class="bg-fuchsia-950">
+        <div class="" id="navbarToggleExternalContent" data-bs-theme="dark">
             <div class="p-4">
-              <h5 class="text-body-emphasis h4">¡Hola! , {{nombre_usuario}}</h5>
+              <h5 class="text-body-emphasis mb-4 text-white text-2xl">¡Bienvenido! ,<i :class="[cargar]"></i> {{name_gestor_session}}</h5>
               <a class="enlaces" @click="adminPage" @touchstart="adminPage"><i class="fa-solid fa-gear"></i>  Configuracion Administrativa</a><br>
               <a class="enlaces" @click="signOut" @touchstart="signOut"><i class="fa-solid fa-right-from-bracket"></i>  Cerrar Sesion</a><br>
             </div>
@@ -36,17 +36,21 @@
 import { mapMutations, mapState } from 'vuex';
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import { Exception } from 'sass';
 
 export default {
     data() {
         return {
-            nombre_usuario:''
+            nombre_usuario:'',
+            cargar:'',
         }
     },
     methods: {
-        ...mapMutations(['getSession']),
+        ...mapMutations(['getSession','getNameGestor']),
         mostrarNombre(){
-            this.nombre_usuario = this.usuario_session[0].nombre_gestor.toUpperCase();
+            this.cargar = 'fa-solid fa-spinner animate-spin'
+            this.getNameGestor();
+            this.cargar = '';
         },
         // Redirigir a la parte de administrador
         adminPage(){
@@ -82,10 +86,10 @@ export default {
         },
     },
     computed: {
-        ...mapState(['usuario_session']),
+        ...mapState(['usuario_session','botones','name_gestor_session']),
     },
     mounted() {
-        this.getSession();
+        this.mostrarNombre();
     },
 }
 </script>

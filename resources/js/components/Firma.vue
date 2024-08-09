@@ -7,13 +7,15 @@
       height="100"
     ></canvas
     ><br />
-    <h6>{{firma_d}}: <b>{{Nombre_de_quien_entrega ? Nombre_de_quien_entrega.toUpperCase() : ''}}</b></h6>
-    <p v-if="cargo_persona !== ''">Cargo: <b>{{cargo_persona}}</b></p>
-    <button type="button" @click="clearSignature" class="btn morado_boton">Borrar</button>
+    <h6 :class="[color_label,'mb-1']">{{firma_d}}: <b>{{Nombre_de_quien_entrega ? Nombre_de_quien_entrega.toUpperCase() : ''}}</b></h6>
+    <p v-if="cargo_persona !== ''" :class="color_label">Cargo: <b>{{cargo_persona}}</b></p>
+    <button type="button" @click="clearSignature" :class="botones">Borrar</button>
   </div>
 </template>
   
   <script>
+import { mapState,mapMutations } from 'vuex';
+
   
 
 export default {
@@ -73,6 +75,9 @@ export default {
       const canvas = this.$refs.signaturePad;
       return canvas.toDataURL("image/png");
     },
+  },
+  computed: {
+    ...mapState(['botones','color_label']),
   },
   
 };

@@ -10,6 +10,12 @@ const store = new Vuex.Store({
         usuario_session:[],
         lista_operaciones:[],
         datos_form:[],
+        name_gestor_session:'',
+        // Variables para clases
+        inputs:'mt-2 p-2 rounded-md bg-opacity-70 text-slate-900 transition duration-150 shadow-sm shadow-fuchsia-600/50 outline-none focus:shadow-xl focus:shadow-fuchsia-600/10 w-full',
+        botones:'rounded-md p-3 bg-fuchsia-600 bg-opacity-70 transition scale-1 duration-100 ease-in hover:scale-90 text-white shadow-md shadow-fuchsia-600',
+        color_label:'text-slate-900 p-1 mt-2',
+        tabla:'outline-none border-none text-center',
     },
     mutations:{
         // Mostrar componentes de manera global
@@ -37,6 +43,15 @@ const store = new Vuex.Store({
             axios.get('/Actas_de_responsabilidad/Gestores/Session')
             .then(res=>{               
                 state.usuario_session[0] = res.data;
+            }).catch(error=>{
+                
+            })
+        },
+        // Nombre del gestor con la sesion
+        getNameGestor(state){
+            axios.get('/Actas_de_responsabilidad/Gestores/Session')
+            .then(res=>{               
+                state.name_gestor_session = res.data.nombre_gestor;
             }).catch(error=>{
                 
             })

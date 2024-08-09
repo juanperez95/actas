@@ -1,25 +1,29 @@
 <template>
   <div>
     <div id="operaciones m-2">
-      <p>Señor(a) <input type="text" placeholder="Ingrese el nombre" v-model="form_data.nombre_encargado"
-          class="form-control"></p>
-      <p>CC. <input type="number" class="form-control" placeholder="Ingrese el número de CC"
-          v-model.number="form_data.documento_encargado"></p>
-      <p>Correo: <input type="email" placeholder="Ingrese el correo" v-model="form_data.correo_encargado"
-          class="form-control"></p>
-      <p>Datos gestor:</p>
-      <input name="" id="" class="form-control" v-model="form_data.nombre_gestor" disabled>
-      <p>Respetado(a) Señor(a)</p>
-      <p>El presente formato se tiene con fin de entregar la responsabilidad del activo solicitado a la operación
+      <div class="xl:grid grid-cols-4 items-center sm:grid-cols-1 border-2 p-2 mt-5">
+        <h1 class="text-2xl bg-fuchsia-950 p-2 text-white col-span-4">Datos basicos</h1>
+        <p :class="color_label">Señor(a) <input type="text" placeholder="Ingrese el nombre" v-model="form_data.nombre_encargado"
+            :class="inputs"></p>
+        <p :class="color_label">CC. <input type="number" :class="inputs" placeholder="Ingrese el número de CC"
+            v-model.number="form_data.documento_encargado"></p>
+        <p :class="color_label">Correo: <input type="email" placeholder="Ingrese el correo" v-model="form_data.correo_encargado"
+          :class="inputs"></p>
+        <p :class="color_label">Datos gestor:
+          <input name="" id="" :class="inputs" v-model="form_data.nombre_gestor" disabled>
+        </p>
+      </div>
+      <p :class="color_label">Respetado(a) Señor(a)</p>
+      <p :class="color_label">El presente formato se tiene con fin de entregar la responsabilidad del activo solicitado a la operación
         retirando el activo anterior según el caso: <input type="text" placeholder="Ingrese el caso"
-          v-model="form_data.n_caso" class="form-control"></p>
-      <p>Definiciones:</p>
-      <ul>
-        <li>Motivo de Solicitud <input type="text" placeholder="Ingrese el motivo" v-model="form_data.motivo_solicitud"
-            class="form-control"></li>
-        <li>Operación Solicitante <span :class="[cargar1]"></span>
+          v-model="form_data.n_caso" :class="inputs"></p>
+          <ul class="grid grid-cols-4 border-2 mt-5 p-2 justify-center">
+        <p :class="['col-span-4 text-2xl bg-fuchsia-950 p-2 text-white p-2']">Definiciones</p>
+        <li :class="color_label">Motivo de Solicitud <input type="text" placeholder="Ingrese el motivo" v-model="form_data.motivo_solicitud"
+          :class="inputs"></li>
+        <li :class="color_label">Operación Solicitante <span :class="[cargar1]"></span>
           <!-- Lista que permite escribir las opciones -->
-          <input type="text" list="lista" class="form-control" v-model="form_data.op_solicitante" @click="mostrarCamps"
+          <input type="text" list="lista" :class="inputs" v-model="form_data.op_solicitante" @click="mostrarCamps"
             @touchstart="mostrarCamps" placeholder="Ingrese la operacion solicitante">
 
           <!-- Iterar todas las campañas de la base de datos -->
@@ -28,148 +32,153 @@
               {{ cam.nombre_camp.toUpperCase() }}</option>
           </datalist>
         </li>
-        <li>Estado de Entrega del Nuevo Activo
-          <select class="form-select mt-2 mb-2" v-model="form_data.est_entrega_nuevoActivo">
+        <li :class="color_label">Estado de Entrega del Nuevo Activo
+          <select :class="[inputs,'p-3']" v-model="form_data.est_entrega_nuevoActivo">
             <option value="EN REPARACION">EN REPARACION</option>
             <option value="DAÑADO">DAÑADO</option>
             <option value="OPERATIVO">OPERATIVO</option>
           </select>
         </li>
-        <li>Estado de Recibido del Activo Recogido
-          <select class="form-select mt-2 mb-2" v-model="form_data.est_recibido_activo">
+        <li :class="color_label">Estado de Recibido del Activo Recogido
+          <select :class="[inputs,'p-3']" v-model="form_data.est_recibido_activo">
             <option value="EN REPARACION">EN REPARACION</option>
             <option value="DAÑADO">DAÑADO</option>
             <option value="OPERATIVO">OPERATIVO</option>
           </select>
         </li>
       </ul>
-      <p>Activos relacionados:</p>
-      <table class="table cabeceras_tabla">
-        <tr>
-          <th>Elemento Recogido</th>
-          <th>Serial</th>
-          <th>Activo</th>
-          <th>Observaciones (Estado)</th>
-          <th>Acciones</th>
-        </tr>
-        <tr>
-          <td>
-            <select name="" id="" class="form-select" v-model="form_data.elemento_recogido" @click="mostrarComponentes"
-              @touchstart="mostrarComponentes">
-              <option :value="componente.nombre_componente" v-for="componente in componentes_vuex" :key="componente.id">
-                {{ componente.nombre_componente.toUpperCase() }}</option>
-            </select>
-          </td>
-          <td><input type="text" placeholder="Ingrese el serial" v-model="form_data.serial_recogido"
-              class="form-control"></td>
-          <td><input type="text" placeholder="Ingrese el activo" v-model="form_data.activo_recogido"
-              class="form-control"></td>
-          <td><input type="text" placeholder="Ingrese las observaciones" v-model="form_data.observaciones_recogido"
-              class="form-control" @keyup.enter="agregarRecogidos"></td>
-          <td>
-            <button class="btn morado_boton" @click="agregarRecogidos" @touchstart="agregarRecogidos"><i
-                class="fa-solid fa-plus"></i> Agregar</button>
-          </td>
-        </tr>
-      </table>
-      <!-- vista de agregados de equipos recogidos -->
-      <div class="p-1" v-if="form_data.data_recogido.length !== 0">
-        <table class="table cabeceras_tabla">
+      <div class="border-2 p-2 mt-5 grid grid-cols-1">
+
+        <p :class="['text-2xl bg-fuchsia-950 p-2 text-white']">Activos relacionados:</p>
+        <table :class="['cabeceras_tabla']">
+          <tr>
+            <th :class="tabla">Elemento Recogido</th>
+            <th :class="tabla">Serial</th>
+            <th :class="tabla">Activo</th>
+            <th :class="tabla">Observaciones (Estado)</th>
+            <th :class="tabla">Acciones</th>
+          </tr>
+          <tr>
+            <td :class="tabla">
+              <select name="" id="" :class="[inputs,'p-3']" v-model="form_data.elemento_recogido" @click="mostrarComponentes"
+                @touchstart="mostrarComponentes">
+                <option :value="componente.nombre_componente" v-for="componente in componentes_vuex" :key="componente.id">
+                  {{ componente.nombre_componente.toUpperCase() }}</option>
+              </select>
+            </td>
+            <td :class="tabla"><input type="text" placeholder="Ingrese el serial" v-model="form_data.serial_recogido"
+                :class="inputs"></td>
+            <td :class="tabla"><input type="text" placeholder="Ingrese el activo" v-model="form_data.activo_recogido"
+                :class="inputs"></td>
+            <td :class="tabla"><input type="text" placeholder="Ingrese las observaciones" v-model="form_data.observaciones_recogido"
+                :class="inputs" @keyup.enter="agregarRecogidos"></td>
+            <td :class="tabla">
+              <button :class="[botones]" @click="agregarRecogidos" @touchstart="agregarRecogidos"><i
+                  class="fa-solid fa-plus"></i> Agregar</button>
+            </td>
+          </tr>
+        </table>
+        <!-- vista de agregados de equipos recogidos -->
+        <div class="p-1" v-if="form_data.data_recogido.length !== 0">
+          <table :class="['cabeceras_tabla']">
+            <thead>
+              <tr>
+                <th :class="tabla">Elemento</th>
+                <th :class="tabla">N° Serial</th>
+                <th :class="tabla">N° Activo</th>
+                <th :class="tabla">Eliminar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="data in form_data.data_recogido" :key="data.id">
+                <td :class="[tabla, color_label]" scope="col">{{ data.elemento_recogido }}</td>
+                <td :class="[tabla, color_label]" scope="col">{{ data.serial_recogido }}</td>
+                <td :class="[tabla, color_label]" scope="col">{{ data.activo_recogido }}</td>
+                <td :class="[tabla, color_label]" scope="col">
+                  <button :class="[botones]" @click="quitarRecogidos(data)" @touchstart="quitarRecogidos(data)"><i
+                      class="fa-solid fa-trash"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- Tabla entregados -->
+        <table :class="['cabeceras_tabla']">
           <thead>
             <tr>
-              <th>Elemento</th>
-              <th>N° Serial</th>
-              <th>N° Activo</th>
-              <th>Eliminar</th>
+              <th :class="tabla">Elemento Entregado</th>
+              <th :class="tabla">Serial</th>
+              <th :class="tabla">Activo</th>
+              <th :class="tabla">Observaciones (Estado)</th>
+              <th :class="tabla">Acciones</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="data in form_data.data_recogido" :key="data.id">
-              <td scope="col">{{ data.elemento_recogido }}</td>
-              <td scope="col">{{ data.serial_recogido }}</td>
-              <td scope="col">{{ data.activo_recogido }}</td>
-              <td scope="col">
-                <button class="btn morado_boton" @click="quitarRecogidos(data)" @touchstart="quitarRecogidos(data)"><i
-                    class="fa-solid fa-trash"></i></button>
+            <tr>
+              <td :class="tabla">
+                <select name="" id="" :class="[inputs,'p-3']" v-model="form_data.elemento_entregado" @click="mostrarComponentes"
+                  @touchstart="mostrarComponentes">
+                  <option :value="componente.nombre_componente" v-for="componente in componentes_vuex" :key="componente.id">
+                    {{ componente.nombre_componente.toUpperCase() }}</option>
+                </select>
+              </td>
+              <td :class="tabla"><input type="text" placeholder="Ingrese el serial" v-model="form_data.serial_entregado"
+                  :class="inputs"></td>
+              <td :class="tabla"><input type="text" placeholder="Ingrese el activo" v-model="form_data.activo_entregado"
+                  :class="inputs"></td>
+              <td :class="tabla"><input type="text" placeholder="Ingrese las observaciones" v-model="form_data.observaciones_entregado"
+                  :class="inputs" @keyup.enter="agregarEntregados"></td>
+              <td :class="tabla">
+                <button @click="agregarEntregados" @touchstart="agregarEntregados" :class="[botones]"><i
+                    class="fa-solid fa-plus"></i> Agregar</button>
               </td>
             </tr>
           </tbody>
         </table>
-      </div>
-      <!-- Tabla entregados -->
-      <table class="table cabeceras_tabla">
-        <tr>
-          <th>Elemento Entregado</th>
-          <th>Serial</th>
-          <th>Activo</th>
-          <th>Observaciones (Estado)</th>
-          <th>Acciones</th>
-        </tr>
-        <tr>
-          <td>
-            <select name="" id="" class="form-select" v-model="form_data.elemento_entregado" @click="mostrarComponentes"
-              @touchstart="mostrarComponentes">
-              <option :value="componente.nombre_componente" v-for="componente in componentes_vuex" :key="componente.id">
-                {{ componente.nombre_componente.toUpperCase() }}</option>
-            </select>
-          </td>
-          <td><input type="text" placeholder="Ingrese el serial" v-model="form_data.serial_entregado"
-              class="form-control"></td>
-          <td><input type="text" placeholder="Ingrese el activo" v-model="form_data.activo_entregado"
-              class="form-control"></td>
-          <td><input type="text" placeholder="Ingrese las observaciones" v-model="form_data.observaciones_entregado"
-              class="form-control" @keyup.enter="agregarEntregados"></td>
-          <td>
-            <button @click="agregarEntregados" @touchstart="agregarEntregados" class="btn morado_boton"><i
-                class="fa-solid fa-plus"></i> Agregar</button>
-          </td>
-        </tr>
-      </table>
-
-      <!-- Vista de elementos entregados -->
-      <div class="p-1" v-if="form_data.data_entregado.length !== 0">
-
-        <table class="table cabeceras_tabla">
-          <thead>
-            <tr>
-              <th>Elemento</th>
-              <th>N° Serial</th>
-              <th>N° Activo</th>
-              <th>Eliminar</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="data in form_data.data_entregado" :key="data.id">
-              <td scope="col">{{ data.elemento_entregado }}</td>
-              <td scope="col">{{ data.serial_entregado }}</td>
-              <td scope="col">{{ data.activo_entregado }}</td>
-              <td scope="col">
-                <button class="btn morado_boton" @click="quitarEntregados(data)" @touchstart="quitarEntregados(data)"><i
-                    class="fa-solid fa-trash"></i></button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+  
+        <!-- Vista de elementos entregados -->
+        <div class="p-1" v-if="form_data.data_entregado.length !== 0">
+  
+          <table :class="['cabeceras_tabla']">
+            <thead>
+              <tr>
+                <th :class="tabla">Elemento</th>
+                <th :class="tabla">N° Serial</th>
+                <th :class="tabla">N° Activo</th>
+                <th :class="tabla">Eliminar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="data in form_data.data_entregado" :key="data.id">
+                <td :class="[tabla, color_label]" scope="col">{{ data.elemento_entregado }}</td>
+                <td :class="[tabla, color_label]" scope="col">{{ data.serial_entregado }}</td>
+                <td :class="[tabla, color_label]" scope="col">{{ data.activo_entregado }}</td>
+                <td :class="[tabla, color_label]" scope="col">
+                  <button :class="[botones]" @click="quitarEntregados(data)" @touchstart="quitarEntregados(data)"><i
+                      class="fa-solid fa-trash"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
-      <p>Observación: <textarea placeholder="Ingrese la observación" v-model="form_data.observaciones"></textarea></p>
-      <hr>
+      <section class="grid grid-cols-1 border-2 p-2 mt-5">
+        <p class="text-2xl bg-fuchsia-950 p-2 text-white">Observación:</p>
+        <textarea :class="inputs" placeholder="Ingrese la observación" v-model="form_data.observaciones"></textarea>
+        <hr>
+      </section>
       <!-- Componente firmas -->
-      <div class="container firmas">
+      <div class="firmas p-2 mt-4">
         <Firma ref="signaturePad" firma_d="Firma de quien entrega" class="mb-3" cargo_persona="GESTOR SOLUCIONES TECNOLOGICAS" :Nombre_de_quien_entrega="form_data.nombre_gestor"></Firma>
         <Firma ref="signaturePad2" firma_d="Firma Operacion" class="mb-3" :cargo_persona="form_data.cargo_operacion" :Nombre_de_quien_entrega="form_data.nombre_encargado"></Firma>
         <Firma ref="signaturePad3" firma_d="Firma Operacion" class="mb-3" cargo_persona=""></Firma>
       </div>
       <table>
         <tr>
-          <th></th>
-          <th></th>
-        </tr>
-        <tr>
-          <td>
-            <p>Nombre: <b>{{ form_data.nombre_encargado.toUpperCase() }}</b></p>
-            <p>Cargo:
-              <select class="form-select" v-model="form_data.cargo_operacion" required>
+          <td :class="tabla">
+            <p>Cargo persona de la operacion</p>
+              <select :class="inputs" v-model="form_data.cargo_operacion" required>
                 <!-- Cargos de personas que pueden firmar -->
                 <option value="JEFE DE OPERACION">Jefe de Operacion</option>
                 <option value="DIRECTOR DE OPERACIONES">Director de Operaciones</option>
@@ -178,15 +187,15 @@
                 <option value="JEFE DE SOPORTE">Jefe de Soporte</option>
                 <option value="COORDINADOR DE SOPORTE">Coordinador de Soporte</option>
               </select>
-            </p>
+
           </td>
         </tr>
       </table>
       <div class="container-fluid b-finales">
         <!-- Llamar a la funcion para generar el pdf -->
-        <button class="btn morado_boton b-anchof" @click="generarPDF" @touchstart="generarPDF"><span
+        <button :class="botones" @click="generarPDF" @touchstart="generarPDF"><span
             :class="[cargar]"></span>Generar PDF</button>
-        <button class="btn morado_boton b-anchof" @click="limpiarTodo" @touchstart="limpiarTodo"><span
+        <button :class="botones" @click="limpiarTodo" @touchstart="limpiarTodo"><span
             class="fa-solid fa-eraser" /> Limpiar formulario</button>
       </div>
       <a href="#" download="" id="link"></a>
@@ -194,7 +203,7 @@
     <br>
     <div class="container-fluid" align="center">
 
-      <p style="font-size:12px">Derechos reservados MaxJP 2024 1.1</p>
+      <p class="text-white">Derechos reservados MaxJP 2024 1.1</p>
     </div>
   </div>
 </template>
@@ -258,11 +267,12 @@ export default {
     this.form_data.observaciones_entregado = 'N/A';
     this.cerrarSesionAuto(this.form_data)
     this.getSession();
-    this.form_data.nombre_gestor = this.usuario_session[0].nombre_gestor.toUpperCase();
+    this.getNameGestor();
+    this.form_data.nombre_gestor = this.name_gestor_session.toUpperCase();
 
   },
   methods: {
-    ...mapMutations(['mostrarComponentes', 'mostrarGestores', 'getSession', 'mostrarCamps', 'cerrarSesionAuto', 'validateActas']),
+    ...mapMutations(['mostrarComponentes', 'mostrarGestores', 'getSession', 'mostrarCamps', 'cerrarSesionAuto', 'validateActas','getNameGestor']),
     generarPDF: async function () {
       this.cargar = 'spinner-border spinner-border-sm';
       if (this.validarInformacion()) {
@@ -462,7 +472,9 @@ export default {
     },
   },
   computed: {
-    ...mapState(['componentes_vuex', 'lista_gestores', 'usuario_session', 'lista_operaciones', 'datos_form'])
+    ...mapState(['componentes_vuex', 'lista_gestores', 'usuario_session', 'lista_operaciones', 'datos_form','inputs','botones','color_label','tabla',
+      'name_gestor_session'
+    ])
   },
 
 }
