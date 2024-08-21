@@ -10,7 +10,7 @@
 </head>
 <body style="background: rgb(149,71,244);
 background: radial-gradient(circle, rgba(149,71,244,1) 0%, rgba(152,35,130,1) 100%);">
-  <div class="container">
+  <div class="bg-white p-3 w-5/6 mx-auto">
     <div style="display:flex;justify-content:space-between;">
       <img src="{{ asset('images/americas.png') }}" alt="Descripción de la imagen" class="logo">
 

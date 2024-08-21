@@ -122,23 +122,22 @@
 
                 <div class="container">
                     <p>Firma de quien entrega: <img src="data:image/png;base64,{{$ruta1}}" alt="" width="30%"></p>
-                    <p>Gestor de soluciones tecnologicas</p>
+                    <p><b>Gestor de soluciones tecnologicas </b></p>
                     <p>Nombre Gestor: <b>{{$nombre_gestor}}</b></p>
                 </div>
             </td>
             <td>
                 <div class="container">
-                    <p>Firma Operación:<img src="data:image/png;base64,{{$ruta2}}" alt="" width="30%"></p>
-                    <p>Nombre encargado: <b>{{$nombre_encargado}}</b></p>
-                    <p>Cargo: <b>{{$cargo_operacion}}</b></p>
-                    <p>Nombre Operacion: <b>{{$op_solicitante}}</b></p>
+                    <p>Firma de quien entrega en bodega:<img src="data:image/png;base64,{{$ruta3}}" alt="" width="30%"></p>
+                    <p><b>Gestor de soluciones tecnologicas </b></p>
+                    <p>Nombre encargado: <b>{{$nombre_gestor_bodega}}</b></p>
                 </div>
             </td>
         </tr>
         <tr>
             <td colspan="2">
                 <div class="container">
-                    <p>Firma Operación:<img src="data:image/png;base64,{{$ruta3}}" alt="" width="30%"></p>
+                    <p>Firma Operación:<img src="data:image/png;base64,{{$ruta2}}" alt="" width="30%"></p>
                     <p>Nombre encargado: <b>{{$nombre_encargado}}</b></p>
                     <p>Cargo: <b>{{$cargo_operacion}}</b></p>
                     <p>Nombre Operacion: <b>{{$op_solicitante}}</b></p>

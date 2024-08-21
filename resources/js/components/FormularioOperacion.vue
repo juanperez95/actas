@@ -1,26 +1,39 @@
 <template>
   <div>
     <div id="operaciones m-2">
-      <div class="xl:grid grid-cols-4 items-center sm:grid-cols-1 border-2 p-2 mt-5">
+      <div class="xl:grid grid-cols-1 border-2 p-2 mt-5">
         <h1 class="text-2xl bg-fuchsia-950 p-2 text-white col-span-4">Datos basicos</h1>
-        <p :class="color_label">Señor(a) <input type="text" placeholder="Ingrese el nombre" v-model="form_data.nombre_encargado"
-            :class="inputs"></p>
+        <p :class="color_label">Señor(a) <input type="text" placeholder="Ingrese el nombre"
+            v-model="form_data.nombre_encargado" :class="inputs"></p>
         <p :class="color_label">CC. <input type="number" :class="inputs" placeholder="Ingrese el número de CC"
             v-model.number="form_data.documento_encargado"></p>
-        <p :class="color_label">Correo: <input type="email" placeholder="Ingrese el correo" v-model="form_data.correo_encargado"
-          :class="inputs"></p>
+        <p :class="color_label">Correo: <input type="email" placeholder="Ingrese el correo"
+            v-model="form_data.correo_encargado" :class="inputs"></p>
         <p :class="color_label">Datos gestor:
           <input name="" id="" :class="inputs" v-model="form_data.nombre_gestor" disabled>
         </p>
       </div>
-      <p :class="color_label">Respetado(a) Señor(a)</p>
-      <p :class="color_label">El presente formato se tiene con fin de entregar la responsabilidad del activo solicitado a la operación
-        retirando el activo anterior según el caso: <input type="text" placeholder="Ingrese el caso"
-          v-model="form_data.n_caso" :class="inputs"></p>
-          <ul class="grid grid-cols-4 border-2 mt-5 p-2 justify-center">
+      <p :class="color_label"><b>PARÁGRAFO PRIMERO:</b> EL TRABAJADOR
+        declara recibir en buen estado y a entera satisfacción el Equipo de Cómputo, los componentes y accesorios que se
+        entregan de forma concomitante con la suscripción de la presenta acta, por lo anterior, el Equipo de Cómputo ,
+        los componentes y accesorios, que se mencionan en esta acta se encuentra bajo la custodia y cuidado de
+        <b>EL TRABAJADOR;</b>
+        Igualmente, la perdida, daño o destrucción de cualquiera de los elementos entregados en esta acta constituye una
+        falta grave meritoria de la terminación del contrato de trabajo,
+        <b>EL TRABAJADOR</b>
+        autoriza con la firma del presente documento, que en caso de pérdida o extravío, daño o destrucción de
+        cualquiera de los elementos tecnológicos por cualquier motivo, le sea deducido o descontado el valor depreciado
+        del bien entregado en custodia para el ejercicio de sus labores, en todo caso el empleador dará a conocer el
+        valor del descuento al trabajador valor que se tendrá en cuenta conforme a los procedimiento establecidos por la
+        compañía, generando la deducción de la sumas que se le adeuden por salarios, prestaciones sociales, vacaciones,
+        intereses de cesantía, pagos de naturaleza extralegal, eventuales indemnizaciones y cualquier otra acreencia a
+        que pueda tener derecho en vigencia del contrato de trabajo o al momento de terminación del contrato de trabajo
+        por cualquier motivo. <input type="text" placeholder="Ingrese el caso" v-model="form_data.n_caso"
+          :class="inputs"></p>
+      <ul class="grid grid-cols-4 border-2 mt-5 p-2 justify-center">
         <p :class="['col-span-4 text-2xl bg-fuchsia-950 p-2 text-white p-2']">Definiciones</p>
-        <li :class="color_label">Motivo de Solicitud <input type="text" placeholder="Ingrese el motivo" v-model="form_data.motivo_solicitud"
-          :class="inputs"></li>
+        <li :class="color_label">Motivo de Solicitud <input type="text" placeholder="Ingrese el motivo"
+            v-model="form_data.motivo_solicitud" :class="inputs"></li>
         <li :class="color_label">Operación Solicitante <span :class="[cargar1]"></span>
           <!-- Lista que permite escribir las opciones -->
           <input type="text" list="lista" :class="inputs" v-model="form_data.op_solicitante" @click="mostrarCamps"
@@ -33,14 +46,14 @@
           </datalist>
         </li>
         <li :class="color_label">Estado de Entrega del Nuevo Activo
-          <select :class="[inputs,'p-3']" v-model="form_data.est_entrega_nuevoActivo">
+          <select :class="[inputs, 'p-3']" v-model="form_data.est_entrega_nuevoActivo">
             <option value="EN REPARACION">EN REPARACION</option>
             <option value="DAÑADO">DAÑADO</option>
             <option value="OPERATIVO">OPERATIVO</option>
           </select>
         </li>
         <li :class="color_label">Estado de Recibido del Activo Recogido
-          <select :class="[inputs,'p-3']" v-model="form_data.est_recibido_activo">
+          <select :class="[inputs, 'p-3']" v-model="form_data.est_recibido_activo">
             <option value="EN REPARACION">EN REPARACION</option>
             <option value="DAÑADO">DAÑADO</option>
             <option value="OPERATIVO">OPERATIVO</option>
@@ -60,9 +73,10 @@
           </tr>
           <tr>
             <td :class="tabla">
-              <select name="" id="" :class="[inputs,'p-3']" v-model="form_data.elemento_recogido" @click="mostrarComponentes"
-                @touchstart="mostrarComponentes">
-                <option :value="componente.nombre_componente" v-for="componente in componentes_vuex" :key="componente.id">
+              <select name="" id="" :class="[inputs, 'p-3']" v-model="form_data.elemento_recogido"
+                @click="mostrarComponentes" @touchstart="mostrarComponentes">
+                <option :value="componente.nombre_componente" v-for="componente in componentes_vuex"
+                  :key="componente.id">
                   {{ componente.nombre_componente.toUpperCase() }}</option>
               </select>
             </td>
@@ -70,8 +84,8 @@
                 :class="inputs"></td>
             <td :class="tabla"><input type="text" placeholder="Ingrese el activo" v-model="form_data.activo_recogido"
                 :class="inputs"></td>
-            <td :class="tabla"><input type="text" placeholder="Ingrese las observaciones" v-model="form_data.observaciones_recogido"
-                :class="inputs" @keyup.enter="agregarRecogidos"></td>
+            <td :class="tabla"><input type="text" placeholder="Ingrese las observaciones"
+                v-model="form_data.observaciones_recogido" :class="inputs" @keyup.enter="agregarRecogidos"></td>
             <td :class="tabla">
               <button :class="[botones]" @click="agregarRecogidos" @touchstart="agregarRecogidos"><i
                   class="fa-solid fa-plus"></i> Agregar</button>
@@ -116,9 +130,10 @@
           <tbody>
             <tr>
               <td :class="tabla">
-                <select name="" id="" :class="[inputs,'p-3']" v-model="form_data.elemento_entregado" @click="mostrarComponentes"
-                  @touchstart="mostrarComponentes">
-                  <option :value="componente.nombre_componente" v-for="componente in componentes_vuex" :key="componente.id">
+                <select name="" id="" :class="[inputs, 'p-3']" v-model="form_data.elemento_entregado"
+                  @click="mostrarComponentes" @touchstart="mostrarComponentes">
+                  <option :value="componente.nombre_componente" v-for="componente in componentes_vuex"
+                    :key="componente.id">
                     {{ componente.nombre_componente.toUpperCase() }}</option>
                 </select>
               </td>
@@ -126,8 +141,8 @@
                   :class="inputs"></td>
               <td :class="tabla"><input type="text" placeholder="Ingrese el activo" v-model="form_data.activo_entregado"
                   :class="inputs"></td>
-              <td :class="tabla"><input type="text" placeholder="Ingrese las observaciones" v-model="form_data.observaciones_entregado"
-                  :class="inputs" @keyup.enter="agregarEntregados"></td>
+              <td :class="tabla"><input type="text" placeholder="Ingrese las observaciones"
+                  v-model="form_data.observaciones_entregado" :class="inputs" @keyup.enter="agregarEntregados"></td>
               <td :class="tabla">
                 <button @click="agregarEntregados" @touchstart="agregarEntregados" :class="[botones]"><i
                     class="fa-solid fa-plus"></i> Agregar</button>
@@ -135,10 +150,10 @@
             </tr>
           </tbody>
         </table>
-  
+
         <!-- Vista de elementos entregados -->
         <div class="p-1" v-if="form_data.data_entregado.length !== 0">
-  
+
           <table :class="['cabeceras_tabla']">
             <thead>
               <tr>
@@ -169,34 +184,49 @@
         <hr>
       </section>
       <!-- Componente firmas -->
-      <div class="firmas p-2 mt-4">
-        <Firma ref="signaturePad" firma_d="Firma de quien entrega" class="mb-3" cargo_persona="GESTOR SOLUCIONES TECNOLOGICAS" :Nombre_de_quien_entrega="form_data.nombre_gestor"></Firma>
-        <Firma ref="signaturePad2" firma_d="Firma Operacion" class="mb-3" :cargo_persona="form_data.cargo_operacion" :Nombre_de_quien_entrega="form_data.nombre_encargado"></Firma>
-        <Firma ref="signaturePad3" firma_d="Firma Operacion" class="mb-3" cargo_persona=""></Firma>
+      <section class="flex border-2 mt-5 p-2 items-center justify-center">
+        <article>
+          <h2 class="text-2xl text-slate-900 text-center">Gestor de bodega: </h2>
+          <select name="" id="" :class="[inputs, 'justify-center w-full']" @click="mostrarGestores"
+            v-model="form_data.nombre_gestor_bodega">
+            <option value="0">Seleccione un gestor</option>
+            <option :value="g.nombre_gestor" v-for="g in lista_gestores" :key="g.nombre_gestor">{{
+              g.nombre_gestor.toUpperCase() }}</option>
+          </select>
+        </article>
+      </section>
+      <div class="flex flex-wrap gap-4 mt-5 p-3 justify-around">
+        <Firma ref="signaturePad" firma_d="Firma de quien entrega" class="mb-3"
+          cargo_persona="GESTOR SOLUCIONES TECNOLOGICAS" :Nombre_de_quien_entrega="form_data.nombre_gestor"></Firma>
+        <Firma ref="signaturePad3" firma_d="Firma de quien entrega de bodega" class="mb-3"
+          cargo_persona="GESTOR SOLUCIONES TECNOLOGICAS" :Nombre_de_quien_entrega="form_data.nombre_gestor_bodega">
+        </Firma>
+        <Firma ref="signaturePad2" firma_d="Firma Operacion" class="mb-3" :cargo_persona="form_data.cargo_operacion"
+          :Nombre_de_quien_entrega="form_data.nombre_encargado"></Firma>
       </div>
       <table>
         <tr>
           <td :class="tabla">
             <p>Cargo persona de la operacion</p>
-              <select :class="inputs" v-model="form_data.cargo_operacion" required>
-                <!-- Cargos de personas que pueden firmar -->
-                <option value="JEFE DE OPERACION">Jefe de Operacion</option>
-                <option value="DIRECTOR DE OPERACIONES">Director de Operaciones</option>
-                <option value="COORDINADOR DE OPERACION">Coordinador de Operación</option>
-                <option value="GERENTE DE OPERACION">Gerente de Operación</option>
-                <option value="JEFE DE SOPORTE">Jefe de Soporte</option>
-                <option value="COORDINADOR DE SOPORTE">Coordinador de Soporte</option>
-              </select>
+            <select :class="inputs" v-model="form_data.cargo_operacion" required>
+              <!-- Cargos de personas que pueden firmar -->
+              <option value="JEFE DE OPERACION">Jefe de Operacion</option>
+              <option value="DIRECTOR DE OPERACIONES">Director de Operaciones</option>
+              <option value="COORDINADOR DE OPERACION">Coordinador de Operación</option>
+              <option value="GERENTE DE OPERACION">Gerente de Operación</option>
+              <option value="JEFE DE SOPORTE">Jefe de Soporte</option>
+              <option value="COORDINADOR DE SOPORTE">Coordinador de Soporte</option>
+            </select>
 
           </td>
         </tr>
       </table>
       <div class="container-fluid b-finales">
         <!-- Llamar a la funcion para generar el pdf -->
-        <button :class="botones" @click="generarPDF" @touchstart="generarPDF"><span
-            :class="[cargar]"></span>Generar PDF</button>
-        <button :class="botones" @click="limpiarTodo" @touchstart="limpiarTodo"><span
-            class="fa-solid fa-eraser" /> Limpiar formulario</button>
+        <button :class="botones" @click="generarPDF" @touchstart="generarPDF"><span :class="[cargar]"></span>Generar
+          PDF</button>
+        <button :class="botones" @click="limpiarTodo" @touchstart="limpiarTodo"><span class="fa-solid fa-eraser" />
+          Limpiar formulario</button>
       </div>
       <a href="#" download="" id="link"></a>
     </div>
@@ -248,6 +278,7 @@ export default {
         nombre_gestor: '',
         cargo_operacion: '',
         nombre_operacion: '',
+        nombre_gestor_bodega: '',
         // Firmas
         firma1: null,
         firma2: null,
@@ -272,7 +303,7 @@ export default {
 
   },
   methods: {
-    ...mapMutations(['mostrarComponentes', 'mostrarGestores', 'getSession', 'mostrarCamps', 'cerrarSesionAuto', 'validateActas','getNameGestor']),
+    ...mapMutations(['mostrarComponentes', 'mostrarGestores', 'getSession', 'mostrarCamps', 'cerrarSesionAuto', 'validateActas', 'getNameGestor']),
     generarPDF: async function () {
       this.cargar = 'spinner-border spinner-border-sm';
       if (this.validarInformacion()) {
@@ -472,7 +503,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(['componentes_vuex', 'lista_gestores', 'usuario_session', 'lista_operaciones', 'datos_form','inputs','botones','color_label','tabla',
+    ...mapState(['componentes_vuex', 'lista_gestores', 'usuario_session', 'lista_operaciones', 'datos_form', 'inputs', 'botones', 'color_label', 'tabla',
       'name_gestor_session'
     ])
   },

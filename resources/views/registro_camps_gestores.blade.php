@@ -14,7 +14,7 @@ background: radial-gradient(circle, rgba(149,71,244,1) 0%, rgba(152,35,130,1) 10
       <img src="{{ asset('images/americas.png') }}" alt="Descripción de la imagen" class="logo">
       <div class="p-2">
 
-        <a class="enlaces" href="{{route('home')}}"><i class="fa-solid fa-backward"></i>  Volver</a><br>
+        <a class="text-purple-800 text-2xl" href="{{route('home')}}"><i class="fa-solid fa-backward"></i>  Volver</a><br>
       </div>
       
     </div>

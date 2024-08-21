@@ -134,6 +134,17 @@
 
 <h2>Observaciones</h2>
 <p>{{$observaciones}}</p>
+<p>El presente documento confirma la recepción de equipos tecnológicos asignados al <b>TRABAJADOR</b>, los cuales están
+    sujetos a validaciones técnicas dentro de un plazo de dos (2) días hábiles. Si no se emite un reporte en este
+    periodo, se considerará que los equipos han sido recibidos a satisfacción. En caso de daños ocasionados por mala
+    manipulación, se aplicarán descuentos según la valorización del equipo.
+    Cualquier desperfecto detectado durante las validaciones será notificado inmediatamente al jefe inmediato o
+    responsable de la entrega para que se tomen las acciones correspondientes. EL TRABAJADOR autoriza que, en caso
+    de pérdida, extravío, daño o destrucción de cualquiera de los elementos por cualquier motivo, le sea deducido o
+    descontado el valor comercial del equipo de cómputo, generando la deducción de las sumas que se le adeuden por
+    salarios, prestaciones sociales, vacaciones, intereses de cesantía, pagos de naturaleza extralegal, eventuales
+    indemnizaciones y cualquier otra acreencia a la que pueda tener derecho durante la vigencia del contrato de
+    trabajo o al momento de la terminación del mismo por cualquier motivo.</p>
 
 <div class="signature">
     <table>

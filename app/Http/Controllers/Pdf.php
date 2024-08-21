@@ -108,6 +108,7 @@ class Pdf extends Controller
     // Generar PDF de la operacion
     public function pdfOperacion(Request $request){
         ini_set('max_execution_time', 120); 
+        $nombre_gestor_bodega = strtoupper($request->nombre_gestor_bodega);
         // Datos basicos
         $nombre_encargado = strtoupper($request->input('nombre_encargado'));
         $documento_encargado = $request->input('documento_encargado');
@@ -155,6 +156,7 @@ class Pdf extends Controller
             // Compactar todas la variables para enviarlas al PDF
             $vista = view('pdf_operacion',compact('nombre_encargado',
             'documento_encargado',
+            'nombre_gestor_bodega',
             'correo_encargado',
             'n_caso',
             'motivo_solicitud',
@@ -336,7 +338,7 @@ class Pdf extends Controller
     }
 
     // Funcion para codificar imagenes de las firmas y logo de la compañia
-    public function encodeImagen($firma1, $firma2, $firma3){
+    public function encodeImagen($firma1, $firma2, $firma3 = null){
         $firma1 = str_replace('data:image/png;base64,', '', $firma1);
         $firma2 = str_replace('data:image/png;base64,', '', $firma2);
         $firma3 = str_replace('data:image/png;base64,', '', $firma3);
