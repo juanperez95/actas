@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button type="button" class="btn morado_boton" data-bs-toggle="modal" data-bs-target="#example-modal" data-bs-whatever="@mdo"><span class="fas fa-user"/>     Registrar gestor</button>
+        <button type="button" :class="botones" data-bs-toggle="modal" data-bs-target="#example-modal" data-bs-whatever="@mdo"><span class="fas fa-user"/>     Registrar gestor</button>
 
         <div class="modal fade" id="example-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -13,20 +13,20 @@
                 <form>
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">N° Documento:</label>
-                        <input type="number" class="form-control" id="recipient-name" v-model="datos_gestor.cedula">
+                        <input type="number" :class="inputs" id="recipient-name" v-model="datos_gestor.cedula">
                     </div>
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Nombre gestor:</label>
-                        <input type="text" class="form-control" id="recipient-name" v-model="datos_gestor.nombre">
+                        <input type="text" :class="inputs" id="recipient-name" v-model="datos_gestor.nombre">
                     </div>
                     <div class="mb-3">
                         <label for="message-text" class="col-form-label">Correo del gestor:</label>
-                        <input type="email" class="form-control" id="message-text" v-model="datos_gestor.correo">
+                        <input type="email" :class="inputs" id="message-text" v-model="datos_gestor.correo">
                     </div>
                     <!-- Roles de los gestores -->
                     <div class="mb-3">
                         <label for="message-text" class="col-form-label">Asignar rol:</label>
-                        <select class="form-control" id="message-text" v-model="datos_gestor.rol" @keyup.enter="registrarGestor">
+                        <select :class="inputs" id="message-text" v-model="datos_gestor.rol" @keyup.enter="registrarGestor">
                             <option value="gestor">Gestor</option>
                             <option value="administrador">Administrador</option>
                         </select>
@@ -34,8 +34,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn morado_boton" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn morado_boton" @click="registrarGestor"><span :class="[cargar]"></span>    Registrar</button>
+                <button type="button" :class="botones" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" :class="botones" @click="registrarGestor"><span :class="[cargar]"></span>    Registrar</button>
             </div>
             </div>
         </div>
@@ -47,6 +47,7 @@
 <script>
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { mapState, mapMutations } from 'vuex';
 
 export default {
     data(){
@@ -131,6 +132,9 @@ export default {
             }
             return false;
         }
+    },
+    computed: {
+        ...mapState(['botones','inputs']),
     },
 
 }

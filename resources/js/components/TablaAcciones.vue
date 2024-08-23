@@ -2,22 +2,21 @@
     <div>
 
         <br>
-        <div class="m-2 p-4 input-group mb-3"
-            style="display: flex; justify-content:space-between; gap:50px; align-items:center;">
-            <select name="" id="" class="form-select" @click="mostrarGestores(); llenarCampos();"
+        <div class="flex gap-4">
+            <select name="" id="" :class="inputs" @click="mostrarGestores(); llenarCampos();" 
                 v-model.number="g_seleccionado">
                 <option value="0">Seleccione un gestor</option>
                 <option :value="g.id" v-for="g in lista_gestores" :key="g.id">{{ g.nombre_gestor.toUpperCase() }}</option>
             </select>
-            <!-- <input type="text" name="" list="camps" class="form-control" placeholder="Buscar campaña" @click="mostrarCamps();llenarCamposCamps();" v-model.number="cam_escogida" @keyup.enter="llenarCamposCamps();"> -->
+            <!-- <input type="text" name="" list="camps" :class="inputs" placeholder="Buscar campaña" @click="mostrarCamps();llenarCamposCamps();" v-model.number="cam_escogida" @keyup.enter="llenarCamposCamps();"> -->
 
-            <select class="form-select" @click="mostrarCamps(); llenarCamposCamps();" v-model="cam_escogida">
+            <select :class="inputs" @click="mostrarCamps(); llenarCamposCamps();" v-model="cam_escogida">
                 <option value="">Seleccione una campaña</option>
                 <option :value="cam.id" v-for="cam in lista_operaciones" :key="cam.id">{{ cam.nombre_camp.toUpperCase() }}
                 </option>
             </select>
             <!-- Parte de componente -->
-            <select class="form-select" @click="mostrarComponente(); llenarCamposComponente()"
+            <select :class="inputs" @click="mostrarComponente(); llenarCamposComponente()"
                 v-model="componente_escogido">
                 <option value="">Seleccione un componente</option>
                 <option :value="componente.id" v-for="componente in componentes_vuex" :key="componente.id">
@@ -29,76 +28,75 @@
         <div class="m-3 p-4 input-group mb-3">
             <!-- <div class="text-center"><span :class="[cargar]"></span></div> -->
             <!-- Tabla de gestor con sus datos -->
-            <table class="table" v-if="g_seleccionado !== 0">
+            <table :class="tabla" v-if="g_seleccionado !== 0">
 
 
 
                 <thead>
-                    <h4>Gestores</h4>
                     <tr class="cabeceras_tabla">
-                        <th scope="row">N° Documento</th>
-                        <th scope="row">Nombre gestor</th>
-                        <th scope="row">Correo</th>
-                        <th scope="row">Rol</th>
-                        <th scope="row">Acciones</th>
+                        <th :class="tabla" scope="row">N° Documento</th>
+                        <th :class="tabla" scope="row">Nombre gestor</th>
+                        <th :class="tabla" scope="row">Correo</th>
+                        <th :class="tabla" scope="row">Rol</th>
+                        <th :class="tabla" scope="row">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="g_found in campos_gestor" :key="g_found.id">
-                        <td scope="row"><input type="text" class="form-control bordes_input_tabla"
+                        <td :class="tabla" scope="row"><input type="text" :class="inputs"
                                 v-model="datos_gestor.cedula"></td>
-                        <td scope="row"><input type="text" class="form-control bordes_input_tabla"
+                        <td :class="tabla" scope="row"><input type="text" :class="inputs"
                                 v-model="datos_gestor.nombre_gestor"></td>
-                        <td scope="row"><input type="text" class="form-control bordes_input_tabla"
+                        <td :class="tabla" scope="row"><input type="text" :class="inputs"
                                 v-model="datos_gestor.correo"></td>
-                        <td scope="row">
-                            <input type="radio" class="form-check-input p-2 m-2 morado_check" value="administrador"
+                        <td :class="tabla" scope="row">
+                            <input type="radio"  value="administrador"
                                 v-model="datos_gestor.rol" name="roles" :checked="datos_gestor.boolean_rol_admin">
                             <label for="" class="form-check-label">Admin</label><br>
-                            <input type="radio" class="form-check-input p-2 m-2 morado_check " value="gestor"
+                            <input type="radio"  value="gestor"
                                 v-model="datos_gestor.rol" name="roles" :checked="datos_gestor.boolean_rol">
                             <label for="" class="form-check-label">Gestor</label>
                         </td>
-                        <td scope="row">
-                            <button class="btn morado_boton mt-2 m-2" @click="editarGestor"><span
+                        <td :class="tabla" scope="row">
+                            <button :class="botones" @click="editarGestor"><span
                                     :class="[carga_update]"></span> Editar</button>
-                            <button class="btn morado_boton mt-2 m-2" @click="resetPassword"><i
-                                    class="fa-solid fa-key"></i> Restablecer contraseña</button>
+                            <button :class="botones" @click="resetPassword"><i
+                                    class="fa-solid fa-key"></i> Borrar contraseña</button>
                                     <!-- Mostrar interfaz de usuario activo -->
-                            <button v-if="datos_gestor.usuario_activo" class="btn morado_boton mt-2 m-2" @click="eliminarGestor">
+                            <button v-if="datos_gestor.usuario_activo" :class="botones" @click="eliminarGestor">
                                 <i class="fa-solid fa-toggle-on"></i>
                                  Inhabilitar</button>
-                                <button v-if="!datos_gestor.usuario_activo" class="btn morado_boton mt-2 m-2" @click="activarGestor">                              
+                                <button v-if="!datos_gestor.usuario_activo" :class="botones" @click="activarGestor">                              
                                 <i class="fa-solid fa-toggle-off"></i> Habilitar</button>
                         </td>
                     </tr>
                 </tbody>
             </table>
             <!-- Tabla de historial -->
-            <table class="table" v-if="g_seleccionado !== 0">
+            <table :class="tabla" v-if="g_seleccionado !== 0">
                 <thead>
                     <tr class="cabeceras_tabla">
-                        <th>Ultimas actas generadas del gestor</th>
+                        <th :class="tabla">Ultimas actas generadas del gestor</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <div class="buscador_fechas">
-                            <input type="text" class="form-control" placeholder="Numero caso" v-model="buscar_caso"
+                            <input type="text" :class="inputs" placeholder="Numero caso" v-model="buscar_caso"
                                 @input="buscarCasos">
-                            <input type="date" name="" id="" class="form-control" v-model="fechas.fecha_inicio"
+                            <input type="date" name="" id="" :class="inputs" v-model="fechas.fecha_inicio"
                                 required>
-                            <input type="date" name="" id="" class="form-control" v-model="fechas.fecha_fin" required>
-                            <button class="btn morado_boton" @click="buscarCasosAvanzado">Buscar fechas</button>
+                            <input type="date" name="" id="" :class="inputs" v-model="fechas.fecha_fin" required>
+                            <button :class="botones" @click="buscarCasosAvanzado">Buscar fechas</button>
                             <!-- Buscar actas por gestor -->
-                            <select name="" id="" class="form-select" @click="mostrarGestores(); filtroActasGestor()"
+                            <select name="" id="" :class="inputs" @click="mostrarGestores(); filtroActasGestor()"
                                 v-model.number="gestor">
                                 <option value="">Seleccione un gestor</option>
                                 <option :value="g.id" v-for="g in lista_gestores" :key="g.id">
                                     {{ g.nombre_gestor.toUpperCase() }}</option>
                             </select>
                             <!-- Filtrar actas por campaña -->
-                            <select class="form-select" @click="mostrarCamps(); filtroActasCam();" v-model="cam_f">
+                            <select :class="inputs" @click="mostrarCamps(); filtroActasCam();" v-model="cam_f">
                                 <option value="">Seleccione una campaña</option>
                                 <option :value="cam.id" v-for="cam in lista_operaciones" :key="cam.id">
                                     {{ cam.nombre_camp.toUpperCase() }}</option>
@@ -128,21 +126,21 @@
                 <thead>
                     <h4>Campañas</h4>
                     <tr class="cabeceras_tabla">
-                        <th scope="row">Nombre Campaña</th>
-                        <th scope="row">Codigo Campaña</th>
-                        <th scope="row">Acciones</th>
+                        <th :class="tabla" scope="row">Nombre Campaña</th>
+                        <th :class="tabla" scope="row">Codigo Campaña</th>
+                        <th :class="tabla" scope="row">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="camp in campos_cam" :key="camp.id">
-                        <td scope="row"><input type="text" class="form-control bordes_input_tabla"
+                        <td :class="tabla" scope="row"><input type="text" :class="inputs"
                                 v-model="datos_camapaña.nombre_camp"></td>
-                        <td scope="row"><input type="text" class="form-control bordes_input_tabla" disabled
+                        <td :class="tabla" scope="row"><input type="text" :class="inputs" disabled
                                 :value="camp.id"></td>
-                        <td scope="row">
-                            <button class="btn morado_boton mt-2 m-2" @click="editarCamp"><span
+                        <td :class="tabla" scope="row">
+                            <button :class="botones" @click="editarCamp"><span
                                     :class="[carga_update]"></span> Editar</button>
-                            <button class="btn morado_boton mt-2 m-2" @click="eliminarCam"><i
+                            <button :class="botones" @click="eliminarCam"><i
                                     class="fa-solid fa-eraser"></i> Eliminar</button>
                         </td>
                     </tr>
@@ -151,20 +149,20 @@
             <!-- Tabla de componentes -->
             <table class="table" v-if="componente_escogido !== ''">
                 <thead>
-                    <h4>Campañas</h4>
+                    <h4>Componentes</h4>
                     <tr class="cabeceras_tabla">
-                        <th scope="row">Nombre Componente</th>
-                        <th scope="row">Acciones</th>
+                        <th :class="tabla" scope="row">Nombre Componente</th>
+                        <th :class="tabla" scope="row">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="compo in campos_componente" :key="compo.id">
-                        <td scope="row"><input type="text" class="form-control bordes_input_tabla"
+                        <td :class="tabla" scope="row"><input type="text" :class="inputs"
                                 v-model="datos_componente.nombre_componente"></td>
-                        <td scope="row">
-                            <button class="btn morado_boton mt-2 m-2" @click="editarComponente"><span
+                        <td :class="tabla" scope="row">
+                            <button :class="botones" @click="editarComponente"><span
                                     :class="[carga_update]"></span> Editar</button>
-                            <button class="btn morado_boton mt-2 m-2" @click="eliminarComponente"><i
+                            <button :class="botones" @click="eliminarComponente"><i
                                     class="fa-solid fa-eraser"></i> Eliminar</button>
                         </td>
                     </tr>
@@ -311,7 +309,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(['componentes_vuex', 'lista_operaciones', 'lista_gestores']),
+        ...mapState(['componentes_vuex', 'lista_operaciones', 'lista_gestores','inputs','botones','color_label','tabla']),
     },
     methods: {
         ...mapMutations(['mostrarComponentes', 'mostrarCamps', 'mostrarGestores', 'cerrarSesionAuto']),

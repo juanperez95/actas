@@ -13,7 +13,7 @@ const store = new Vuex.Store({
         name_gestor_session:'',
         // Variables para clases
         inputs:'mt-2 p-2 rounded-md bg-opacity-70 text-slate-900 transition duration-150 shadow-sm shadow-fuchsia-600/50 outline-none focus:shadow-xl focus:shadow-fuchsia-600/10 w-full',
-        botones:'rounded-md p-3 bg-fuchsia-600 bg-opacity-70 transition scale-1 duration-100 ease-in hover:scale-90 text-white shadow-md shadow-fuchsia-600',
+        botones:'rounded-lg p-3 bg-fuchsia-700 bg-opacity-70 transition scale-1 duration-100 ease-in hover:bg-fuchsia-800 text-white m-1',
         color_label:'text-slate-900 p-1 mt-2',
         tabla:'outline-none border-none text-center',
     },

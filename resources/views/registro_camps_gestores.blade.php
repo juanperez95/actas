@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@vite(['resources/js/app.js','resources/css/app.css','resources/sass/app.scss'])
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,26 +18,30 @@ background: radial-gradient(circle, rgba(149,71,244,1) 0%, rgba(152,35,130,1) 10
       </div>
       
     </div>
-    
-    <h2>Registro de campañas y gestores</h2>
+    <h2 class="text-3xl p-4">Registro de campañas y gestores</h2>
     <!-- framework Vue.js -->
     
     <div id="app">
-      <div class="input-group mb-3 p-3" style="display: flex; flex-direction:row;justify-content:space-around">
-        <div>
+      <div class="grid grid-cols-3 border-2 mb-4 p-3 justify-between">
+        <h3 class="mb-3 text-2xl text-white bg-purple-950 col-span-3 p-2 text-center">Detalles de entidad</h3>
+        <div class="flex justify-center">
           {{-- Modal gestor --}}
           <modal-gestor/>
           {{-- Modal componente --}}
         </div>
         {{-- Modal campaña --}}
-        <div>
+        <div class="flex justify-center">
           
           <modal-camp/>
         </div>
-        <modal-componente/>
+
+        <div class="flex justify-center">
+          
+          <modal-componente/>
+        </div>
       </div>
-      <div class="p-3">
-        <h2>Datos de busqueda</h2>
+      <div class="p-3 border-2">
+        <h2 class="text-2xl border-2 bg-purple-950 text-white p-2">Datos de busqueda</h2>
         {{-- Tabla de busqueda con vue --}}
         <tabla-acciones/>
       </div>

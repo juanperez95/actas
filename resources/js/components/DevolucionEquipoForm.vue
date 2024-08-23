@@ -2,11 +2,11 @@
   <div class="card shadow-lg">
     <div class="card-body">
       <div class="row">
-        <div class="col-md-6 mb-3">
+        <div class="col-md-6 mb-3">        
           <section class="sm:grid grid-cols-5 mt-5 p-2 border-2 gap-8 justify-center items-center">
             <article class="text-2xl bg-fuchsia-950 text-white col-span-5 p-2">Datos del usuario</article>
             <article>
-              <label for="numeroCaso" class="form-label">Número de Caso:</label>
+              <label for="numeroCaso" class="form-label">N° Caso:</label>
               <input type="text" id="numeroCaso" :class="inputs" v-model="formData.numeroCaso"
                 @click="cargarUsuarioSession">
             </article>
@@ -24,7 +24,7 @@
               </datalist>
             </article>
             <article>
-              <label for="correoPersonal" class="form-label">Correo Personal:</label>
+              <label for="correoPersonal" class="form-label">Correo usuario:</label>
               <input type="email" id="correoPersonal" :class="inputs" v-model="formData.correoPersonal">
             </article>
             <article>
@@ -226,7 +226,7 @@
 
     <div class="flex justify-around p-6 m-2">
       <button type="submit" :class="[botones]" @click="submitForm" :disabled="!condiciones" :enabled="condiciones">
-        <i class="fas fa-file-pdf me-2"></i>Generar PDF
+        <i :class="[cargar]"></i> Generar PDF
       </button>
       <button type="reset" :class="[botones]" @click="limpiarTodo">
         <i class="fas fa-eraser me-2"></i>Limpiar
@@ -293,6 +293,8 @@ export default {
       },
       // Valor para aceptar terminos y condiciones y habilitar el boton de generar
       condiciones:false,
+      // Mostrar spinner para demostrar que carga el elemento
+      cargar:'fas fa-file-pdf me-2',
 
 
     };
@@ -345,20 +347,20 @@ export default {
       };
     },
     generarPDFRetorno: async function () {
-      this.cargar = 'spinner-border spinner-border-sm';
-
+      this.cargar = 'fa-solid fa-spinner fa-spin';
+      
       // Asignar firmas a laravel
       this.formData.firma1 = this.$refs.signaturePad.getSignatureDataUrl();
       this.formData.firma2 = this.$refs.signaturePad2.getSignatureDataUrl();
-
-
+      
+      
       this.showNotification('info', 'Generando PDF...');
-
+      
       await axios.post('/PDF_RTN', this.formData, {
         responseType: 'blob'
       })
-        .then((res) => {
-          if (res.status == 200) {
+      .then((res) => {
+        if (res.status == 200) {
             var enlace = document.getElementById('down');
             enlace.download = (new Date().getDate().toLocaleString() + '_' + (new Date().getMonth() + 1).toString() + '_' + (new Date().getFullYear()).toString() + '_' + new Date().getTime().toString()) + '_GESTOR_RETORNO_A ' + (this.formData.nombres.toUpperCase()) + '--' + (this.formData.NombreRecibe.toUpperCase()) + '.pdf';
             enlace.href = URL.createObjectURL(res.data);
@@ -370,12 +372,13 @@ export default {
         }).catch((err) => {
           console.log(err);
         })
-
-      this.showNotification('success', 'PDF generado con éxito');
-
-
-    },
-    showNotification(icon, text) {
+        
+        this.showNotification('success', 'PDF generado con éxito');
+        this.cargar = 'fas fa-file-pdf me-2';
+        
+        
+      },
+      showNotification(icon, text) {
       Swal.fire({
         icon,
         text,

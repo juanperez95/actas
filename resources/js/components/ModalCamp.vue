@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button type="button" class="btn morado_boton" data-bs-toggle="modal" data-bs-target="#modal-cam" data-bs-whatever="@mdo"><i class="fa-brands fa-font-awesome"></i>   Registrar Campaña</button>
+        <button type="button" :class="botones" data-bs-toggle="modal" data-bs-target="#modal-cam" data-bs-whatever="@mdo"><i class="fa-brands fa-font-awesome"></i>   Registrar Campaña</button>
 
         <div class="modal fade" id="modal-cam" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -13,13 +13,13 @@
                 <form action="#">
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Nombre campaña:</label>
-                        <input type="text" class="form-control" id="recipient-name" v-model="datos_cam.nombre_cam" @keyup.enter="registrarCamp">
+                        <input type="text" :class="inputs" id="recipient-name" v-model="datos_cam.nombre_cam" @keyup.enter="registrarCamp">
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn morado_boton" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn morado_boton" @click="registrarCamp"><span :class="[cargar]"></span>    Registrar Campaña</button>
+                <button type="button" :class="botones" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" :class="botones" @click="registrarCamp"><span :class="[cargar]"></span>    Registrar Campaña</button>
             </div>
             </div>
         </div>
@@ -31,6 +31,7 @@
 <script>
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { mapState, mapMutations } from 'vuex';
 
 export default {
     data() {
@@ -108,6 +109,9 @@ export default {
             }
             return false;
         }
+    },
+    computed: {
+        ...mapState(['botones','inputs']),
     },
 }
 </script>

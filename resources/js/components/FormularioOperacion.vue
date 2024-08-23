@@ -223,7 +223,7 @@
       </table>
       <div class="container-fluid b-finales">
         <!-- Llamar a la funcion para generar el pdf -->
-        <button :class="botones" @click="generarPDF" @touchstart="generarPDF"><span :class="[cargar]"></span>Generar
+        <button :class="botones" @click="generarPDF" @touchstart="generarPDF"><span :class="[cargar]"></span> Generar
           PDF</button>
         <button :class="botones" @click="limpiarTodo" @touchstart="limpiarTodo"><span class="fa-solid fa-eraser" />
           Limpiar formulario</button>
@@ -305,7 +305,7 @@ export default {
   methods: {
     ...mapMutations(['mostrarComponentes', 'mostrarGestores', 'getSession', 'mostrarCamps', 'cerrarSesionAuto', 'validateActas', 'getNameGestor']),
     generarPDF: async function () {
-      this.cargar = 'spinner-border spinner-border-sm';
+      this.cargar = 'fa-solid fa-spinner fa-spin';
       if (this.validarInformacion()) {
         this.notificacion(4);
         this.cargar = '';
@@ -430,7 +430,7 @@ export default {
         // observaciones
         observaciones: '',
         // Firmas
-        nombre_gestor: '',
+        nombre_gestor: this.name_gestor_session.toUpperCase(),
         cargo_operacion: '',
         nombre_operacion: '',
         // Firmas

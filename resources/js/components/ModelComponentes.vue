@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button type="button" class="btn morado_boton" data-bs-toggle="modal" data-bs-target="#modal-componente" data-bs-whatever="@mdo"><i class="fa-solid fa-computer"></i>   Registrar Componente</button>
+        <button type="button" :class="botones" data-bs-toggle="modal" data-bs-target="#modal-componente" data-bs-whatever="@mdo"><i class="fa-solid fa-computer"></i>   Registrar Componente</button>
 
         <div class="modal fade" id="modal-componente" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -13,13 +13,13 @@
                 <form action="#">
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Nombre componente:</label>
-                        <input type="text" class="form-control" id="recipient-name" v-model="datos_componente.nombre_componente">
+                        <input type="text" :class="inputs" id="recipient-name" v-model="datos_componente.nombre_componente">
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary morado_boton" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-outline-danger morado_boton" @click="registrarComponente"><span :class="[cargar]"></span>    Registrar Componente</button>
+                <button type="button" :class="botones" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" :class="botones" @click="registrarComponente"><span :class="[cargar]"></span>    Registrar Componente</button>
             </div>
             </div>
         </div>
@@ -30,6 +30,7 @@
 <script> 
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { mapState, mapMutations } from 'vuex';
 
 export default {
     data() {
@@ -106,6 +107,9 @@ export default {
             }
         },
 
+    },
+    computed: {
+        ...mapState(['botones','inputs']),
     },
 }
 </script>
