@@ -261,7 +261,7 @@ import { mapMutations, mapState } from 'vuex';
 
 export default {
     mounted() {
-        this.cerrarSesionAuto();
+        this.cerrarSesionAuto(null);
     },
     data() {
         return {     
@@ -309,7 +309,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(['componentes_vuex', 'lista_operaciones', 'lista_gestores','inputs','botones','color_label','tabla']),
+        ...mapState(['componentes_vuex', 'lista_operaciones', 'lista_gestores','inputs','botones','color_label','tabla','datos_form']),
     },
     methods: {
         ...mapMutations(['mostrarComponentes', 'mostrarCamps', 'mostrarGestores', 'cerrarSesionAuto']),

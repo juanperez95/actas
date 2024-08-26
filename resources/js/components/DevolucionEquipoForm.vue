@@ -3,6 +3,12 @@
     <div class="card-body">
       <div class="row">
         <div class="col-md-6 mb-3">        
+          <section>
+            <article>
+              <!-- Validar que se guarde el formulario del usuario logueado -->
+              <button :class="botones" @click="guardarRetorno">Guardar formulario</button>
+            </article>
+          </section>
           <section class="sm:grid grid-cols-5 mt-5 p-2 border-2 gap-8 justify-center items-center">
             <article class="text-2xl bg-fuchsia-950 text-white col-span-5 p-2">Datos del usuario</article>
             <article>
@@ -250,6 +256,7 @@ export default {
   },
   mounted() {
     this.getSession();
+    this.cerrarSesionAuto(this.form_data);
   },
   data() {
     return {
@@ -300,7 +307,12 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["getSession", 'mostrarCamps']),
+    ...mapMutations(["getSession", 'mostrarCamps','cerrarSesionAuto','saveForm']),
+    // Recoger datos y guardar datos
+    guardarRetorno(){
+      let cedula = this.usuario_session[0].cedula;
+      this.saveForm({documento:cedula,form:this.formData});
+    },
     async submitForm() {
       console.log(this.isFormValid);
       if (this.isFormValid) {
@@ -408,7 +420,7 @@ export default {
 
 
     },
-    ...mapState(["usuario_session", 'lista_operaciones', 'inputs', 'botones', 'color_label'])
+    ...mapState(["usuario_session", 'lista_operaciones', 'inputs', 'botones', 'color_label','datos_form'])
 
   },
 };

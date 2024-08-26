@@ -9,6 +9,7 @@ const store = new Vuex.Store({
         lista_gestores:[],
         usuario_session:[],
         lista_operaciones:[],
+        // Datos form sirve para recoger los datos que se guardan en localStorage si desen recuperar formularios guardados.
         datos_form:[],
         name_gestor_session:'',
         // Variables para clases
@@ -74,7 +75,6 @@ const store = new Vuex.Store({
                     axios.get('/Actas_de_responsabilidad/Login/DestroyAuto')
                     .then(res=>{
                         if(res.data){
-                            localStorage.setItem('cache_acta',JSON.stringify([lista]));
                             window.location.href = "/Actas";
                             history.replaceState(null, '', '/Actas');                                    
                         }
@@ -82,7 +82,7 @@ const store = new Vuex.Store({
                     .catch(err=>{
                         // console.log(err);
                     });
-                },(60000*10)); // La sesion se cierra en 10 minutos
+                },(60000*15)); // La sesion se cierra en 15 minutos
             }
             function reset(){
                 clearInterval(tiempo);
@@ -123,6 +123,35 @@ const store = new Vuex.Store({
                     localStorage.clear();
                 }
             });
+        },
+        // Funcion para guardar formularios por parte del usuario
+        saveForm(state, lista){
+            var documento = lista.documento;
+            let datos = lista.form;
+            let mapeo = new Map();
+            try{
+                // Validar si en el localStorage tiene datos y buscar y reemplzaar los datos del usuario logueado.
+                if(localStorage.length !== 0){
+                    let local_storage = new Map(Object.entries(JSON.parse(localStorage.getItem('cache_actas'))));
+                    console.log(local_storage.has(documento))
+                    if(local_storage.has(documento)){
+                        // Actualizar los datos de la coleccion
+                        local_storage.set(documento,datos);
+
+                        // Volver a llevar los datos al storage
+                        local_storage.clear();
+                        localStorage.setItem('cache_actas',JSON.stringify(Object.fromEntries(local_storage)));
+
+                    }
+                }else{
+                    // Guardar datos si no encuentra al usuario en la cache crear una coleccion de datos
+                    let datos_new = [mapeo.set(documento,datos)];
+                    localStorage.setItem('cache_actas',JSON.stringify(Object.fromEntries(datos_new[0])));
+                    
+                }
+            }catch(Exception){
+                console.log(Exception);
+            }
         }
     }
 });

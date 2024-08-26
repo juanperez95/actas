@@ -107,11 +107,10 @@ padding: 0;
   font-size: 18px;
   color:var(--color_texto_botones);
   cursor: pointer;
-  transform: scale(1);
-  transition: all 0.3s ease-in;
+  transition: color 0.1s ease-in;
 }
 .enlaces:hover{
-  transform: scale(0.90);
+  color: var(--color_hover_botones);
 }
 .cabeceras_tabla th{
   background-color: var(--color_americas);

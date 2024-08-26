@@ -293,7 +293,6 @@ export default {
     }
   },
   mounted() {
-    this.validateActas('operacion');
     this.form_data.observaciones_recogido = 'N/A'
     this.form_data.observaciones_entregado = 'N/A';
     this.cerrarSesionAuto(this.form_data)
