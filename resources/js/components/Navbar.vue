@@ -3,8 +3,8 @@
         <div class="" id="navbarToggleExternalContent" data-bs-theme="dark">
             <div class="p-4">
               <h5 class="text-body-emphasis mb-4 text-white text-2xl">¡Bienvenido! ,<i :class="[cargar]"></i> {{name_gestor_session}}</h5>
-              <a class="enlaces" @click="adminPage" @touchstart="adminPage"><i class="fa-solid fa-gear"></i>  Configuracion Administrativa</a><br>
-              <a class="enlaces" @click="signOut" @touchstart="signOut"><i class="fa-solid fa-right-from-bracket"></i>  Cerrar Sesion</a><br>
+              <a class="enlaces" @click="adminPage"><i class="fa-solid fa-gear"></i>  Configuracion Administrativa</a><br>
+              <a class="enlaces" @click="signOut"><i class="fa-solid fa-right-from-bracket"></i>  Cerrar Sesion</a><br>
             </div>
           </div>
           <nav class="navbar barra_nav mb-3">

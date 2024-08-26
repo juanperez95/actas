@@ -13,8 +13,8 @@ const store = new Vuex.Store({
         datos_form:[],
         name_gestor_session:'',
         // Variables para clases
-        inputs:'mt-2 p-2 rounded-md bg-opacity-70 text-slate-900 transition duration-150 shadow-sm shadow-fuchsia-600/50 outline-none focus:shadow-xl focus:shadow-fuchsia-600/10 w-full',
-        botones:'rounded-lg p-3 bg-fuchsia-700 bg-opacity-70 transition scale-1 duration-100 ease-in hover:bg-fuchsia-800 text-white m-1',
+        inputs:'mt-2 p-2 bg-grey-500 text-slate-900 transition duration-150 w-full rounded-md outline-none',
+        botones:'rounded-full border-2 border-purple-800 bg-opacity-70 transition duration-100 hover:bg-purple-800 hover:text-white ease-in text-purple-800 m-1 p-3',
         color_label:'text-slate-900 p-1 mt-2',
         tabla:'outline-none border-none text-center',
     },
@@ -94,36 +94,7 @@ const store = new Vuex.Store({
 
 
         },
-        // Validar que hay datos en el local storage
-        validateActas(state, tipo){
-            let datos = null;
-
-            if(localStorage.length !== 0){
-                datos = localStorage.getItem('cache_acta');
-                if(datos[0].tipo_formulario == tipo) {
-                    this.notificaciones();
-                }else{
-                    console.log("no!")
-                }
-            }
-        },
-        notificaciones(state){
-            Swal.fire({
-                title: "¿Completar acta?",
-                text: "Hay un acta pendiente por completar!",
-                icon: "info",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Si"
-                }).then((result) => {
-                if (result.isConfirmed) {
-                    state.datos_form = datos;
-                }else{
-                    localStorage.clear();
-                }
-            });
-        },
+        
         // Funcion para guardar formularios por parte del usuario
         saveForm(state, lista){
             var documento = lista.documento;
@@ -133,26 +104,61 @@ const store = new Vuex.Store({
                 // Validar si en el localStorage tiene datos y buscar y reemplzaar los datos del usuario logueado.
                 if(localStorage.length !== 0){
                     let local_storage = new Map(Object.entries(JSON.parse(localStorage.getItem('cache_actas'))));
-                    console.log(local_storage.has(documento))
-                    if(local_storage.has(documento)){
+                    // Validar que existe el usuario con un acta guardada
+                    if(local_storage.has(documento.toString())){
+                        localStorage.clear();
                         // Actualizar los datos de la coleccion
-                        local_storage.set(documento,datos);
-
+                        local_storage.set(documento.toString(),datos);
+                        
                         // Volver a llevar los datos al storage
-                        local_storage.clear();
                         localStorage.setItem('cache_actas',JSON.stringify(Object.fromEntries(local_storage)));
 
+                    }else{
+                        local_storage.set(documento,datos);
+                        localStorage.setItem('cache_actas',JSON.stringify(Object.fromEntries(local_storage)));
                     }
                 }else{
                     // Guardar datos si no encuentra al usuario en la cache crear una coleccion de datos
-                    let datos_new = [mapeo.set(documento,datos)];
-                    localStorage.setItem('cache_actas',JSON.stringify(Object.fromEntries(datos_new[0])));
+                    mapeo.set(documento,datos);
+                    localStorage.setItem('cache_actas',JSON.stringify(Object.fromEntries(mapeo)));
                     
                 }
+                Swal.fire({
+                    title: '¡Satisfactorio!',
+                    text: '¡Se ha guardado el formulario exitosamente!',
+                    icon: 'success',
+                    toast:true,
+                    timer:3000,
+                    showConfirmButton:false,
+                    position:'top-end'
+                });
             }catch(Exception){
-                console.log(Exception);
+                // console.log(Exception);
             }
-        }
+        },
+
+        // Funcion para cargar un acta guardada anteriormente por el usuario.
+        loadForm(state, documento){
+            try{
+                let local_storage = new Map(Object.entries(JSON.parse(localStorage.getItem('cache_actas'))));
+                if(local_storage.has(documento.toString())){
+                    state.datos_form = local_storage.get(documento.toString());
+                }else{
+                    console.log("Not Found");
+                }
+                Swal.fire({
+                    title: '¡Satisfactorio!',
+                    text: '¡Se ha cargado el formulario exitosamente!',
+                    icon: 'success',
+                    toast:true,
+                    timer:3000,
+                    showConfirmButton:false,
+                    position:'top-end'
+                });
+            }catch(Exception){
+                console.log("");
+            }
+            }
     }
 });
 

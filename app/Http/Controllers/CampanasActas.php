@@ -34,7 +34,7 @@ class CampanasActas extends Controller
 
     // Mostrar a todas las campañas de la base de datos
     public function MostrarCam(){
-        $camps = ModelsCampanasActas::all();
+        $camps = ModelsCampanasActas::orderBy('nombre_camp','ASC')->get();
         // Devolver la respuesta en formato JSON
         return response()->json($camps);
     }

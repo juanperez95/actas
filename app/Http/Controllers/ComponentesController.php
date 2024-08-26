@@ -45,7 +45,7 @@ class ComponentesController extends Controller
 
     // Mostrar 
     public function MostrarComponente(){
-        return response()->json(Componentes::all());
+        return response()->json(Componentes::orderBy('nombre_componente','ASC')->get());
     }
 
 

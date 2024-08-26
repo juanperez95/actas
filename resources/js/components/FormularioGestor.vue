@@ -3,7 +3,7 @@
     <div id="gestores">
       <p>
         Gestor que entrega:
-        <select class="form-select" v-model="form_data.nombre_persona" @click="getSession();llenarCampos();" @touchstart="getSession();llenarCampos();">
+        <select class="form-select" v-model="form_data.nombre_persona" @touchstart="getSession();llenarCampos();">
           <option :value="gestor.nombre_gestor" v-for="gestor in usuario_session" :key="gestor.nombre_gestor">{{gestor.nombre_gestor ? gestor.nombre_gestor.toUpperCase() : ''}}</option>
         </select>
       </p>
@@ -17,7 +17,7 @@
       </p>
       <p>
         El presente formato se tiene con fin de entregar la responsabilidad del activo solicitado al gestor {{cargar1}}
-        <span :class="[cargar2]"></span><select class="form-select" v-model="form_data.nombre_gestor" @click="mostrarGestores" @touchstart="mostrarGestores">
+        <span :class="[cargar2]"></span><select class="form-select" v-model="form_data.nombre_gestor" @touchstart="mostrarGestores">
           <option :value="gestor.nombre_gestor" v-for="gestor in lista_gestores" :key="gestor.nombre_gestor">{{gestor.nombre_gestor ? gestor.nombre_gestor.toUpperCase() : ''}}</option>
         </select>
       </p>
@@ -33,7 +33,7 @@
         </li>
         <li>
           Operación Solicitante
-          <span :class="[cargar1]"></span><input type="text" placeholder="Ingrese la operación" class="form-select" v-model="form_data.op_solicitante" list="listaOp" @click="mostrarCamps" @touchstart="mostrarCamps"/>
+          <span :class="[cargar1]"></span><input type="text" placeholder="Ingrese la operación" class="form-select" v-model="form_data.op_solicitante" list="listaOp" @touchstart="mostrarCamps"/>
           <datalist id="listaOp">
             <option :value="cam.nombre_camp.toUpperCase()" v-for="cam in lista_operaciones" :key="cam.id">{{cam.nombre_camp.toUpperCase()}}</option>
           </datalist>
@@ -51,7 +51,7 @@
         </tr>
         <tr>
           <td>
-            <select name="" id="" class="form-select" v-model="form_data.ingreso_elemento" @click="mostrarComponentes" @touchstart="mostrarComponentes">
+            <select name="" id="" class="form-select" v-model="form_data.ingreso_elemento" @touchstart="mostrarComponentes">
               <option :value="componente.nombre_componente" v-for="componente in componentes_vuex" :key="componente.id">{{componente.nombre_componente.toUpperCase()}}</option>             
             </select>
           </td>
@@ -65,7 +65,7 @@
             <input type="text" placeholder="Ingrese las observaciones" v-model="form_data.observaciones_elemento" @keyup.enter="agregarElementos" class="form-control"/>
           </td>
           <td>
-            <button class="btn morado_boton" @click="agregarElementos" @touchstart="agregarElementos"><i class="fa-solid fa-plus"></i> Agregar</button>
+            <button class="btn morado_boton" @touchstart="agregarElementos"><i class="fa-solid fa-plus"></i> Agregar</button>
           </td>
         </tr>
       </table>
@@ -88,7 +88,7 @@
               <td scope="col">{{data.serial_elemento.toUpperCase()}}</td>
               <td scope="col">{{data.activo_elemento.toUpperCase()}}</td>
               <td scope="col">
-                <button class="btn morado_boton" @click="quitarElementos(data)" @touchstart="quitarElementos"><i class="fa-solid fa-trash"></i></button>
+                <button class="btn morado_boton" @touchstart="quitarElementos(data)" ><i class="fa-solid fa-trash"></i></button>
               </td>
             </tr>
           </tbody>
@@ -107,7 +107,7 @@
         </tr>
         <tr>
           <td>
-            <select name="" id="" class="form-select" v-model="form_data.ingreso_elemento_r" @click="mostrarComponentes" @touchstart="mostrarComponentes">
+            <select name="" id="" class="form-select" v-model="form_data.ingreso_elemento_r" @touchstart="mostrarComponentes">
               <option :value="componente.nombre_componente" v-for="componente in componentes_vuex" :key="componente.id">{{componente.nombre_componente.toUpperCase()}}</option>             
             </select>
           </td>
@@ -121,7 +121,7 @@
             <input type="text" placeholder="Ingrese las observaciones" v-model="form_data.observaciones_elemento_r" @keyup.enter="agregarRecogido" class="form-control"/>
           </td>
           <td>
-            <button class="btn morado_boton" @click="agregarRecogido" @touchstart="agregarRecogido"><i class="fa-solid fa-plus"></i> Agregar</button>
+            <button class="btn morado_boton" @touchstart="agregarRecogido"><i class="fa-solid fa-plus"></i> Agregar</button>
           </td>
         </tr>
       </table>
@@ -144,7 +144,7 @@
               <td scope="col">{{data.serial_elemento.toUpperCase()}}</td>
               <td scope="col">{{data.activo_elemento.toUpperCase()}}</td>
               <td scope="col">
-                <button class="btn morado_boton" @click="quitarRecogido(data)" @touchstart="quitarRecogido"><i class="fa-solid fa-trash"></i></button>
+                <button class="btn morado_boton" @touchstart="quitarRecogido(data)" ><i class="fa-solid fa-trash"></i></button>
               </td>
             </tr>
           </tbody>
@@ -182,7 +182,7 @@
       </table>
     </div>
     <div class="container-fluid b-finales">
-      <button class="btn morado_boton mt-2 b-anchof" @click="generarPDFGestor" @touchstart="generarPDFGestor"><span :class="[cargar]"></span>  Generar PDF</button>
+      <button class="btn morado_boton mt-2 b-anchof" @touchstart="generarPDFGestor"><span :class="[cargar]"></span>  Generar PDF</button>
       <button class="btn morado_boton mt-2 b-anchof" @click="limpiarTodo" @touchstart="limpiarTodo"><span class="fa-solid fa-eraser"/>  Limpiar Formulario</button>
     </div>
 

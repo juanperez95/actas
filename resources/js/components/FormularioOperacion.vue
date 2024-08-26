@@ -1,6 +1,13 @@
 <template>
   <div>
     <div id="operaciones m-2">
+      <section>
+        <article>
+          <!-- Validar que se guarde el formulario del usuario logueado -->
+          <button :class="botones" @click="guardarOperacion"><i class="fa-solid fa-floppy-disk"></i> Guardar formulario</button>
+          <button :class="botones" @click="cargarOperacion"><i class="fa-solid fa-rotate-right"></i> Cargar formulario</button>
+        </article>
+      </section>
       <div class="xl:grid grid-cols-1 border-2 p-2 mt-5">
         <h1 class="text-2xl bg-fuchsia-950 p-2 text-white col-span-4">Datos basicos</h1>
         <p :class="color_label">Señor(a) <input type="text" placeholder="Ingrese el nombre"
@@ -36,14 +43,13 @@
             v-model="form_data.motivo_solicitud" :class="inputs"></li>
         <li :class="color_label">Operación Solicitante <span :class="[cargar1]"></span>
           <!-- Lista que permite escribir las opciones -->
-          <input type="text" list="lista" :class="inputs" v-model="form_data.op_solicitante" @click="mostrarCamps"
-            @touchstart="mostrarCamps" placeholder="Ingrese la operacion solicitante">
-
+          <select  :class="[inputs, 'p-3']" v-model="form_data.op_solicitante" 
+          @click="mostrarCamps" placeholder="Ingrese la operacion solicitante">
           <!-- Iterar todas las campañas de la base de datos -->
-          <datalist id="lista">
             <option :value="cam.nombre_camp.toUpperCase()" v-for="cam in lista_operaciones" :key="cam.id">
               {{ cam.nombre_camp.toUpperCase() }}</option>
-          </datalist>
+           </select> 
+
         </li>
         <li :class="color_label">Estado de Entrega del Nuevo Activo
           <select :class="[inputs, 'p-3']" v-model="form_data.est_entrega_nuevoActivo">
@@ -74,7 +80,7 @@
           <tr>
             <td :class="tabla">
               <select name="" id="" :class="[inputs, 'p-3']" v-model="form_data.elemento_recogido"
-                @click="mostrarComponentes" @touchstart="mostrarComponentes">
+                @click="mostrarComponentes">
                 <option :value="componente.nombre_componente" v-for="componente in componentes_vuex"
                   :key="componente.id">
                   {{ componente.nombre_componente.toUpperCase() }}</option>
@@ -87,7 +93,7 @@
             <td :class="tabla"><input type="text" placeholder="Ingrese las observaciones"
                 v-model="form_data.observaciones_recogido" :class="inputs" @keyup.enter="agregarRecogidos"></td>
             <td :class="tabla">
-              <button :class="[botones]" @click="agregarRecogidos" @touchstart="agregarRecogidos"><i
+              <button :class="[botones]" @click="agregarRecogidos"><i
                   class="fa-solid fa-plus"></i> Agregar</button>
             </td>
           </tr>
@@ -109,7 +115,7 @@
                 <td :class="[tabla, color_label]" scope="col">{{ data.serial_recogido }}</td>
                 <td :class="[tabla, color_label]" scope="col">{{ data.activo_recogido }}</td>
                 <td :class="[tabla, color_label]" scope="col">
-                  <button :class="[botones]" @click="quitarRecogidos(data)" @touchstart="quitarRecogidos(data)"><i
+                  <button :class="[botones]" @click="quitarRecogidos(data)"><i
                       class="fa-solid fa-trash"></i></button>
                 </td>
               </tr>
@@ -131,7 +137,7 @@
             <tr>
               <td :class="tabla">
                 <select name="" id="" :class="[inputs, 'p-3']" v-model="form_data.elemento_entregado"
-                  @click="mostrarComponentes" @touchstart="mostrarComponentes">
+                  @click="mostrarComponentes">
                   <option :value="componente.nombre_componente" v-for="componente in componentes_vuex"
                     :key="componente.id">
                     {{ componente.nombre_componente.toUpperCase() }}</option>
@@ -144,7 +150,7 @@
               <td :class="tabla"><input type="text" placeholder="Ingrese las observaciones"
                   v-model="form_data.observaciones_entregado" :class="inputs" @keyup.enter="agregarEntregados"></td>
               <td :class="tabla">
-                <button @click="agregarEntregados" @touchstart="agregarEntregados" :class="[botones]"><i
+                <button @click="agregarEntregados" :class="[botones]"><i
                     class="fa-solid fa-plus"></i> Agregar</button>
               </td>
             </tr>
@@ -169,7 +175,7 @@
                 <td :class="[tabla, color_label]" scope="col">{{ data.serial_entregado }}</td>
                 <td :class="[tabla, color_label]" scope="col">{{ data.activo_entregado }}</td>
                 <td :class="[tabla, color_label]" scope="col">
-                  <button :class="[botones]" @click="quitarEntregados(data)" @touchstart="quitarEntregados(data)"><i
+                  <button :class="[botones]" @click="quitarEntregados(data)"><i
                       class="fa-solid fa-trash"></i></button>
                 </td>
               </tr>
@@ -223,9 +229,9 @@
       </table>
       <div class="container-fluid b-finales">
         <!-- Llamar a la funcion para generar el pdf -->
-        <button :class="botones" @click="generarPDF" @touchstart="generarPDF"><span :class="[cargar]"></span> Generar
+        <button :class="botones" @click="generarPDF"><span :class="[cargar]"></span> Generar
           PDF</button>
-        <button :class="botones" @click="limpiarTodo" @touchstart="limpiarTodo"><span class="fa-solid fa-eraser" />
+        <button :class="botones"  @click="limpiarTodo"><span class="fa-solid fa-eraser" />
           Limpiar formulario</button>
       </div>
       <a href="#" download="" id="link"></a>
@@ -302,7 +308,18 @@ export default {
 
   },
   methods: {
-    ...mapMutations(['mostrarComponentes', 'mostrarGestores', 'getSession', 'mostrarCamps', 'cerrarSesionAuto', 'validateActas', 'getNameGestor']),
+    ...mapMutations(['mostrarComponentes', 'mostrarGestores', 'getSession', 'mostrarCamps', 'cerrarSesionAuto', 'validateActas', 'getNameGestor','saveForm','loadForm']),
+    // Guardar formulario de la operacion
+    guardarOperacion(){
+      let cedula = this.usuario_session[0].cedula;
+      this.saveForm({documento:cedula, form:this.form_data});
+    },
+
+    // Cargar los datos del formulario de la operacion
+    cargarOperacion(){
+      this.loadForm(this.usuario_session[0].cedula);
+      this.form_data = this.datos_form;
+    },
     generarPDF: async function () {
       this.cargar = 'fa-solid fa-spinner fa-spin';
       if (this.validarInformacion()) {

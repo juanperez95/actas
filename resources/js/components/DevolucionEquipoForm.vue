@@ -6,7 +6,8 @@
           <section>
             <article>
               <!-- Validar que se guarde el formulario del usuario logueado -->
-              <button :class="botones" @click="guardarRetorno">Guardar formulario</button>
+              <button :class="botones" @click="guardarRetorno"><i class="fa-solid fa-floppy-disk"></i> Guardar formulario</button>
+              <button :class="botones" @click="cargarRetorno"><i class="fa-solid fa-rotate-right"></i> Cargar formulario</button>
             </article>
           </section>
           <section class="sm:grid grid-cols-5 mt-5 p-2 border-2 gap-8 justify-center items-center">
@@ -22,12 +23,12 @@
             </article>
             <article>
               <label for="campana" class="form-label">Campaña:</label>
-              <input type="text" id="campana" :class="inputs" v-model="formData.campana" list="listaOp"
+              <select :class="[inputs,'p-3']" v-model="formData.campana" 
                 @click="mostrarCamps">
-              <datalist id="listaOp">
-                <option :value="cam.nombre_camp" v-for="cam in lista_operaciones" :key="cam.id">
+                <option class="mt-1 bg-gray-100" :value="cam.nombre_camp" v-for="cam in lista_operaciones" :key="cam.id">
                   {{ cam.nombre_camp.toUpperCase() }}</option>
-              </datalist>
+
+                </select>
             </article>
             <article>
               <label for="correoPersonal" class="form-label">Correo usuario:</label>
@@ -48,16 +49,16 @@
           <div class="col-md-6 mb-3">
             <label for="dispositivo" class="form-label">Tipo de dispositivo:</label>
             <select id="dispositivo" :class="[inputs, 'p-3']" v-model="formData.dispositivo">
-              <option value="">Seleccione</option>
-              <option value="Portatil">Portátil</option>
-              <option value="Escritorio">Escritorio</option>
+              <option class="mt-1 bg-gray-100" value="">Seleccione</option>
+              <option class="mt-1 bg-gray-100" value="Portatil">Portátil</option>
+              <option class="mt-1 bg-gray-100" value="Escritorio">Escritorio</option>
             </select>
           </div>
           <div class="col-md-6 mb-3" v-if="formData.dispositivo === 'Escritorio'">
             <label for="Tipoescritorio" class="form-label">Tipo de escritorio:</label>
             <select id="Tipoescritorio" :class="[inputs, 'p-3']" v-model="formData.Tipoescritorio">
-              <option value="Torre">Torre</option>
-              <option value="Micro">Micro</option>
+              <option class="mt-1 bg-gray-100" value="Torre">Torre</option>
+              <option class="mt-1 bg-gray-100" value="Micro">Micro</option>
             </select>
           </div>
           <div class="mb-1">
@@ -73,9 +74,9 @@
           <div class="col-md-4 mt-3">
             <label for="estadoDispositivo" class="form-label">Estado del Dispositivo:</label>
             <select id="estadoDispositivo" :class="[inputs, 'p-3']" v-model="formData.estadoDispositivo">
-              <option value="Bueno">Bueno</option>
-              <option value="Dañado">Dañado</option>
-              <option value="Dado de baja">Dado de baja</option>
+              <option class="mt-1 bg-gray-100" value="Bueno">Bueno</option>
+              <option class="mt-1 bg-gray-100" value="Dañado">Dañado</option>
+              <option class="mt-1 bg-gray-100" value="Dado de baja">Dado de baja</option>
             </select>
           </div>
 
@@ -94,9 +95,9 @@
             <div class="col-md-4 mb-3">
               <label for="estadoMonitor" class="form-label">Estado del Monitor:</label>
               <select id="estadoMonitor" :class="[inputs, 'p-3']" v-model="formData.estadoMonitor">
-                <option value="Bueno">Bueno</option>
-                <option value="Dañado">Dañado</option>
-                <option value="Dado de baja">Dado de baja</option>
+                <option class="mt-1 bg-gray-100" value="Bueno">Bueno</option>
+                <option class="mt-1 bg-gray-100" value="Dañado">Dañado</option>
+                <option class="mt-1 bg-gray-100" value="Dado de baja">Dado de baja</option>
               </select>
             </div>
           </section>
@@ -106,49 +107,49 @@
           <section class="grid grid-cols-2 border-2 mt-5 p-2 gap-8 mb-8">
             <h4 class="text-white col-span-2 bg-fuchsia-950 p-2 text-2xl">Detalles de los perisfericos</h4>
             <div class="col-md-6 mb-3">
-              <label for="raton" class="form-label">Ratón:</label>
+              <label for="raton" class="form-label">Mouse:</label>
               <select id="raton" :class="[inputs, 'p-3']" v-model="formData.raton">
-                <option value="No">No</option>
-                <option value="Si">Sí</option>
+                <option class="mt-1 bg-gray-100" value="No">No</option>
+                <option class="mt-1 bg-gray-100" value="Si">Sí</option>
               </select>
             </div>
             <div class="col-md-6 mb-3" v-if="formData.raton === 'Si'">
               <label for="estadoRaton" class="form-label">Estado del Ratón:</label>
               <select id="estadoRaton" :class="[inputs, 'p-3']" v-model="formData.estadoRaton">
-                <option value="Bueno">Bueno</option>
-                <option value="Dañado">Dañado</option>
-                <option value="Dado de baja">Dado de baja</option>
+                <option class="mt-1 bg-gray-100" value="Bueno">Bueno</option>
+                <option class="mt-1 bg-gray-100" value="Dañado">Dañado</option>
+                <option class="mt-1 bg-gray-100" value="Dado de baja">Dado de baja</option>
               </select>
             </div>
 
             <div class="col-md-6 mb-3">
               <label for="teclado" class="form-label">Teclado:</label>
               <select id="teclado" :class="[inputs, 'p-3']" v-model="formData.teclado">
-                <option value="No">No</option>
-                <option value="Si">Sí</option>
+                <option class="mt-1 bg-gray-100" value="No">No</option>
+                <option class="mt-1 bg-gray-100" value="Si">Sí</option>
               </select>
             </div>
             <div class="col-md-6 mb-3" v-if="formData.teclado === 'Si'">
               <label for="estadoTeclado" class="form-label">Estado del Teclado:</label>
               <select id="estadoTeclado" :class="[inputs, 'p-3']" v-model="formData.estadoTeclado">
-                <option value="Bueno">Bueno</option>
-                <option value="Dañado">Dañado</option>
-                <option value="Dado de baja">Dado de baja</option>
+                <option class="mt-1 bg-gray-100" value="Bueno">Bueno</option>
+                <option class="mt-1 bg-gray-100" value="Dañado">Dañado</option>
+                <option class="mt-1 bg-gray-100" value="Dado de baja">Dado de baja</option>
               </select>
             </div>
             <div class="col-md-6 mb-3">
               <label for="diadema" class="form-label">Diadema:</label>
               <select id="diadema" :class="[inputs, 'p-3']" v-model="formData.diadema">
-                <option value="No">No</option>
-                <option value="Si">Sí</option>
+                <option class="mt-1 bg-gray-100" value="No">No</option>
+                <option class="mt-1 bg-gray-100" value="Si">Sí</option>
               </select>
             </div>
             <div class="col-md-5 mb-4" v-if="formData.diadema === 'Si'">
               <label for="marcaDiadema" class="form-label">Marca de la Diadema:</label>
               <select id="marcaDiadema" :class="[inputs, 'p-3']" v-model="formData.marcaDiadema">
-                <option value="PLANTRONICS">PLANTRONICS</option>
-                <option value="JABRA">JABRA</option>
-                <option value="XKIM">XKIM</option>
+                <option class="mt-1 bg-gray-100" value="PLANTRONICS">PLANTRONICS</option>
+                <option class="mt-1 bg-gray-100" value="JABRA">JABRA</option>
+                <option class="mt-1 bg-gray-100" value="XKIM">XKIM</option>
               </select>
             </div>
             <div class="col-md-10  mb-9" v-if="formData.diadema === 'Si'">
@@ -158,16 +159,16 @@
             <div class="col-md-10 mb-9" v-if="formData.diadema === 'Si'">
               <label for="estadoDiadema" class="form-label">Estado de la Diadema:</label>
               <select id="estadoDiadema" :class="[inputs, 'p-3']" v-model="formData.estadoDiadema">
-                <option value="Bueno">Bueno</option>
-                <option value="Dañado">Dañado</option>
-                <option value="Dado de baja">Dado de baja</option>
+                <option class="mt-1 bg-gray-100" value="Bueno">Bueno</option>
+                <option class="mt-1 bg-gray-100" value="Dañado">Dañado</option>
+                <option class="mt-1 bg-gray-100" value="Dado de baja">Dado de baja</option>
               </select>
             </div>
             <div class="col-md-6 mb-3">
               <label for="camara" class="form-label">Cámara:</label>
               <select id="camara" :class="[inputs, 'p-3']" v-model="formData.camara">
-                <option value="No">No</option>
-                <option value="Si">Sí</option>
+                <option class="mt-1 bg-gray-100" value="No">No</option>
+                <option class="mt-1 bg-gray-100" value="Si">Sí</option>
               </select>
             </div>
           </section>
@@ -179,8 +180,8 @@
           <div class="col-md-6 mb-3">
             <label for="segundoMonitor" class="form-label">¿Segundo Monitor?:</label>
             <select id="segundoMonitor" :class="[inputs, 'p-3']" v-model="formData.segundoMonitor">
-              <option value="No">No</option>
-              <option value="Si">Sí</option>
+              <option class="mt-1 bg-gray-100" value="No">No</option>
+              <option class="mt-1 bg-gray-100" value="Si">Sí</option>
             </select>
           </div>
         </div>
@@ -307,7 +308,13 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["getSession", 'mostrarCamps','cerrarSesionAuto','saveForm']),
+    ...mapMutations(["getSession", 'mostrarCamps','cerrarSesionAuto','saveForm','loadForm']),
+    // Cargar formulario si hay algo
+    cargarRetorno(){
+      this.loadForm(this.usuario_session[0].cedula);
+      this.formData = this.datos_form;
+    },
+
     // Recoger datos y guardar datos
     guardarRetorno(){
       let cedula = this.usuario_session[0].cedula;

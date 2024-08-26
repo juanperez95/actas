@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\GestoreActas;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -68,7 +69,7 @@ class GestoresActas extends Controller
 
     // Mostrar a todos los gestores de la base de datos
     public function MostrarGestores(){
-        $gestores = GestoreActas::where('usuario_activo',true)->get();
+        $gestores = GestoreActas::where('usuario_activo',true)->orderBy('nombre_gestor','ASC')->get();
         // Devolver la respuesta en formato JSON
         return response()->json($gestores);
     }
