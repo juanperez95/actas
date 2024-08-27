@@ -197,7 +197,7 @@
 }
 
 .cabeceras_tabla th {
-    background-color: #982993;
+    background-color: #4117db;
     color: aliceblue;
 }
 

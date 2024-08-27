@@ -8,9 +8,8 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <link rel="icon" href="{{asset('images/americas.png')}}" type="image/png">
 </head>
-<body style="background: rgb(149,71,244);
-background: radial-gradient(circle, rgba(149,71,244,1) 0%, rgba(152,35,130,1) 100%);">
-  <div class="bg-white p-3 w-5/6 mx-auto">
+<body style="background-image:url('{{asset('images/5556661.jpg')}}');">
+  <div class="bg-purple-200 p-3 w-5/6 mx-auto">
     <div style="display:flex;justify-content:space-between;">
       <img src="{{ asset('images/americas.png') }}" alt="Descripción de la imagen" class="logo">
 
@@ -21,11 +20,11 @@ background: radial-gradient(circle, rgba(149,71,244,1) 0%, rgba(152,35,130,1) 10
     
     <!-- framework Vue.js -->
     
-    <label for="option" class="text-white">Seleccione una opción:</label>
     <div id="app">
       <div>
         <navbar-actas/>
       </div>
+      <label for="option">Seleccione una opción:</label>
       <select id="option" v-model.number="seleccion_operacion" class="mt-2 p-2 rounded-md bg-purple-50 bg-opacity-70">
         {{-- <option value="1">ACTA DE RESPONSABILIDAD AL GESTOR</option> --}}
         <option class="mt-2 p-3" value="2">ACTA DE CAMBIO A INVENTARIO DE OPERACION</option>

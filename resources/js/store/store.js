@@ -13,8 +13,8 @@ const store = new Vuex.Store({
         datos_form:[],
         name_gestor_session:'',
         // Variables para clases
-        inputs:'mt-2 p-2 bg-grey-500 text-slate-900 transition duration-150 w-full rounded-md outline-none',
-        botones:'rounded-full border-2 border-purple-800 bg-opacity-70 transition duration-100 hover:bg-purple-800 hover:text-white ease-in text-purple-800 m-1 p-3',
+        inputs:'p-3 bg-white bg-opacity-50 rounded-md text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-600 m-2',
+        botones:'rounded-lg border-2 border-purple-800 bg-opacity-70 transition duration-100 hover:bg-purple-800 hover:text-white ease-in text-purple-800 m-1 p-2',
         color_label:'text-slate-900 p-1 mt-2',
         tabla:'outline-none border-none text-center',
     },

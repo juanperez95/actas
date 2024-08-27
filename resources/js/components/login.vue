@@ -117,9 +117,9 @@ export default {
 
 <style scoped>
 .bg-custom {
-  background: rgb(150,47,164);
-  background: linear-gradient(0deg, rgba(150,47,164,1) 0%, rgba(92,30,157,1) 100%);
-  background-size: cover;
+  background-image: url('../assets/5556661.jpg');
+  /* background: linear-gradient(0deg, rgba(150,47,164,1) 0%, rgba(92,30,157,1) 100%); */
+  /* background-size: cover; */
   background-position: center;
 }
 </style>

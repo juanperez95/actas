@@ -8,13 +8,13 @@
           <button :class="botones" @click="cargarOperacion"><i class="fa-solid fa-rotate-right"></i> Cargar formulario</button>
         </article>
       </section>
-      <div class="xl:grid grid-cols-1 border-2 p-2 mt-5">
-        <h1 class="text-2xl bg-fuchsia-950 p-2 text-white col-span-4">Datos basicos</h1>
-        <p :class="color_label">Señor(a) <input type="text" placeholder="Ingrese el nombre"
+      <div class="xl:grid grid-cols-2 border-2 p-2 mt-5">
+        <h1 class="text-2xl bg-fuchsia-950 p-2 text-white col-span-2">Datos basicos</h1>
+        <p :class="color_label">Señor(a) <input type="text"
             v-model="form_data.nombre_encargado" :class="inputs"></p>
-        <p :class="color_label">CC. <input type="number" :class="inputs" placeholder="Ingrese el número de CC"
+        <p :class="color_label">N° Documento: <input type="number" :class="[inputs,'p-2']"
             v-model.number="form_data.documento_encargado"></p>
-        <p :class="color_label">Correo: <input type="email" placeholder="Ingrese el correo"
+        <p :class="color_label">Correo: <input type="email"
             v-model="form_data.correo_encargado" :class="inputs"></p>
         <p :class="color_label">Datos gestor:
           <input name="" id="" :class="inputs" v-model="form_data.nombre_gestor" disabled>
@@ -37,9 +37,9 @@
         que pueda tener derecho en vigencia del contrato de trabajo o al momento de terminación del contrato de trabajo
         por cualquier motivo. <input type="text" placeholder="Ingrese el caso" v-model="form_data.n_caso"
           :class="inputs"></p>
-      <ul class="grid grid-cols-4 border-2 mt-5 p-2 justify-center">
-        <p :class="['col-span-4 text-2xl bg-fuchsia-950 p-2 text-white p-2']">Definiciones</p>
-        <li :class="color_label">Motivo de Solicitud <input type="text" placeholder="Ingrese el motivo"
+      <ul class="grid grid-cols-4 justify-center align-around">
+        <p :class="['col-span-4 text-2xl bg-fuchsia-950 p-2 text-white']">Definiciones</p>
+        <li :class="color_label">Motivo de Solicitud <input type="text"
             v-model="form_data.motivo_solicitud" :class="inputs"></li>
         <li :class="color_label">Operación Solicitante <span :class="[cargar1]"></span>
           <!-- Lista que permite escribir las opciones -->
@@ -51,14 +51,14 @@
            </select> 
 
         </li>
-        <li :class="color_label">Estado de Entrega del Nuevo Activo
+        <li :class="color_label">Estado Nuevo Activo
           <select :class="[inputs, 'p-3']" v-model="form_data.est_entrega_nuevoActivo">
             <option value="EN REPARACION">EN REPARACION</option>
             <option value="DAÑADO">DAÑADO</option>
             <option value="OPERATIVO">OPERATIVO</option>
           </select>
         </li>
-        <li :class="color_label">Estado de Recibido del Activo Recogido
+        <li :class="color_label">Estado Activo Recogido
           <select :class="[inputs, 'p-3']" v-model="form_data.est_recibido_activo">
             <option value="EN REPARACION">EN REPARACION</option>
             <option value="DAÑADO">DAÑADO</option>
@@ -79,7 +79,7 @@
           </tr>
           <tr>
             <td :class="tabla">
-              <select name="" id="" :class="[inputs, 'p-3']" v-model="form_data.elemento_recogido"
+              <select name="" id="" :class="[inputs]" v-model="form_data.elemento_recogido"
                 @click="mostrarComponentes">
                 <option :value="componente.nombre_componente" v-for="componente in componentes_vuex"
                   :key="componente.id">

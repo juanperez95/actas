@@ -7,9 +7,8 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   
 </head>
-<body style="background: rgb(149,71,244);
-background: radial-gradient(circle, rgba(149,71,244,1) 0%, rgba(152,35,130,1) 100%);">
-  <div class="container">
+<body style="background-image:url('{{asset('images/5556661.jpg')}}');">
+  <div class="bg-purple-200 p-3 w-5/6 mx-auto">
     <div style="display:flex;justify-content:space-between;">
       <img src="{{ asset('images/americas.png') }}" alt="Descripción de la imagen" class="logo">
       <div class="p-2">

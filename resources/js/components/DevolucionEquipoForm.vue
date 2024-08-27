@@ -10,8 +10,8 @@
               <button :class="botones" @click="cargarRetorno"><i class="fa-solid fa-rotate-right"></i> Cargar formulario</button>
             </article>
           </section>
-          <section class="sm:grid grid-cols-5 mt-5 p-2 border-2 gap-8 justify-center items-center">
-            <article class="text-2xl bg-fuchsia-950 text-white col-span-5 p-2">Datos del usuario</article>
+          <section class="sm:grid grid-cols-3 mt-1 p-2 border-2 gap-8 justify-center items-center">
+            <article class="text-2xl bg-fuchsia-950 text-white col-span-3 p-2">Datos del usuario</article>
             <article>
               <label for="numeroCaso" class="form-label">N° Caso:</label>
               <input type="text" id="numeroCaso" :class="inputs" v-model="formData.numeroCaso"
@@ -210,7 +210,7 @@
         indemnizaciones y cualquier otra acreencia a la que pueda tener derecho durante la vigencia del contrato de
         trabajo o al momento de la terminación del mismo por cualquier motivo.
         <article for="condiciones" class="p-2 mt-5 flex">
-          <input type="checkbox" name="condiciones" id="" class="w-4" :value="true" v-model="condiciones"><label for="condiciones">Si, acepto las condiciones</label>
+          <input class="bg-purple-500 w-4" type="checkbox" name="condiciones" id="" :value="true" v-model="condiciones"><label for="condiciones">Si, acepto las condiciones</label>
         </article>
       </p>
 
