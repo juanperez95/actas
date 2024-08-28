@@ -29,20 +29,14 @@ class Historiales_actas extends Controller
 
     }
     // Buscar en el historial por medio del numero de caso y fechas.
-    public function BuscarHistorialHard($f_inicio, $f_fin){
+    public function BuscarHistorialHard($f_inicio, $f_fin, $id_gestor){
         // Tomar los ultimos 20
         $historial = Historial_pdf::whereBetween('fecha_creacion',
-        [$f_inicio,$f_fin])->take(20)->get();
+        [$f_inicio,$f_fin])->where('fk_id_gestor',$id_gestor)->take(30)->get();
         return response()->json($historial);
 
     }
 
-    // Buscar en el historial por medio del numero de caso y fechas.
-    public function BuscarHistorialGestor($fk_gestor){
-        // Tomar los ultimos 20
-        $historial = Historial_pdf::where('fk_id_gestor',$fk_gestor)->take(20)->get();
-        return response()->json($historial);
-    }
 
     // Buscar en el historial por medio de la campaña
     public function BuscarHistorialCamp($fk_cam){
@@ -55,4 +49,18 @@ class Historiales_actas extends Controller
         }
         return response()->json($historial);
     }
+
+
+    // Actas generadas por el usuario
+    public function historialMyActas(){
+        return view('my_documents');
+    }
+
+    // Buscar las actas sobre el gestor que inicio sesion
+    public function showMyDocuments(Request $request){
+        return response()->json(Historial_pdf::where('fk_id_gestor',$request->id)->take(12)->get());
+    }
+
+
+
 }

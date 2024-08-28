@@ -76,7 +76,7 @@ class GestoresActas extends Controller
 
     // Mostrar a todos los que conforman la base de datos
     public function MostrarTodos(Request $request){
-        $gestores = GestoreActas::all();
+        $gestores = GestoreActas::orderBy('nombre_gestor','ASC')->get();
         // Devolver la respuesta en formato JSON
         return response()->json($gestores);
     }

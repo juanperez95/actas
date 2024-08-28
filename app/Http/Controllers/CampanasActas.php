@@ -17,6 +17,7 @@ class CampanasActas extends Controller
 
         $camp = new ModelsCampanasActas();
         $camp->nombre_camp = $request->input('nombre_cam');
+        $camp->camp_activo = true;
         $camp->save();
         return false;
     }
@@ -26,14 +27,28 @@ class CampanasActas extends Controller
         $cam->nombre_camp = $request->input('nombre_camp');
         $cam->save();
     }
-    // Eliminar
+    // Inhabilitar la campaña
     public function EliminarCam($id){
         $cam = ModelsCampanasActas::find($id);
-        $cam->delete();
+        $cam->camp_activo = false;
+        $cam->save();
+    }
+    // Habilitar la campaña
+    public function HabilitarCam($id){
+        $cam = ModelsCampanasActas::find($id);
+        $cam->camp_activo = true;
+        $cam->save();
+        return true;
     }
 
-    // Mostrar a todas las campañas de la base de datos
+    // Mostrar a todas las campañas de la base de datos que solo esten activos
     public function MostrarCam(){
+        $camps = ModelsCampanasActas::orderBy('nombre_camp','ASC')->where('camp_activo',true)->get();
+        // Devolver la respuesta en formato JSON
+        return response()->json($camps);
+    }
+    // Mostrar a todas las campañas de la base de datos
+    public function MostrarCamAll(){
         $camps = ModelsCampanasActas::orderBy('nombre_camp','ASC')->get();
         // Devolver la respuesta en formato JSON
         return response()->json($camps);

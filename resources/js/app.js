@@ -8,6 +8,7 @@ import ModelComponentes from './components/ModelComponentes.vue';
 import DevolucionEquipoForm from './components/DevolucionEquipoForm.vue';
 import login from './components/login.vue';
 import Navbar from './components/Navbar.vue';
+import TablaGestor from './components/TablaGestor.vue';
 
 
 import 'bootstrap';
@@ -35,6 +36,7 @@ app.component('modal-componente', ModelComponentes);
 app.component('tabla-acciones', TablaAcciones);
 app.component('form-retorno', DevolucionEquipoForm);
 app.component('navbar-actas', Navbar);
+app.component('tabla-gestor', TablaGestor);
 
 
 // Inicio de sesion

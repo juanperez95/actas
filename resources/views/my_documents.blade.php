@@ -21,33 +21,10 @@
     </div>
     <!-- framework Vue.js -->
     
-    <div id="app">
-      <h2 class="text-white border-2 text-2xl p-3 bg-purple-950 m-3">Registro de usuario y elementos</h2>
-      <div class="grid grid-cols-3 border-2 mb-4 p-3 justify-between">
-        <h3 class="mb-3 text-2xl text-white bg-purple-950 col-span-3 p-2 text-center">Detalles de entidad</h3>
-        <div class="flex justify-center">
-          {{-- Modal gestor --}}
-          <modal-gestor/>
-          {{-- Modal componente --}}
-        </div>
-        {{-- Modal campaña --}}
-        <div class="flex justify-center">
-          
-          <modal-camp/>
-        </div>
-
-        <div class="flex justify-center">
-          
-          <modal-componente/>
-        </div>
-      </div>
-      <div class="p-3 border-2">
-        <h2 class="text-2xl border-2 bg-purple-950 text-white p-2">Datos de busqueda</h2>
-        {{-- Tabla de busqueda con vue --}}
-        <tabla-acciones/>
-      </div>
-    </div>
+    <section id="app" class="border-2 grid grid-cols-1 justify-center mt-3 p-3">
+      <h2 class="text-3xl p-4 col-span-1 p-3 text-white text-center bg-purple-950">Mis actas</h2>
+      <tabla-gestor/>
+    </section>
     
   </body>
-  <script src="{{ asset('js/app.js') }}"></script>
 </html>

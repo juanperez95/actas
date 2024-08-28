@@ -10,7 +10,7 @@
               <button :class="botones" @click="cargarRetorno"><i class="fa-solid fa-rotate-right"></i> Cargar formulario</button>
             </article>
           </section>
-          <section class="sm:grid grid-cols-3 mt-1 p-2 border-2 gap-8 justify-center items-center">
+          <section class="sm:grid grid-cols-3 mt-1 p-5 border-2 gap-8 justify-center items-center">
             <article class="text-2xl bg-fuchsia-950 text-white col-span-3 p-2">Datos del usuario</article>
             <article>
               <label for="numeroCaso" class="form-label">N° Caso:</label>
@@ -23,7 +23,7 @@
             </article>
             <article>
               <label for="campana" class="form-label">Campaña:</label>
-              <select :class="[inputs,'p-3']" v-model="formData.campana" 
+              <select :class="[inputs,'p-3']" id="seleccion" v-model="formData.campana" 
                 @click="mostrarCamps">
                 <option class="mt-1 bg-gray-100" :value="cam.nombre_camp" v-for="cam in lista_operaciones" :key="cam.id">
                   {{ cam.nombre_camp.toUpperCase() }}</option>
@@ -48,7 +48,7 @@
 
           <div class="col-md-6 mb-3">
             <label for="dispositivo" class="form-label">Tipo de dispositivo:</label>
-            <select id="dispositivo" :class="[inputs, 'p-3']" v-model="formData.dispositivo">
+            <select id="dispositivo" :class="[inputs,'p-3']" v-model="formData.dispositivo">
               <option class="mt-1 bg-gray-100" value="">Seleccione</option>
               <option class="mt-1 bg-gray-100" value="Portatil">Portátil</option>
               <option class="mt-1 bg-gray-100" value="Escritorio">Escritorio</option>
@@ -250,6 +250,7 @@ import { mapState, mapMutations } from 'vuex';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import Firma from './Firma.vue';
+
 
 export default {
   components: {

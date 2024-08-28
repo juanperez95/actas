@@ -1,10 +1,11 @@
 <template>
     <div class="bg-fuchsia-950">
         <div class="" id="navbarToggleExternalContent" data-bs-theme="dark">
-            <div class="p-4">
-              <h5 class="text-body-emphasis mb-4 text-white text-2xl">¡Bienvenido! ,<i :class="[cargar]"></i> {{name_gestor_session}}</h5>
-              <a class="enlaces" @click="adminPage"><i class="fa-solid fa-gear"></i>  Configuracion Administrativa</a><br>
-              <a class="enlaces" @click="signOut"><i class="fa-solid fa-right-from-bracket"></i>  Cerrar Sesion</a><br>
+            <div class="p-8 grid grid-cols-2 gap-2 justify-around">
+              <h5 class="text-body-emphasis mb-4 text-white text-2xl col-span-3">¡Bienvenido! <span :class="[cargar]"></span> {{name_gestor_session}}</h5>
+              <a class="enlaces" @click="adminPage"><i class="fa-solid fa-gear"></i>  Configuracion Administrativa</a>
+              <a href="/Actas_de_responsabilidad/Historial/MyDocuments" class="enlaces"><i class="fa-regular fa-folder-open"></i>  Mis actas</a>
+              <a class="enlaces" @click="signOut"><i class="fa-solid fa-right-from-bracket"></i>  Cerrar Sesion</a>
             </div>
           </div>
           <nav class="navbar barra_nav mb-3">
@@ -48,7 +49,7 @@ export default {
     methods: {
         ...mapMutations(['getSession','getNameGestor']),
         mostrarNombre(){
-            this.cargar = 'fa-solid fa-spinner animate-spin'
+            this.cargar = "fa-solid fa-spinner fa-spin"
             this.getNameGestor();
             this.cargar = '';
         },

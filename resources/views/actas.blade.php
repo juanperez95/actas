@@ -7,9 +7,12 @@
   <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <link rel="icon" href="{{asset('images/americas.png')}}" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <body style="background-image:url('{{asset('images/5556661.jpg')}}');">
-  <div class="bg-purple-200 p-3 w-5/6 mx-auto">
+  <div class="bg-white  p-3 w-5/6 mx-auto">
     <div style="display:flex;justify-content:space-between;">
       <img src="{{ asset('images/americas.png') }}" alt="Descripción de la imagen" class="logo">
 

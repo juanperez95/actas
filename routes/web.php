@@ -27,13 +27,16 @@ Route::post('/Actas_de_responsabilidad/Gestores/ResetPass/{id}',[GestoresActas::
 Route::get('/Actas_de_responsabilidad/Gestores/Filtro/{fk_gestor}',[Historiales_actas::class,'BuscarHistorialGestor'])->name('historial_gestor');
 Route::get('/Actas_de_responsabilidad/Gestores/Activar_usuario/{id}',[GestoresActas::class,'ActivarGestor'])->name('activar_gestor');
 Route::get('/Actas_de_responsabilidad/Gestores/BloquearUsuario/{id}',[GestoresActas::class,'BlockGestor'])->name('bloquear_gestor');
+Route::get('/Actas_de_responsabilidad/GestoresAll',[GestoresActas::class,'MostrarTodos'])->name('mostrar_gestorall');
 
 
 // Acciones con las campañas
 Route::get('/Actas_de_responsabilidad/Campanas',[CampanasActas::class,'MostrarCam'])->name('mostrar_cam');
+Route::get('/Actas_de_responsabilidad/CampanasAll',[CampanasActas::class,'MostrarCamAll'])->name('mostrar_camall');
 Route::post('/Actas_de_responsabilidad/Campanas/Registro',[CampanasActas::class,'AgregarCam'])->name('agregar_cam');
 Route::post('/Actas_de_responsabilidad/Campanas/BuscarCamp',[CampanasActas::class,'BuscarCamp'])->name('buscar_cam');
 Route::delete('/Actas_de_responsabilidad/Campanas/Destroy/{id}',[CampanasActas::class,'EliminarCam'])->name('borrar_cam');
+Route::get('/Actas_de_responsabilidad/Campanas/ActivarCam/{id}',[CampanasActas::class,'HabilitarCam'])->name('activar_cam');
 Route::put('/Actas_de_responsabilidad/Campanas/Update/{id}',[CampanasActas::class,'ModificarCam'])->name('editar_cam');
 Route::get('/Actas_de_responsabilidad/Campanas/Filtro/{fk_cam}',[Historiales_actas::class,'BuscarHistorialCamp'])->name('historial_cam');
     
@@ -66,4 +69,6 @@ Route::get('/Actas_de_responsabilidad/Login/DestroyAuto',[Pdf::class,'SignOutAut
 Route::post('/Actas_de_responsabilidad/Historial/{id}',[Historiales_actas::class,'AccederDatos'])->name('historial_actas');
 Route::post('/Actas_de_responsabilidad/Historial/DownloadPDF/{id}',[Historiales_actas::class,'DownloadAgainPDF'])->name('download_actas');
 Route::post('/Actas_de_responsabilidad/Historial/BuscarCaso/{id}',[Historiales_actas::class,'BuscarHistorialBasic'])->name('buscar_actas');
-Route::post('/Actas_de_responsabilidad/Historial/BuscarCasoAvanzado/{f_inicio}/{f_fin}',[Historiales_actas::class,'BuscarHistorialHard'])->name('buscar_actas');
+Route::post('/Actas_de_responsabilidad/Historial/BuscarCasoAvanzado/{f_inicio}/{f_fin}/{id_gestor}',[Historiales_actas::class,'BuscarHistorialHard'])->name('buscar_actas');
+Route::get('/Actas_de_responsabilidad/Historial/MyDocuments',[Historiales_actas::class,'historialMyActas'])->name('myActas');
+Route::post('/Actas_de_responsabilidad/Historial/MyDocuments/Show',[Historiales_actas::class,'showMyDocuments'])->name('showMyActas');

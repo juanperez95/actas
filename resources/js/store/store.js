@@ -13,10 +13,10 @@ const store = new Vuex.Store({
         datos_form:[],
         name_gestor_session:'',
         // Variables para clases
-        inputs:'p-3 bg-white bg-opacity-50 rounded-md text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-600 m-2',
-        botones:'rounded-lg border-2 border-purple-800 bg-opacity-70 transition duration-100 hover:bg-purple-800 hover:text-white ease-in text-purple-800 m-1 p-2',
+        inputs:'outline-none ring-0 focus:ring-purple-500 transition duration-300 focus:ring-2 bg-opacity-80 text-slate-500 m-1',
+        botones:'bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50 m-2',
         color_label:'text-slate-900 p-1 mt-2',
-        tabla:'outline-none border-none text-center',
+        tabla:'outline-none border-none text-center p-3',
     },
     mutations:{
         // Mostrar componentes de manera global
@@ -29,9 +29,18 @@ const store = new Vuex.Store({
                 console.log(error);
             });
         },
-        // Mostrar gestores de manera global
+        // Mostrar gestores de manera global solo a los activos
         mostrarGestores(state){
             axios.get('/Actas_de_responsabilidad/Gestores')
+            .then(gestores=>{
+                state.lista_gestores = (gestores.data);
+            })
+            .catch(error=>{
+                console.log(error);
+            })
+        },
+        mostrarGestoresAll(state){
+            axios.get('/Actas_de_responsabilidad/GestoresAll')
             .then(gestores=>{
                 state.lista_gestores = (gestores.data);
             })
@@ -57,9 +66,28 @@ const store = new Vuex.Store({
                 
             })
         },
-        // Mostrar campañas
+        // ID del gestor que inicia sesion
+        getIDGestor(state){
+            axios.get('/Actas_de_responsabilidad/Gestores/Session')
+            .then(res=>{               
+                state.name_gestor_session = res.data.id;
+            }).catch(error=>{
+                
+            })
+        },
+        // Mostrar campañas que esten activas
         mostrarCamps(state){
             axios.get('/Actas_de_responsabilidad/Campanas')
+            .then((cam)=>{
+                state.lista_operaciones = cam.data;
+            })
+            .catch((error)=>{
+                console.log(error);
+            })
+        },
+        // Mostrar todas las campañas
+        mostrarCampsAll(state){
+            axios.get('/Actas_de_responsabilidad/CampanasAll')
             .then((cam)=>{
                 state.lista_operaciones = cam.data;
             })

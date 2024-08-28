@@ -1,3 +1,9 @@
+*{
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
 /* Variables de color */
 :root{
   --color_americas:#6922c7;

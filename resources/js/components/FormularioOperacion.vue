@@ -12,12 +12,12 @@
         <h1 class="text-2xl bg-fuchsia-950 p-2 text-white col-span-2">Datos basicos</h1>
         <p :class="color_label">Señor(a) <input type="text"
             v-model="form_data.nombre_encargado" :class="inputs"></p>
-        <p :class="color_label">N° Documento: <input type="number" :class="[inputs,'p-2']"
+        <p :class="color_label">N° Documento: <input type="text" :class="[inputs,'p-2']"
             v-model.number="form_data.documento_encargado"></p>
         <p :class="color_label">Correo: <input type="email"
             v-model="form_data.correo_encargado" :class="inputs"></p>
         <p :class="color_label">Datos gestor:
-          <input name="" id="" :class="inputs" v-model="form_data.nombre_gestor" disabled>
+          <input name="" id=""  type="text" :class="inputs" v-model="form_data.nombre_gestor" disabled>
         </p>
       </div>
       <p :class="color_label"><b>PARÁGRAFO PRIMERO:</b> EL TRABAJADOR
@@ -37,10 +37,10 @@
         que pueda tener derecho en vigencia del contrato de trabajo o al momento de terminación del contrato de trabajo
         por cualquier motivo. <input type="text" placeholder="Ingrese el caso" v-model="form_data.n_caso"
           :class="inputs"></p>
-      <ul class="grid grid-cols-4 justify-center align-around">
-        <p :class="['col-span-4 text-2xl bg-fuchsia-950 p-2 text-white']">Definiciones</p>
+      <ul class="grid grid-cols-2 justify-center align-around">
+        <p :class="['col-span-2 text-2xl bg-fuchsia-950 p-2 text-white']">Definiciones</p>
         <li :class="color_label">Motivo de Solicitud <input type="text"
-            v-model="form_data.motivo_solicitud" :class="inputs"></li>
+            v-model="form_data.motivo_solicitud" :class="[inputs]"></li>
         <li :class="color_label">Operación Solicitante <span :class="[cargar1]"></span>
           <!-- Lista que permite escribir las opciones -->
           <select  :class="[inputs, 'p-3']" v-model="form_data.op_solicitante" 
@@ -79,7 +79,7 @@
           </tr>
           <tr>
             <td :class="tabla">
-              <select name="" id="" :class="[inputs]" v-model="form_data.elemento_recogido"
+              <select name="" id="" :class="[inputs, 'p-3']" v-model="form_data.elemento_recogido"
                 @click="mostrarComponentes">
                 <option :value="componente.nombre_componente" v-for="componente in componentes_vuex"
                   :key="componente.id">
@@ -186,16 +186,15 @@
 
       <section class="grid grid-cols-1 border-2 p-2 mt-5">
         <p class="text-2xl bg-fuchsia-950 p-2 text-white">Observación:</p>
-        <textarea :class="inputs" placeholder="Ingrese la observación" v-model="form_data.observaciones"></textarea>
+        <textarea :class="inputs" v-model="form_data.observaciones"></textarea>
         <hr>
       </section>
       <!-- Componente firmas -->
       <section class="flex border-2 mt-5 p-2 items-center justify-center">
         <article>
           <h2 class="text-2xl text-slate-900 text-center">Gestor de bodega: </h2>
-          <select name="" id="" :class="[inputs, 'justify-center w-full']" @click="mostrarGestores"
+          <select name="" id="" :class="[inputs,'p-3']" @click="mostrarGestores"
             v-model="form_data.nombre_gestor_bodega">
-            <option value="0">Seleccione un gestor</option>
             <option :value="g.nombre_gestor" v-for="g in lista_gestores" :key="g.nombre_gestor">{{
               g.nombre_gestor.toUpperCase() }}</option>
           </select>
@@ -214,7 +213,7 @@
         <tr>
           <td :class="tabla">
             <p>Cargo persona de la operacion</p>
-            <select :class="inputs" v-model="form_data.cargo_operacion" required>
+            <select :class="[inputs,'p-3']" v-model="form_data.cargo_operacion" required>
               <!-- Cargos de personas que pueden firmar -->
               <option value="JEFE DE OPERACION">Jefe de Operacion</option>
               <option value="DIRECTOR DE OPERACIONES">Director de Operaciones</option>
@@ -239,7 +238,7 @@
     <br>
     <div class="container-fluid" align="center">
 
-      <p class="text-white">Derechos reservados MaxJP 2024 1.1</p>
+      <p class="text-slate-800">Derechos reservados MaxJP 2024 1.1</p>
     </div>
   </div>
 </template>

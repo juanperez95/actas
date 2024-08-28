@@ -12,22 +12,22 @@
             <div class="modal-body">
                 <form>
                     <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">N° Documento:</label>
-                        <input type="number" :class="inputs" id="recipient-name" v-model="datos_gestor.cedula">
+                        <label for="recipient-name" class="">N° Documento:</label>
+                        <input type="text" class="outline-none ring-0 focus:ring-purple-500 transition duration-300 focus:ring-2 bg-opacity-80 text-purple-600"  v-model="datos_gestor.cedula">
                     </div>
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Nombre gestor:</label>
-                        <input type="text" :class="inputs" id="recipient-name" v-model="datos_gestor.nombre">
+                        <input type="text" class="outline-none ring-0 focus:ring-purple-500 transition duration-300 focus:ring-2 bg-opacity-80 text-purple-600" v-model="datos_gestor.nombre">
                     </div>
                     <div class="mb-3">
                         <label for="message-text" class="col-form-label">Correo del gestor:</label>
-                        <input type="email" :class="inputs" id="message-text" v-model="datos_gestor.correo">
+                        <input type="email" class="outline-none ring-0 focus:ring-purple-500 transition duration-300 focus:ring-2 bg-opacity-80 text-purple-600" v-model="datos_gestor.correo">
                     </div>
                     <!-- Roles de los gestores -->
                     <div class="mb-3">
                         <label for="message-text" class="col-form-label">Asignar rol:</label>
-                        <select :class="inputs" id="message-text" v-model="datos_gestor.rol" @keyup.enter="registrarGestor">
-                            <option value="gestor">Gestor</option>
+                        <select class="outline-none ring-0 focus:ring-purple-500 transition duration-300 focus:ring-2 bg-opacity-80 text-purple-600 p-2" id="message-text" v-model="datos_gestor.rol" @keyup.enter="registrarGestor">
+                            <option class="" value="gestor">Gestor</option>
                             <option value="administrador">Administrador</option>
                         </select>
                     </div>
