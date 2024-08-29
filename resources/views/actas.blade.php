@@ -4,7 +4,6 @@
 <html>
 <head>
   <title>Acta de Responsabilidad de Equipos de Trabajo</title>
-  <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <link rel="icon" href="{{asset('images/americas.png')}}" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,7 +37,10 @@
       <form-operacion  class="p-2" v-if="seleccion_operacion===2"></form-operacion>
       <form-retorno  class="p-2" v-if="seleccion_operacion===3"></form-retorno>
     </div>
+<<<<<<< HEAD
+=======
 
+>>>>>>> origin/main
 </body>
 {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
 </html>
