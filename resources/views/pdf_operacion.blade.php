@@ -1,16 +1,15 @@
-@extends('layouts.app')
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ACTA DE RESPONSABILIDAD DE EQUIPOS DE TRABAJO</title>
+    <title>ACTA CAMBIO DE INVENTARIO A OPERACION</title>
     <style>
         body {
             font-family: sans-serif;
             margin: 12px;
         }
-        h1, h2 {
+        h1, h2, h3 {
             text-align: center;
             font-size: 14px;
         }
@@ -20,7 +19,14 @@
             margin-bottom: 20px;
             font-size:12px;
         }
-        th, td {
+        th{
+            border: 1px solid #000;
+            padding: 6px;
+            text-align: center;
+            color: aliceblue;
+            background-color: #8A2991;
+        }
+        td {
             border: 1px solid #000;
             padding: 6px;
             text-align: center;
@@ -31,21 +37,20 @@
             flex-direction:row;
         }
         p{
-            font-size:12px;
+            font-size:11px;
         }
     </style>
 </head>
 <body>
-
+<script src="{{asset('js/styles.js')}}"></script>
 <img src="data:image/png;base64,{{ $rutaLogo }}" alt="" width="30%">
 
-<h3 align="center">ACTA DE RESPONSABILIDAD DE EQUIPOS DE TRABAJO</h3>
+<h3>ACTA CAMBIO DE INVENTARIO A OPERACION</h3>
 
 <p>Señor(@) <b>{{$nombre_encargado}}</b></p>
 <p>CC: <b>{{$documento_encargado}}</b></p>
 <p>Correo: <b>{{$correo_encargado}}</b></p>
 
-<p>Respetada Señor(@) <b>{{$nombre_encargado}}</b></p>
 
 <p>El presente formato se tiene con fin de entregar la responsabilidad del activo solicitado a la operación retirando el activo anterior según el caso: <strong>{{$n_caso}}</strong></p>
 
@@ -56,7 +61,7 @@
 <p>Estado de Entrega del Nuevo Activo: <b>{{$est_entrega_nuevoActivo}}</b></p>
 <p>Estado de Recibido del Activo Recogido: <b>{{$est_recibido_activo}}</b></p>
 
-<p>Fecha de entrega del activo: <b>{{$fecha_entrega}}</b></p>
+<p>Fecha de acta: <b>{{$fecha_entrega}}</b></p>
 
 <h2>Activos relacionados:</h2>
 
@@ -116,14 +121,24 @@
             <td>
 
                 <div class="container">
-                    <p>Firma de quien entrega: <img src="data:image/png;base64,{{$ruta1}}" alt="" width="30%"></p>
-                    <p>Gestor de soluciones tecnologicas</p>
+                    <p>Firma de quien entrega: <img src="data:image/png;base64,{{$ruta1}}" alt="" width="100px" height="40px"></p>
+                    <p><b>Gestor de soluciones tecnologicas </b></p>
                     <p>Nombre Gestor: <b>{{$nombre_gestor}}</b></p>
                 </div>
             </td>
             <td>
                 <div class="container">
-                    <p>Firma Operación:<img src="data:image/png;base64,{{$ruta2}}" alt="" width="30%"></p>
+                    <p>Firma de quien entrega en bodega:<img src="data:image/png;base64,{{$ruta3}}" alt="" width="100px" height="40px"></p>
+                    <p><b>Gestor de soluciones tecnologicas </b></p>
+                    <p>Nombre encargado: <b>{{$nombre_gestor_bodega}}</b></p>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div class="container">
+                    <p>Firma Operación:<img src="data:image/png;base64,{{$ruta2}}" alt="" width="100px" height="40px"></p>
+                    <p>Nombre encargado: <b>{{$nombre_encargado}}</b></p>
                     <p>Cargo: <b>{{$cargo_operacion}}</b></p>
                     <p>Nombre Operacion: <b>{{$op_solicitante}}</b></p>
                 </div>
@@ -131,7 +146,6 @@
         </tr>
     </table>
 </div>
-
 
 </body>
 </html>

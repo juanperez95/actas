@@ -1,17 +1,16 @@
-@extends('layouts.app')
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <img src="data:image/png;base64,{{ $rutaLogo }}" alt="" width="30%">
-    <title>ACTA DE RESPONSABILIDAD DE EQUIPOS DE TRABAJO</title>
+    <title>ACTA DE RESPONSABILIDAD AL GESTOR</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 12px;
         }
-        h1, h2, h4 {
+        h1, h2, h3 {
             text-align: center;
             font-size:14px;
         }
@@ -21,7 +20,14 @@
             margin-bottom: 20px;
             font-size:12px;
         }
-        th, td {
+        th{
+            border: 1px solid #000;
+            padding: 6px;
+            text-align: center;
+            color: aliceblue;
+            background-color: #8A2991;
+        }
+        td {
             border: 1px solid #000;
             padding: 6px;
             text-align: center;
@@ -38,13 +44,11 @@
 </head>
 <body>
 
-<h4>ACTA DE RESPONSABILIDAD DE EQUIPOS DE TRABAJO</h4>
+<h3>ACTA DE RESPONSABILIDAD AL GESTOR</h3>
 
 <p>Señor (@): <b>{{$nombre_persona}}</b></p>
 <p>CC: <b>{{$documento_persona}}</b></p>
 <p>Correo: <b>{{$correo_persona}}</b></p>
-
-<p>Respetada Señor (@)</p>
 
 <p>El presente formato se tiene con fin de entregar la responsabilidad del activo solicitado al gestor: <b>{{$nombre_gestor}}</b></p>
 
@@ -52,7 +56,8 @@
 
 <p>Motivo de Solicitud: <b>{{$motivo_solicitud}}</b></p>
 <p>Operación Solicitante: <b>{{$op_solicitante}}</b></p>
-<p>Fecha de entrega del activo: <b>{{$fecha_entregaActivo}}</b></p>
+<p>Numero Caso: <b>{{$numero_caso}}</b></p>
+<p>Fecha de acta: <b>{{$fecha_entregaActivo}}</b></p>
 
 <h2>Activos relacionados:</h2>
 
@@ -68,6 +73,29 @@
     <tbody>
         <!-- Agregar filas según sea necesario -->
         @foreach ($data_elemento as $data)
+        
+        <tr>
+            <td>{{$data['ingreso_elemento']}}</td>
+            <td>{{$data['serial_elemento']}}</td>
+            <td>{{$data['activo_elemento']}}</td>
+            <td>{{$data['observaciones_elemento']}}</td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
+{{-- Tabla de elementos recogidos --}}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Elemento</th>
+            <th>Serial</th>
+            <th>Activo</th>
+            <th>Observaciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Agregar filas según sea necesario -->
+        @foreach ($data_elemento_r as $data)
         
         <tr>
             <td>{{$data['ingreso_elemento']}}</td>
@@ -106,6 +134,6 @@
     </table>
     <br>
 </div>
-
 </body>
+<script src="{{asset('js/styles.js')}}"></script>
 </html>
