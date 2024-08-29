@@ -32,7 +32,7 @@ class Historiales_actas extends Controller
     public function BuscarHistorialHard($f_inicio, $f_fin, $id_gestor){
         // Tomar los ultimos 20
         $historial = Historial_pdf::whereBetween('fecha_creacion',
-        [$f_inicio,$f_fin])->where('fk_id_gestor',$id_gestor)->take(30)->get();
+        [$f_inicio,$f_fin])->where('fk_id_gestor',$id_gestor)->orderBy('fecha_creacion','DESC')->take(30)->get();
         return response()->json($historial);
 
     }
@@ -58,7 +58,7 @@ class Historiales_actas extends Controller
 
     // Buscar las actas sobre el gestor que inicio sesion
     public function showMyDocuments(Request $request){
-        return response()->json(Historial_pdf::where('fk_id_gestor',$request->id)->take(12)->get());
+        return response()->json(Historial_pdf::where('fk_id_gestor',$request->id)->orderBy('fecha_creacion','DESC')->take(12)->get());
     }
 
 

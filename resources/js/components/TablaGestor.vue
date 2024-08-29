@@ -1,8 +1,13 @@
 <template>
     <div>
         <section>
-            <article>
+            <article class="border-2 p-2 m-2 text-center">
+                <p>Total de actas realizadas: {{lista_actas.length}}</p>
+            </article>
+            <article class="grid grid-cols-4 gap-3">
                 <button :class="botones" @click="showActasGestorLogin"><i class="fa-solid fa-magnifying-glass"></i>   Mostrar actas</button>
+                <input type="text" name="" id="" :class="[inputs,'']" @input="buscarCasos" v-model="buscarCaso">
+                <input type="date" name="" id="" :class="inputs" @input="buscarCasosAvanzado" v-model="fecha">
             </article>
         </section>
         <table>
@@ -11,7 +16,7 @@
                     <th :class="tabla">N° Caso</th>
                     <th :class="tabla">Tipo de acta</th>
                     <th :class="tabla">Fecha de creacion</th>
-                    <th :class="tabla">Accion</th>
+                    <th :class="tabla">PDF en servidor</th>
                 </tr>
             </thead>
             <tbody>
@@ -42,10 +47,32 @@ export default {
     data() {
         return {
             lista_actas: [],
+            buscarCaso:null,
+            fecha:''
         }
     },
     methods: {
         ...mapMutations(['getIDGestor']),
+        // Metodo para buscar por dias las actas realizadas por el gestor 
+        buscarCasosAvanzado() {
+            axios.post(`/Actas_de_responsabilidad/Historial/BuscarCasoAvanzado/${this.fecha}/${this.fecha}/${this.name_gestor_session}`)
+                .then(res => {
+                    this.lista_actas = res.data;
+                })
+                .catch(err => {
+
+                });
+        },
+        // Metodo para buscar un id de caso y mostrarlo
+        buscarCasos: async function () {
+            await axios.post(`/Actas_de_responsabilidad/Historial/BuscarCaso/${this.buscarCaso}`)
+                .then(res => {
+                    this.lista_actas = res.data;
+                })
+                .catch(err => {
+
+                });
+        },
         // Metodo para iniciar la tabla de actas que lleva
         async showActasGestorLogin() {
             await axios.post(`/Actas_de_responsabilidad/Historial/MyDocuments/Show`, { id: this.name_gestor_session })
@@ -58,7 +85,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(['tabla', 'name_gestor_session', 'inputs', 'botones']),
+        ...mapState(['tabla','name_gestor_session', 'inputs', 'botones']),
     },
     mounted() {
         this.getIDGestor();

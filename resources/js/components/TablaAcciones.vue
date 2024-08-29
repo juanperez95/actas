@@ -560,7 +560,6 @@ export default {
 
                 });
         },
-        // Filtrar actas por gestor
     },
 }
 </script>
