@@ -16,10 +16,19 @@
         <input type="email" placeholder="Ingrese el correo" v-model="form_data.correo_persona" class="form-control"/>
       </p>
       <p>
+<<<<<<< HEAD
+        Respetada Señor
+        <b>{{form_data.nombre_persona.toUpperCase()}}</b>
+      </p>k
+      <p>
+        El presente formato se tiene con fin de entregar la responsabilidad del activo solicitado al gestor
+        <input type="text" placeholder="Ingrese el gestor" v-model="form_data.nombre_gestor"/>
+=======
         El presente formato se tiene con fin de entregar la responsabilidad del activo solicitado al gestor {{cargar1}}
         <span :class="[cargar2]"></span><select class="form-select" v-model="form_data.nombre_gestor" @touchstart="mostrarGestores">
           <option :value="gestor.nombre_gestor" v-for="gestor in lista_gestores" :key="gestor.nombre_gestor">{{gestor.nombre_gestor ? gestor.nombre_gestor.toUpperCase() : ''}}</option>
         </select>
+>>>>>>> origin/main
       </p>
       <p>Definiciones:</p>
       <ul>
@@ -59,7 +68,11 @@
             <input type="text" placeholder="Ingrese el serial" v-model="form_data.serial_elemento" class="form-control"/>
           </td>
           <td>
+<<<<<<< HEAD
+            <input type="text" placeholder="Ingrese el activo" v-model="form_data.activo_elemento" :disabled="form_data.ingreso_elemento === 'Diadema'" :enabled="form_data.ingreso_elemento !== 'Diadema' ? form_data.activo_elemento : form_data.activo_elemento = 'No tiene'"/>
+=======
             <input type="text" placeholder="Ingrese el activo" v-model="form_data.activo_elemento" class="form-control"/>
+>>>>>>> origin/main
           </td>
           <td>
             <input type="text" placeholder="Ingrese las observaciones" v-model="form_data.observaciones_elemento" @keyup.enter="agregarElementos" class="form-control"/>
@@ -72,8 +85,13 @@
 
       <!-- Lista de elementos agregados -->
 
+<<<<<<< HEAD
+      <div class="container p-3">
+        <table class="table"> 
+=======
       <div class="p-1" v-if="form_data.data_elemento.length !== 0">
         <table class="table cabeceras_tabla">
+>>>>>>> origin/main
           <thead>
             <tr>
               <th>Elemento</th>
@@ -368,6 +386,7 @@ export default {
         observaciones_elemento:'N/A',
         observaciones_elemento_r:'N/A'
       }
+      this.form_data.observaciones_elemento = 'N/A'
     },
     validarInformacion(){
       if(this.form_data.correo_persona == '' 
