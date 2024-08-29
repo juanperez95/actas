@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 </head>
 <body style="background-image:url('{{asset('images/5556661.jpg')}}');">
   <div class="bg-white  p-3 w-5/6 mx-auto">
@@ -33,14 +34,9 @@
         <option class="mt-2 p-3" value="3">ACTA DE RETORNOS DE EQUIPO</option>
       </select>
       <!-- Componentes de formularios -->
-      <form-gestor class="p-2" v-if="seleccion_operacion===1"></form-gestor>
       <form-operacion  class="p-2" v-if="seleccion_operacion===2"></form-operacion>
       <form-retorno  class="p-2" v-if="seleccion_operacion===3"></form-retorno>
     </div>
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/main
 </body>
 {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
 </html>

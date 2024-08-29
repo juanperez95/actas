@@ -66,35 +66,6 @@
           </select>
         </li>
       </ul>
-<<<<<<< HEAD
-      <p>Fecha de entrega del activo: <input type="date" v-model="form_data.fecha_entrega"></p>
-      <p>Activos relacionados:</p>
-      <table>
-        <tr>
-          <th>Elemento Recogido</th>
-          <th>Serial</th>
-          <th>Activo</th>
-          <th>Observaciones (Estado)</th>
-          <th>Acciones</th>
-        </tr>
-        <tr>
-          <td>
-            <select name="" id="" class="form-select" v-model="form_data.elemento_recogido">
-              <option value="Torre">Torre</option>
-              <option value="Diadema">Diadema</option>
-              <option value="Monitor">Monitor</option>
-              <option value="Minitorre">Minitorre</option>
-            </select>
-          </td>
-          <td><input type="text" placeholder="Ingrese el serial" v-model="form_data.serial_recogido"></td>
-          <td><input type="text" placeholder="Ingrese el activo" v-model="form_data.activo_recogido" :disabled="form_data.elemento_recogido === 'Diadema'" :enabled="form_data.elemento_recogido !== 'Diadema' ? form_data.activo_recogido : form_data.activo_recogido = 'No tiene'"></td>
-          <td><input type="text" placeholder="Ingrese las observaciones" v-model="form_data.observaciones_recogido" @keyup.enter="agregarRecogidos"></td>
-          <td>
-            <button class="btn btn-danger" @click="agregarRecogidos">Agregar</button>
-          </td>
-        </tr>
-      </table>
-=======
       <div class="border-2 p-2 mt-5 grid grid-cols-1">
 
         <p :class="['text-2xl bg-fuchsia-950 p-2 text-white']">Activos relacionados:</p>
@@ -127,7 +98,6 @@
             </td>
           </tr>
         </table>
->>>>>>> origin/main
         <!-- vista de agregados de equipos recogidos -->
         <div class="p-1" v-if="form_data.data_recogido.length !== 0">
           <table :class="['cabeceras_tabla']">
@@ -153,40 +123,7 @@
           </table>
         </div>
         <!-- Tabla entregados -->
-<<<<<<< HEAD
-      <table>
-        <tr>
-          <th>Elemento Entregado</th>
-          <th>Serial</th>
-          <th>Activo</th>
-          <th>Observaciones (Estado)</th>
-          <th>Acciones</th>
-        </tr>
-        <tr>
-          <td>
-            <select name="" id="" class="form-select" v-model="form_data.elemento_entregado">
-              <option value="Torre">Torre</option>
-              <option value="Diadema">Diadema</option>
-              <option value="Monitor">Monitor</option>
-              <option value="Minitorre">Minitorre</option>
-            </select>
-          </td>
-          <td><input type="text" placeholder="Ingrese el serial" v-model="form_data.serial_entregado"></td>
-          <td><input type="text" placeholder="Ingrese el activo" v-model="form_data.activo_entregado" :disabled="form_data.elemento_entregado === 'Diadema'" :enabled="form_data.elemento_entregado !== 'Diadema' ? form_data.activo_entregado : form_data.activo_entregado = 'No tiene'"></td>
-          <td><input type="text" placeholder="Ingrese las observaciones" v-model="form_data.observaciones_entregado" @keyup.enter="agregarEntregados"></td>
-          <td>
-            <button @click="agregarEntregados" class="btn btn-danger">Agregar</button>
-          </td>
-        </tr>
-      </table>
-
-      <!-- Vista de elementos entregados -->
-      <div class="container">
-
-        <table class="table">
-=======
         <table :class="['cabeceras_tabla']">
->>>>>>> origin/main
           <thead>
             <tr>
               <th :class="tabla">Elemento Entregado</th>
@@ -376,49 +313,11 @@ export default {
       let cedula = this.usuario_session[0].cedula;
       this.saveForm({documento:cedula, form:this.form_data});
     },
-<<<<<<< HEAD
-    name:'form-operacion',
-    // Recoger los datos del formulario
-    data(){
-        return {    
-            form_data:{
-                // Datos basicos de la persona
-                nombre_encargado:'',
-                documento_encargado:null,
-                correo_encargado:'',
-                // N° Caso
-                n_caso:'',
-                // Motivos
-                motivo_solicitud:'',
-                op_solicitante:'',
-                est_entrega_nuevoActivo:'',
-                est_recibido_activo:'',
-                // Fecha entrega
-                fecha_entrega:'',
-                // Datos del equipos recogido
-                data_recogido:[],
-                // Datos del equipos entregado
-                data_entregado:[],
-                // observaciones
-                observaciones:'',
-                // Firmas
-                nombre_gestor:'',
-                cargo_operacion:'',
-                nombre_operacion:'',
-                // Firmas
-                firma1:null,
-                firma2:null,
-            },
-            // Si escogen diadema cambia el estado de la entrada del activo
-            opcion_diadema:""
-        }
-=======
 
     // Cargar los datos del formulario de la operacion
     cargarOperacion(){
       this.loadForm(this.usuario_session[0].cedula);
       this.form_data = this.datos_form;
->>>>>>> origin/main
     },
     generarPDF: async function () {
       this.cargar = 'fa-solid fa-spinner fa-spin';
@@ -477,104 +376,9 @@ export default {
         } else {
           this.notificacion(3);
         }
-<<<<<<< HEAD
-        },
-        // Quitar elementos entregados
-        quitarEntregados(elemento){
-          for(let ind in this.form_data.data_entregado){
-            if(elemento.serial_entregado === this.form_data.data_entregado[ind].serial_entregado){
-              this.form_data.data_entregado.splice(ind,1);
-            }
-          }
-        },
-        // Limpiar todos los campos
-        limpiarTodo(){
-          this.form_data = {
-                // Datos basicos de la persona
-                nombre_encargado:'',
-                documento_encargado:null,
-                correo_encargado:'',
-                // N° Caso
-                n_caso:'',
-                // Motivos
-                motivo_solicitud:'',
-                op_solicitante:'',
-                est_entrega_nuevoActivo:'',
-                est_recibido_activo:'',
-                // Fecha entrega
-                fecha_entrega:'',
-                // Datos del equipos recogido
-                data_recogido:[],
-                // Datos del equipos entregado
-                data_entregado:[],
-                // observaciones
-                observaciones:'',
-                // Firmas
-                nombre_gestor:'',
-                cargo_operacion:'',
-                nombre_operacion:'',
-                // Firmas
-                firma1:null,
-                firma2:null,
-            }
-            this.form_data.observaciones_recogido = 'N/A'
-            this.form_data.observaciones_entregado = 'N/A'
-          },
-        // Retornar un valor booleano para indicar que se puede generar el PDF.
-        validarInformacion(){
-          if(this.form_data.correo_encargado=='' || this.form_data.documento_encargado == '' || this.form_data.n_caso == '' || 
-            this.form_data.est_entrega_nuevoActivo == '' || this.form_data.est_recibido_activo == '' || this.form_data.fecha_entrega == ''
-            || this.form_data.op_solicitante == '' || this.form_data.data_entregado == [] || this.form_data.data_recogido == []
-          ){
-            return true;
-          }
-          return false;
-        },
-        // alertas de sweetalert2 
-        notificacion(contexto){
-          let datos = {};
-          switch (contexto) {
-            case 1: // Generar alerta del pdf
-              datos = {
-                title:'¡Generando PDF!',
-                timer:2000,
-                imageUrl: 'https://play-lh.googleusercontent.com/9XKD5S7rwQ6FiPXSyp9SzLXfIue88ntf9sJ9K250IuHTL7pmn2-ZB0sngAX4A2Bw4w',
-                imageHeight: 180,
-              };
-              break;
-            case 2: // Generar alerta de error
-              datos = {
-                title:'¡Oops!',
-                text:'Ha ocurrido un error al generar el pdf',
-                icon:'error',
-              };
-              break;
-            case 3: // Generar alerta de error al no completar los seriales
-              datos = {
-                text:'Llene los campos de serial y activo',
-                icon:'error',
-                position:"top-end",
-                showConfirmButton: false,
-                timer:1000,
-              };
-            break;
-            case 4: // Generar alerta de error al no llenar los campos del formulario
-              datos = {
-                title:'¡Oops!',
-                text:'¡Valide los campos del formulario!',
-                icon:'warning',
-              };
-            break;
-            
-          }
-          Swal.fire(datos);
-
-        }
-=======
       } catch (err) {
         this.notificacion(3);
       }
->>>>>>> origin/main
     },
     // Quitar elementos recogidos por equivocacion del usuario
     quitarRecogidos(elemento) {
