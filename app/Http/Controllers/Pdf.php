@@ -227,6 +227,17 @@ class Pdf extends Controller
         $firma1 = $request->firma1;
         $firma2 = $request->firma2;
 
+        // Modelos monitor_dispositivo
+
+        $marcaDispositivo = $request->marcaDispositivo;
+        $modeloDispositivo = $request->modeloDispositivo;
+        $marcaMonitor = $request->marcaMonitor;
+        $modeloMonitor = $request->modeloMonitor;
+        $marcaMonitor2 = $request->marcaMonitor2;
+        $modeloMonitor2 = $request->modeloMonitor2;
+
+
+
         // Decodificar las dos firmas
         $data = $this->encodeImagen($firma1, $firma2);
 
@@ -243,7 +254,8 @@ class Pdf extends Controller
         'estadoRaton', 'teclado', 'estadoTeclado', 'camara', 'serialCpu', 
         'activoCpu', 'estadoCpu', 'serialMonitor', 'activoMonitor', 'estadoMonitor',
          'segundoMonitor', 'serialMonitor2', 'activoMonitor2', 'tieneDiadema',  'marcaDiadema', 'estadoDiadema',
-          'observaciones', 'nombreRecibe', 'ruta1', 'ruta2','rutaLogo');
+          'observaciones', 'nombreRecibe', 'ruta1', 'ruta2','rutaLogo','marcaDispositivo','modeloDispositivo'
+        ,'marcaMonitor','modeloMonitor','marcaMonitor2','modeloMonitor2');
 
         $opciones = new Options();
         $opciones->set('isHtml5ParserEnabled', true);

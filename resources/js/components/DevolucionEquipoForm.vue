@@ -62,6 +62,14 @@
             </select>
           </div>
           <div class="mb-1">
+            <label for="marcaDispositivo" class="form-label">Marca del Dispositivo:</label>
+            <input type="text" id="marcaDispositivo" :class="inputs" v-model="formData.marcaDispositivo">
+          </div>
+          <div class="mb-1">
+            <label for="modeloDispositivo" class="form-label">Modelo del Dispositivo:</label>
+            <input type="text" id="modeloDispositivo" :class="inputs" v-model="formData.modeloDispositivo">
+          </div>
+          <div class="mb-1">
             <label for="serialDispositivo" class="form-label">Serial del Dispositivo:</label>
             <input type="text" id="serialDispositivo" :class="inputs" v-model="formData.serialDispositivo">
           </div>
@@ -84,6 +92,15 @@
         <div class="row">
           <section class="grid grid-cols-3 p-2 mt-5 border-2 gap-8 ">
             <h3 class="text-white col-span-3 bg-fuchsia-950 p-2 text-2xl">Detalles del monitor</h3>
+            <div class="mb-1">
+            <label for="marcaMonitor" class="form-label">Marca del Monitor:</label>
+            <input type="text" id="marcaMonitor" :class="inputs" v-model="formData.marcaMonitor">
+          </div>
+  
+          <div class="mb-1">
+            <label for="modeloMonitor" class="form-label">Modelo del Monitor:</label>
+            <input type="text" id="modeloMonitor" :class="inputs" v-model="formData.modeloMonitor">
+          </div>
             <div class="col-md-4 mb-3">
               <label for="serialMonitor" class="form-label">Serial del Monitor:</label>
               <input type="text" id="serialMonitor" :class="inputs" v-model="formData.serialMonitor">
@@ -187,6 +204,15 @@
         </div>
 
         <div v-if="formData.segundoMonitor === 'Si'" class="row">
+          <div class="mb-1">
+            <label for="marcaMonitor2" class="form-label">Marca del Monitor:</label>
+            <input type="text" id="marcaMonitor2" :class="inputs" v-model="formData.marcaMonitor2">
+          </div>
+  
+          <div class="mb-1">
+            <label for="modeloMonitor2" class="form-label">Modelo del Monitor:</label>
+            <input type="text" id="modeloMonitor2" :class="inputs" v-model="formData.modeloMonitor2">
+          </div>
           <div class="col-md-6 mb-3">
             <label for="serialMonitor2" class="form-label">Serial del Segundo Monitor:</label>
             <input type="text" id="serialMonitor2" :class="inputs" v-model="formData.serialMonitor2">
@@ -275,6 +301,8 @@ export default {
         serialDispositivo: '',
         activoDispositivo: '',
         estadoDispositivo: '',
+        marcaDispositivo:'',
+        modeloDispositivo:'',
         diadema: 'No',
         marcaDiadema: '',
         serialDiadema: '',
@@ -289,8 +317,12 @@ export default {
         estadoCpu: '',
         serialMonitor: '',
         activoMonitor: '',
+        marcaMonitor:'',
+        modeloMonitor:'',
         estadoMonitor: '',
         segundoMonitor: 'No',
+        marcaMonitor2:'',
+        modeloMonitor2:'',
         serialMonitor2: '',
         activoMonitor2: '',
         tieneDiadema: 'No',
@@ -343,6 +375,8 @@ export default {
         serialDispositivo: '',
         activoDispositivo: '',
         estadoDispositivo: '',
+        marcaDispositivo:'',
+        modeloDispositivo:'',
         diadema: 'No',
         marcaDiadema: '',
         serialDiadema: '',
@@ -355,6 +389,8 @@ export default {
         teclado: 'No',
         estadoTeclado: '',
         camara: 'No',
+        marcaMonitor:'',
+        modeloMonitor:'',
         serialMonitor: '',
         activoMonitor: '',
         estadoMonitor: '',

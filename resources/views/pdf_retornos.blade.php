@@ -60,6 +60,13 @@
 
 <table>
     <tr>
+        <th>Marca del Dispositivo</th>
+        <td>{{$marcaDispositivo}}</td>
+        <th>Modelo del Dispositivo</th>
+        <td>{{$modeloDispositivo}}</td>
+    </tr>
+   
+    <tr>
         <th>Tipo de Dispositivo</th>
         <td>{{$dispositivo}}</td>
         <th>Tipo de Escritorio</th>
@@ -76,6 +83,12 @@
         <td>{{$estadoDispositivo}}</td>
         <th>Serial del Monitor</th>
         <td>{{$serialMonitor}}</td>
+    </tr>
+    <tr>
+        <th>Marca del Monitor</th>
+        <td>{{$marcaMonitor}}</td>
+        <th>Modelo del Monitor</th>
+        <td>{{$modeloMonitor}}</td>
     </tr>
     <tr>
         <th>Activo del Monitor</th>
@@ -123,6 +136,12 @@
 @if($segundoMonitor === 'Si')
 <h2>Detalles del Segundo Monitor</h2>
 <table>
+<tr>
+        <th>Marca del Monitor2</th>
+        <td>{{$marcaMonitor2}}</td>
+        <th>Modelo del Monitor2</th>
+        <td>{{$modeloMonitor2}}</td>
+    </tr>
     <tr>
         <th>Serial del Segundo Monitor</th>
         <td>{{$serialMonitor2}}</td>

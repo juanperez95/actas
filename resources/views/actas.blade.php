@@ -32,10 +32,12 @@
         {{-- <option value="1">ACTA DE RESPONSABILIDAD AL GESTOR</option> --}}
         <option class="mt-2 p-3" value="2">ACTA DE CAMBIO A INVENTARIO DE OPERACION</option>
         <option class="mt-2 p-3" value="3">ACTA DE RETORNOS DE EQUIPO</option>
+        <option class="mt-2 p-3" value="4">ACTA DE ENTREGAS DE EQUIPO</option>
       </select>
       <!-- Componentes de formularios -->
       <form-operacion  class="p-2" v-if="seleccion_operacion===2"></form-operacion>
       <form-retorno  class="p-2" v-if="seleccion_operacion===3"></form-retorno>
+      <form-entregas class="p-2" v-if="seleccion_operacion===4"></form-entregas>
     </div>
 </body>
 {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
