@@ -52,7 +52,7 @@ export default {
         }
     },
     methods: {
-        ...mapMutations(['getIDGestor']),
+        ...mapMutations(['getIDGestor', 'cerrarSesionAuto']),
         // Metodo para buscar por dias las actas realizadas por el gestor 
         buscarCasosAvanzado() {
             axios.post(`/Actas_de_responsabilidad/Historial/BuscarCasoAvanzado/${this.fecha}/${this.fecha}/${this.name_gestor_session}`)
@@ -90,6 +90,7 @@ export default {
     mounted() {
         this.getIDGestor();
         this.showActasGestorLogin();
+        this.cerrarSesionAuto([null]);
     },
 
 

@@ -27,8 +27,8 @@
                 <select id="concepto" :class="[inputs, 'p-3']" v-model="formData.concepto">
                   <option value="Asignación">Asignación</option>
                   <option value="Cambio">Cambio</option>
-                  <option value="Retiro">Retiro</option>
                   <option value="Préstamo">Préstamo</option>
+                  
                 </select>
               </div>
                <!-- New fields for previous equipment (only visible when "Cambio" is selected) -->

@@ -25,7 +25,7 @@ class Pdf extends Controller
                 $tipo_acta = 'acta_operacion';
                 break;
             case 2:
-                $tipo_acta = 'acta_gestores';
+                $tipo_acta = 'acta_entrega';
                 break;
             case 3:
                 $tipo_acta = 'acta_retornos';
@@ -359,7 +359,7 @@ class Pdf extends Controller
             $pdf->render();
 
             // Guardar el pdf en el servidor y base de datos.
-            $this->SavePDFServerDB($nombres.'_A_'.$nombreRecibe,$pdf,Carbon::now()->toDateString(),$request,3,$numeroCaso,$campana);
+            $this->SavePDFServerDB($nombres.'_A_'.$nombreRecibe,$pdf,Carbon::now()->toDateString(),$request,2,$numeroCaso,$campana);
 
         }catch(Exception $e){
             error_log($e->getMessage());
