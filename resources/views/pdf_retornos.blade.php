@@ -81,14 +81,14 @@
     <tr>
         <th>Estado del Dispositivo</th>
         <td>{{$estadoDispositivo}}</td>
-        <th>Serial del Monitor</th>
-        <td>{{$serialMonitor}}</td>
-    </tr>
-    <tr>
         <th>Marca del Monitor</th>
         <td>{{$marcaMonitor}}</td>
+    </tr>
+    <tr>
         <th>Modelo del Monitor</th>
         <td>{{$modeloMonitor}}</td>
+        <th>Serial del Monitor</th>
+        <td>{{$serialMonitor}}</td>
     </tr>
     <tr>
         <th>Activo del Monitor</th>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acta de Entrega de Activos Tecnológicos</title>
+    <title>Acta de entrega de activos tecnológicos</title>
     <style>
         body {
             font-family: sans-serif;
@@ -45,24 +45,28 @@
     </style>
 </head>
 <body>
+<script src="{{asset('js/styles.js')}}"></script>
+<img src="data:image/png;base64,{{$rutaLogo}}" alt="Logo" width="30%">
+
+<!-- <th>{{$nombreRecibe}}</th> -->
+
     <h1>F25 TEC 0401 Acta de entrega de activos tecnológicos</h1>
     
     <p>
-        <strong>Fecha de entrega:</strong> {{fechaEntrega}}
-        <strong>Por concepto de:</strong> {{concepto}}
-        <strong>Caso No:</strong> {{numeroCaso}}
-        <strong>Tipo:</strong> {{tipoDispositivo}}
+        <strong>Fecha de entrega:</strong> {{$fechaEntrega}}
+        <strong>Por concepto de:</strong> {{$concepto}}
+        <strong>Caso No:</strong> {{$numeroCaso}}
+        <strong>Tipo:</strong> {{$tipoEscritorio}}
     </p>
 
     <p>
         <strong>Datos del equipo anterior:</strong><br>
-        Reemplazar acta anterior: {{reemplazarActa}}<br>
-        Serial del equipo anterior: {{serialEquipoAnterior}}<br>
-        No. de activo: {{activoEquipoAnterior}}
+        Serial del equipo anterior: {{$serialEquipoAnterior}}<br>
+        No. de activo: {{$activoEquipoAnterior}}
     </p>
 
     <p>
-        Entre los suscritos a saber, <strong>Andres Fernando Camacho Contreras</strong>, mayor de edad y vecino de la ciudad de Bogotá D.C., e identificado con la cédula de ciudadanía No. 1013620994, quien obra en nombre y representación de <strong>AMÉRICAS BPS S.A.</strong>, en su calidad de <strong>Director Operaciones IT</strong>, quien en adelante se denominará <strong>EL EMPLEADOR</strong>, y por la otra, <strong>{{nombreTrabajador}}</strong> identificado(a) con la cédula de ciudadanía número <strong>{{cedulaTrabajador}}</strong> expedida en <strong>{{lugarExpedicion}}</strong> en calidad de <strong>EL TRABAJADOR</strong>, manifiestan que han efectuado EL PRESENTE COMÚN ACUERDO, acorde a las especificaciones anexas:
+        Entre los suscritos a saber, <strong>Andres Fernando Camacho Contreras</strong>, mayor de edad y vecino de la ciudad de Bogotá D.C., e identificado con la cédula de ciudadanía No. 1013620994, quien obra en nombre y representación de <strong>AMÉRICAS BPS S.A.</strong>, en su calidad de <strong>Director Operaciones IT</strong>, quien en adelante se denominará <strong>EL EMPLEADOR</strong>, y por la otra, <strong>{{$nombres}}</strong> identificado(a) con la cédula de ciudadanía número <strong>{{$cedula}}</strong> expedida en <strong>{{$expedicionCedula}}</strong> en calidad de <strong>EL TRABAJADOR</strong>, manifiestan que han efectuado EL PRESENTE COMÚN ACUERDO, acorde a las especificaciones anexas:
     </p>
 
     <p>
@@ -78,42 +82,63 @@
             <th>Activo</th>
         </tr>
         <tr>
-            <td>{{tipoDispositivo}}</td>
-            <td>{{marcaDispositivo}}</td>
-            <td>{{modeloDispositivo}}</td>
-            <td>{{serialDispositivo}}</td>
-            <td>{{activoDispositivo}}</td>
+            <td>{{$dispositivo}}</td>
+            <td>{{$marcaDispositivo ?? 'N/A'}}</td>
+            <td>{{$modeloDispositivo ?? 'N/A'}}</td>
+            <td>{{$serialDispositivo ?? 'N/A'}}</td>
+            <td>{{$activoDispositivo ?? 'N/A'}}</td>
         </tr>
         <tr>
             <td>Monitor</td>
-            <td>{{marcaMonitor}}</td>
-            <td>{{modeloMonitor}}</td>
-            <td>{{serialMonitor}}</td>
-            <td>{{activoMonitor}}</td>
+            <td>{{$marcaMonitor ?? 'N/A'}}</td>
+            <td>{{$modeloMonitor ?? 'N/A'}}</td>
+            <td>{{$serialMonitor ?? 'N/A'}}</td>
+            <td>{{$activoMonitor ?? 'N/A'}}</td>
         </tr>
         <tr>
             <td>Mouse</td>
-            <td>{{marcaMouse}}</td>
-            <td>{{modeloMouse}}</td>
-            <td>{{serialMouse}}</td>
-            <td>{{activoMouse}}</td>
+            <td>{{$raton}}</td>
+            <td>{{$raton}}</td>
+            <td>{{$raton}}</td>
+            <td>{{$raton}}</td>
         </tr>
         <tr>
             <td>Teclado</td>
-            <td>{{marcaTeclado}}</td>
-            <td>{{modeloTeclado}}</td>
-            <td>{{serialTeclado}}</td>
-            <td>{{activoTeclado}}</td>
+            <td>{{$teclado}}</td>
+            <td>{{$teclado}}</td>
+            <td>{{$teclado}}</td>
+            <td>{{$teclado}}</td>
         </tr>
         <tr>
             <td>Diadema</td>
-            <td>{{marcaDiadema}}</td>
-            <td>{{modeloDiadema}}</td>
-            <td>{{serialDiadema}}</td>
-            <td>{{activoDiadema}}</td>
+            <td>{{$marcaDiadema ?? 'N/A' }}</td>
+            <td>{{$marcaDiadema ?? 'N/A' }}</td>
+            <td>{{$serialDiadema ?? 'N/A' }}</td>
+            <td>{{$serialDiadema ?? 'N/A' }}</td>
         </tr>
     </table>
-
+    <table>
+        <tr>
+            <th>Celular</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <td>IMEI 1</td>
+            <td>{{$IMEI ?? 'N/A'}}</td>
+            <td>IMEI 2</td>
+            <td>{{$IMEI2 ?? 'N/A'}}</td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <th>Observaciones</th>
+        </tr>
+        <tr>
+        <td>{{$observaciones ?? 'N/A'}}</td>
+        </tr>
+    </table>
     <p>
         <strong>PARÁGRAFO PRIMERO: EL TRABAJADOR</strong> declara recibir en buen estado y a entera satisfacción el Equipo de Cómputo, los componentes y accesorios que se entregan de forma concomitante con la suscripción de la presenta acta, por lo anterior, el Equipo de Cómputo, los componentes y accesorios, que se mencionan en esta acta se encuentra bajo la custodia y cuidado de <strong>EL TRABAJADOR</strong>; Igualmente, la perdida, daño o destrucción de cualquiera de los elementos entregados en esta acta constituye una falta grave meritoria de la terminación del contrato de trabajo, <strong>EL TRABAJADOR</strong> autoriza con la firma del presente documento, que en caso de pérdida o extravío, daño o destrucción de cualquiera de los elementos tecnológicos por cualquier motivo, le sea deducido o descontado el valor depreciado del bien entregado en custodia para el ejercicio de sus labores, en todo caso el empleador dará a conocer el valor del descuento al trabajador valor que se tendrá en cuenta conforme a los procedimiento establecidos por la compañía, generando la deducción de la sumas que se le adeuden por salarios, prestaciones sociales, vacaciones, intereses de cesantía, pagos de naturaleza extralegal, eventuales indemnizaciones y cualquier otra acreencia a que pueda tener derecho en vigencia del contrato de trabajo o al momento de terminación del contrato de trabajo por cualquier motivo.
     </p>
@@ -145,26 +170,6 @@
     <p>
         <strong>CLÁUSULA QUINTA: EL TRABAJADOR</strong> manifiesta que ha sido advertido y acepta expresamente que no debe instalar en los Equipo de cómputo suministrados por <strong>EL EMPLEADOR</strong> ninguna clase de software licenciado o no ( incluyendo pero no limitando: a Free software, Open source, Licencia GPL (General PublicLicense) o copyright, Software de dominio público, Freeware, Shareware, Adware (Advertising spyware)) de igual forma, se compromete a no alterar la configuración del Equipo de cómputo que se asignó para el desempeño de su labor cumpliendo a cabalidad las políticas de seguridad establecidas por <strong>EL EMPLEADOR</strong> para garantizar la confidencialidad, integridad y seguridad de la información.
     </p>
-
-    <div class="signature">
-        <div style="width: 50%;">
-            <p class="firmas_p"><strong>EL EMPLEADOR</strong></p>
-            <p class="firmas_p">Andres Fernando Camacho Contreras</p>
-            <p class="firmas_p">Director Operaciones IT</p>
-        </div>
-        <div style="width: 50%;">
-            <p class="firmas_p"><strong>EL TRABAJADOR</strong></p>
-            <p class="firmas_p">{{nombreTrabajador}}</p>
-            <p class="firmas_p">{{cargoTrabajador}}</p>
-        </div>
-    </div>
-
-    <p>
-        <strong>ENTREGA fecha:</strong> {{fechaEntrega}}<br>
-        <strong>Número de caso:</strong> {{numeroCaso}}<br>
-        <strong>Campaña:</strong> {{campana}}
-    </p>
-
     <div class="signature">
     <table>
         <tr>
@@ -176,8 +181,15 @@
             </td>
             <td>
                 <div class="container">
+                    
                     <p class="firmas_p">Firma de quien recibe: <img src="data:image/png;base64,{{$ruta2}}" alt="" width="100px" height="40px"></p>
                     <p class="firmas_p">Nombre: <b>{{$nombres}}</b></p>
+
+                    <p>
+                        <strong>Fecha de entrega:</strong> {{$fechaEntrega}}<br>
+                        <strong>Número de caso:</strong> {{$numeroCaso}}<br>
+                        <strong>Campaña:</strong> {{$campana}}
+                    </p>
                 </div>
             </td>
         </tr>

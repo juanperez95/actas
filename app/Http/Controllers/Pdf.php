@@ -193,9 +193,11 @@ class Pdf extends Controller
     public function pdfRetorno(Request $request){
         ini_set('max_execution_time', 120); 
         $dispositivo = $request->dispositivo;
-        $tipoEscritorio = $request->Tipoescritorio;
+        $tipoEscritorio = $request->tipoescritorio;
+        
         $numeroCaso = $request->numeroCaso;
         $nombres = $request->nombres;
+       
         $campana = $request->campana;
         $correoPersonal = $request->correoPersonal;
         $correoJefe = $request->correoJefe;
@@ -281,72 +283,92 @@ class Pdf extends Controller
 
 
 
-    // Generar PDF del gestor
-    public function pdfGestor(Request $request){
-        // Datos basicos
-        $nombre_persona = strtoupper($request->input('nombre_persona'));
-        $numero_caso = $request->input('numero_caso');
-        $documento_persona = $request->input('documento_persona');
-        $correo_persona = $request->input('correo_persona');
-        // Nombre gestor
-        $nombre_gestor = strtoupper($request->input('nombre_gestor'));
-        // Motivos
-        $motivo_solicitud = $request->input('motivo_solicitud');
-        $op_solicitante = $request->input('op_solicitante');
-        // Fecha generada automaticamente
-        $fecha_entregaActivo = Carbon::now()->toDateString();
-        // Datos de elementos y observaciones
-        $ingreso_elemento = strtoupper($request->input('ingreso_elemento'));
-        $serial_elemento = strtoupper($request->input('serial_elemento'));
-        $activo_elemento = strtoupper($request->input('activo_elemento'));
-        $observaciones_elemento = $request->input('observaciones_elemento');
-        $observaciones = $request->input('observaciones');
-        // Nombre de quien entrega e elemento
-        $nombre_deEntrega = $request->input('nombre_deEntrega');
-        // Datos de elemento
-        $data_elemento = $request->input('data_elemento');
-        $data_elemento_r = $request->input('data_elemento_r');
+    // Generar PDF de Entregas
+    public function pdfEntrega(Request $request){
+        ini_set('max_execution_time', 120);
+        $dispositivo = $request->dispositivo;
+        $tipoEscritorio = $request->Tipoescritorio;
+        $numeroCaso = $request->numeroCaso;
+        $fechaEntrega = $request->fechaEntrega;
+        $nombres = $request->nombres;
+        $observaciones = $request-> observaciones;
+        $campana = $request->campana;
+        $cedula = $request->cedula;
+        $expedicionCedula = $request->expedicionCedula;
+        $concepto = $request-> concepto;
+        $correoPersonal = $request->correoPersonal;
+        $correoJefe = $request->correoJefe;
+        $marcaDispositivo = $request -> marcaDispositivo;
+        $modeloDispositivo = $request -> modeloDispositivo;
+        $serialDispositivo = $request->serialDispositivo;
+        $activoDispositivo = $request->activoDispositivo;
+        $estadoDispositivo = $request->estadoDispositivo;
+        $serialEquipoAnterior = $request->serialEquipoAnterior;
+        $activoEquipoAnterior = $request->activoEquipoAnterior;
+        $diadema = $request->diadema;
+        $marcaDiadema = $request->marcaDiadema;
+        $serialDiadema = $request->serialDiadema;
+        $estadoDiadema = $request->estadoDiadema;
+        $raton = $request->raton;
+        $estadoRaton = $request->estadoRaton;
+        $teclado = $request->teclado;
+        $estadoTeclado = $request->estadoTeclado;
+        $marcaMonitor = $request -> marcaMonitor;
+        $modeloMonitor = $request -> modeloMonitor;
+        $serialMonitor = $request->serialMonitor;
+        $activoMonitor = $request->activoMonitor;
+        $estadoMonitor = $request->estadoMonitor;
+        $segundoMonitor = $request->segundoMonitor;
+        $serialMonitor2 = $request->serialMonitor2;
+        $activoMonitor2 = $request->activoMonitor2;
+        $tieneDiadema = $request->tieneDiadema;
+        $IMEI = $request->IMEI;
+        $IMEI2 = $request->IMEI2;
+        $diademaSerial = $request->Diademaserial;
+        $observaciones = $request->observaciones;
+        $nombreRecibe = $request->NombreRecibe;
+        $firma1 = $request->firma1;
+        $firma2 = $request->firma2;
+        // Decodificar las dos firmas
+        $data = $this->encodeImagen($firma1, $firma2);
 
-        // Firmas desde vue
-        $firma1 = $request->input('firma1');
-        $firma2 = $request->input('firma2');
-
-        // Codificar las imagenes
-        $data =$this->encodeImagen($firma1,$firma2);
-        $rutaLogo = $data['rutaLogo'];
         $ruta1 = $data['ruta1'];
         $ruta2 = $data['ruta2'];
+        $rutaLogo = $data['rutaLogo'];
 
-        $opciones = new Options();
-        $opciones->set('isRemoteEnabled', true);
+       
 
-        $pdf = new Dompdf($opciones);
-        $vista = view('pdf_gestor',compact(
-            'nombre_persona',
-            'numero_caso',
-            'documento_persona',
-            'correo_persona',
-            'nombre_gestor',
-            'motivo_solicitud',
-            'op_solicitante',
-            'fecha_entregaActivo',
-            'ingreso_elemento',
-            'serial_elemento',
-            'activo_elemento',
-            'observaciones_elemento',
-            'observaciones',
-            'nombre_deEntrega',
-            'data_elemento',
-            'data_elemento_r',
-            'ruta1',
-            'ruta2',
-            'rutaLogo'
-        ));
-        $pdf->loadHtml($vista);
-        $pdf->render();        
-        $this->SavePDFServerDB($nombre_persona.'_A_'.$nombre_gestor,$pdf,$fecha_entregaActivo,$request,2,$numero_caso);
+         // Compactar todas la variables para enviarlas al PDF
+         $datos_pdf = compact('dispositivo', 'tipoEscritorio', 'fechaEntrega',
+         'numeroCaso', 'nombres', 'campana', 'correoPersonal','cedula', 'concepto','serialEquipoAnterior','activoEquipoAnterior',
+         'correoJefe', 'serialDispositivo', 'activoDispositivo', 'expedicionCedula','IMEI','IMEI2',
+         'estadoDispositivo', 'diadema', 'serialDiadema', 'raton', 'observaciones',
+         'estadoRaton', 'teclado', 'estadoTeclado',  'serialMonitor', 'activoMonitor', 'estadoMonitor',
+          'segundoMonitor',  'marcaDiadema', 'estadoDiadema',
+           'observaciones', 'nombreRecibe', 'ruta1', 'ruta2','rutaLogo','marcaDispositivo','modeloDispositivo'
+         ,'marcaMonitor','modeloMonitor');
 
-        return $pdf->stream('gestor.pdf');
+         $opciones = new Options();
+        $opciones->set('isHtml5ParserEnabled', true);
+
+        try{
+            $pdf = new Dompdf($opciones);   
+            $vista = view('pdf_Entregas',$datos_pdf);
+
+            $pdf->loadHtml($vista);
+            $pdf->render();
+
+            // Guardar el pdf en el servidor y base de datos.
+            $this->SavePDFServerDB($nombres.'_A_'.$nombreRecibe,$pdf,Carbon::now()->toDateString(),$request,3,$numeroCaso,$campana);
+
+        }catch(Exception $e){
+            error_log($e->getMessage());
+            return response()->json($e->getMessage());
+        }
+
+        // Finalizar la descarga
+        return $pdf->stream('entrega.pdf');
+
     }
 
     // Funcion para codificar imagenes de las firmas y logo de la compañia

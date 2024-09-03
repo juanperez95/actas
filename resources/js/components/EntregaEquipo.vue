@@ -97,32 +97,32 @@
                 <option value="Celular">Celular</option>
               </select>
             </div>
-            <div class="col-md-6 mb-3" v-if="formData.dispositivo === 'Escritorio'">
+            <!-- <div class="col-md-6 mb-3" v-if="formData.dispositivo === 'Escritorio'">
               <label for="Tipoescritorio" class="form-label">Tipo de escritorio:</label>
               <select id="Tipoescritorio" :class="[inputs, 'p-3']" v-model="formData.Tipoescritorio">
                 <option value="Torre">Torre</option>
                 <option value="Micro">Micro</option>
               </select>
-            </div>
+            </div> -->
             <div v-if="formData.dispositivo === 'Celular'" class="col-span-3 grid grid-cols-2 gap-4">
-      <div class="mb-1">
-        <label for="IMEI" class="form-label">IMEI 1:</label>
-        <input type="text" id="IMEI" :class="inputs" v-model="formData.IMEI">
-      </div>
-      <div class="mb-1">
-        <label for="IMEI2" class="form-label">IMEI 2:</label>
-        <input type="text" id="IMEI2" :class="inputs" v-model="formData.IMEI2">
-      </div>
-    </div>
+                <div class="mb-1">
+                    <label for="IMEI" class="form-label">IMEI 1:</label>
+                    <input type="text" id="IMEI" :class="inputs" v-model="formData.IMEI">
+                </div>
+                <div class="mb-1">
+                    <label for="IMEI2" class="form-label">IMEI 2:</label>
+                    <input type="text" id="IMEI2" :class="inputs" v-model="formData.IMEI2">
+                </div>
+                </div>
 
-    <div v-if="formData.dispositivo !== 'Celular'" class="col-span-3 grid grid-cols-3 gap-4">
-      <div class="col-md-6 mb-3" v-if="formData.dispositivo === 'Escritorio'">
-        <label for="Tipoescritorio" class="form-label">Tipo de escritorio:</label>
-        <select id="Tipoescritorio" :class="[inputs, 'p-3']" v-model="formData.Tipoescritorio">
-          <option value="Torre">Torre</option>
-          <option value="Micro">Micro</option>
-        </select>
-      </div>
+                <div v-if="formData.dispositivo !== 'Celular'" class="col-span-3 grid grid-cols-3 gap-4">
+                <div class="col-md-6 mb-3" v-if="formData.dispositivo === 'Escritorio'">
+                    <label for="Tipoescritorio" class="form-label">Tipo de escritorio:</label>
+                    <select id="Tipoescritorio" :class="[inputs, 'p-3']" v-model="formData.Tipoescritorio">
+                    <option value="Torre">Torre</option>
+                    <option value="Micro">Micro</option>
+                    </select>
+                </div>
     
             <div class="mb-1">
             <label for="marcaDispositivo" class="form-label">Marca del Dispositivo:</label>
@@ -177,21 +177,18 @@
             </div>
         </div>
 
-            <div v-if="formData.segundoMonitor === 'Si'" class="mb-1">
+        <div v-if="formData.segundoMonitor === 'Si'" class="mb-1">
       <label for="segundoMonitor" class="form-label">¿Tiene segundo monitor?</label>
-      <select id="segundoMonitor" :class="[inputs, 'p-3']" v-model="formData.segundoMonitor">
-        <option value="No">No</option>
-        <option value="Si">Sí</option>
-      </select>
-    </div>
-  
-    <div v-if="formData.segundoMonitor === 'Si'" class="mb-1">
-       
+            <select id="segundoMonitor" :class="[inputs, 'p-3']" v-model="formData.segundoMonitor">
+                <option value="No">No</option>
+                <option value="Si">Sí</option>
+            </select>
+        </div>
+    
+        <div v-if="formData.segundoMonitor === 'Si'" class="mb-1">
             <label for="marcaMonitor2" class="form-label">Marca del Monitor:</label>
             <input type="text" id="marcaMonitor2" :class="inputs" v-model="formData.marcaMonitor2">
-        
-          
-          </div>
+        </div>
 
           <div v-if="formData.segundoMonitor === 'Si'" class="mb-1">
             <label for="modeloMonitor2" class="form-label">Modelo del Monitor:</label>
@@ -215,7 +212,7 @@
               <option value="Dado de baja">Dado de baja</option>
             </select>
           </div>
-          </section>
+       </section>
           
           <!-- Sección para periféricos -->
           <section class="sm:border-2 mt-5 p-2 grid grid-cols-3 gap-8 justify-center items-center">
@@ -385,6 +382,7 @@
         formData: {
           tipo_formulario: 'entrega',
           dispositivo: '',
+          concepto:'',
           Tipoescritorio: '',
           numeroCaso: '',
           nombres: '',
@@ -395,6 +393,8 @@
           activoDispositivo: '',
           estadoDispositivo: '',
           marcaDispositivo: '',
+          serialDispositivoAnterior:'',
+          activoEquipoAnterior: '',
           modeloDispositivo: '',
           marcaMonitor: '',
           modeloMonitor: '',
@@ -447,12 +447,19 @@
     },
   
     methods: {
-      
-      ...mapMutations(["getSession", 'mostrarCamps', 'cerrarSesionAuto', 'saveForm']),
-      guardarFormulario() {
-        let cedula = this.usuario_session[0].cedula;
-        this.saveForm({ documento: cedula, form: this.formData });
-      },
+
+        ...mapMutations(["getSession", 'mostrarCamps','cerrarSesionAuto','saveForm','loadForm']),
+    // Cargar formulario si hay algo
+    cargarEntrega(){
+      this.loadForm(this.usuario_session[0].cedula);
+      this.formData = this.datos_form;
+    },
+
+    // Recoger datos y guardar datos
+    guardarEntrega(){
+      let cedula = this.usuario_session[0].cedula;
+      this.saveForm({documento:cedula,form:this.formData});
+    },
       async submitForm() {
         if (this.isFormValid) {
           this.generarPDFEntrega();
@@ -474,6 +481,8 @@
           correoJefe: '',
           serialDispositivo: '',
           activoDispositivo: '',
+          serialDispositivoAnterior:'',
+          activoEquipoAnterior: '',
           estadoDispositivo: '',
           marcaDispositivo: '',
           modeloDispositivo: '',
@@ -517,23 +526,23 @@
         
         this.showNotification('info', 'Generando PDF...');
         
-        await axios.post('/PDF_ENTREGA', this.formData, {
+        await axios.post('/PDF_ETN', this.formData, {
           responseType: 'blob'
         })
         .then((res) => {
           if (res.status == 200) {
             var enlace = document.getElementById('down');
-            enlace.download = `${new Date().toISOString().slice(0,10)}_ACTA_ENTREGA_${this.formData.nombres.toUpperCase()}.pdf`;
+            enlace.download = `${new Date().toISOString().slice(0,10)}_ACTA_ENTREGA_${this.formData.nombres.toUpperCase()}_${this.formData.campana.toUpperCase()}.pdf`;
             enlace.href = URL.createObjectURL(res.data);
             enlace.click();
             URL.revokeObjectURL(enlace.href);
+            this.showNotification('success', 'PDF generado con éxito');
           }
         }).catch((err) => {
           console.error(err);
           this.showNotification('error', 'Error al generar el PDF');
         });
         
-        this.showNotification('success', 'PDF generado con éxito');
         this.cargar = 'fas fa-file-pdf me-2';
       },
       
