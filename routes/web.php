@@ -7,6 +7,8 @@ use App\Http\Controllers\GestoresActas;
 use App\Http\Controllers\Historiales_actas;
 use App\Http\Controllers\Pdf;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
+
 
 Route::get('/', [Pdf::class,'index']);
 Route::get('/Actas',[Pdf::class,'Home'])->name('home');
