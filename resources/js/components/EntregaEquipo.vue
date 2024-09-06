@@ -43,7 +43,7 @@
               
             </section>
   
-            <section class="sm:grid grid-cols-5 mt-5 p-2 border-2 gap-8 justify-center items-center">
+            <section class="sm:grid grid-cols-5 mt-5 p-2 border-2 gap-8 justify-center items-center ">
               <article class="text-2xl bg-fuchsia-950 text-white col-span-5 p-2">Datos del usuario</article>
               
               <article>
