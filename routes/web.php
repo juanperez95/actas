@@ -8,7 +8,7 @@ use App\Http\Controllers\Historiales_actas;
 use App\Http\Controllers\CorreoController;
 use App\Http\Controllers\Pdf;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Mail;
 
 
 Route::get('/', [Pdf::class,'index']);
@@ -76,7 +76,3 @@ Route::post('/Actas_de_responsabilidad/Historial/BuscarCaso/{id}',[Historiales_a
 Route::post('/Actas_de_responsabilidad/Historial/BuscarCasoAvanzado/{f_inicio}/{f_fin}/{id_gestor}',[Historiales_actas::class,'BuscarHistorialHard'])->name('buscar_actas');
 Route::get('/Actas_de_responsabilidad/Historial/MyDocuments',[Historiales_actas::class,'historialMyActas'])->name('myActas');
 Route::post('/Actas_de_responsabilidad/Historial/MyDocuments/Show',[Historiales_actas::class,'showMyDocuments'])->name('showMyActas');
-
-
-// RUTAS DE E-MAILS
-Route::post('/enviar-correo', [CorreoController::class, 'enviarCorreo']);
